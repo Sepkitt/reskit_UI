@@ -1,0 +1,188 @@
+{
+    "devices": [
+        {
+            "type": "television",
+            "breakpoints": [
+                {
+                    "name": "xl",
+                    "simulations": [
+                        {
+                            "screen": "simultated-4k",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-xl",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-lg",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-md",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-sm",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-xs",
+                            "scale": "scale(0.3, 0.3)"
+                        }
+                    ]
+                },
+                {
+                    "name": "lg",
+                    "simulations": [
+                        {
+                            "screen": "simultated-4k",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-xl",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-lg",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-md",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-sm",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-xs",
+                            "scale": "scale(0.3, 0.3)"
+                        }
+                    ]
+                },
+                {
+                    "name": "md",
+                    "simulations": [
+                        {
+                            "screen": "simultated-4k",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-xl",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-lg",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-md",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-sm",
+                            "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-xs",
+                            "scale": "scale(0.3, 0.3)"
+                        }
+                    ]
+                }
+            ]
+        },
+            {
+                "type": "laptop",
+                "breakpoints": [
+                    {
+                        "name": "xl",
+                        "simulations": [
+                            {
+                                "screen": "simultated-4k",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.3, 0.3)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "lg",
+                        "simulations": [
+                            {
+                                "screen": "simultated-4k",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.3, 0.3)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "md",
+                        "simulations": [
+                            {
+                                "screen": "simultated-4k",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.3, 0.3)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.3, 0.3)"
+                            }
+                        ]
+                    }
+                ]
+            }
+    ]
+}
