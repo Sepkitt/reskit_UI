@@ -6,7 +6,7 @@ Simulator to allow approximate testing of responsive web pages
 
 ## Made with Nuxt + Vuetify
 
-Test your site here https://reskit.netlify.app
+Test your site here https://reskitui.netlify.app/ui
 
 ## Build Setup
 
