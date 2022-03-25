@@ -6,7 +6,7 @@
       color="info"
     >
 
-      <v-toolbar-title class="white--text">resKit</v-toolbar-title>
+      <v-toolbar-title class="white--text"><img src=""/></v-toolbar-title>
 
       <v-spacer></v-spacer>
 

@@ -37,9 +37,13 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn dark text>
-          <v-icon class="mx-2" to="https://github.com/SepStacks/RESKIT">la-github</v-icon>
-          Github
+        <v-btn dark text >
+            <a class="white--text" href="https://github.com/Sepkitt/reskit_UI">
+          <v-icon class="mx-2" color="white" >la-github</v-icon>
+        
+            Github
+          </a>
+         
         </v-btn>
       </v-app-bar>
 
@@ -63,6 +67,10 @@
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: 50% 50% !important;
+}
+
+a {
+  text-decoration: none;
 }
 
 </style>
