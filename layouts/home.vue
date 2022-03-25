@@ -44,7 +44,15 @@
       </v-app-bar>
 
     </v-card>
-    <nuxt />
+   <v-main>
+     <v-container fill-height>
+       <v-row>
+         <v-col>
+            <nuxt />
+         </v-col>
+       </v-row>
+     </v-container>
+   </v-main>
   </v-app>
 </template>
 
