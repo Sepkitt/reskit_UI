@@ -308,6 +308,15 @@
   ],
   "tablets": [
     {
+      "name": "POS UI",
+      "featured": true,
+      "width": 1024,
+      "touch": true,
+      "os": "as@r",
+      "screen": "phone",
+      "height": 768
+    },
+    {
       "name": "Kindle Fire HDX",
       "featured": true,
       "width": 800,
