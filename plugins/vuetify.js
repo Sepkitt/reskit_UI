@@ -50,16 +50,14 @@ export default {
   theme: {
     themes: {
       // dark: {
-      //   text:'#707070',
-      //   primary: '#E61331',
-      //   accent: '#FFB300',
-      //   secondary: '#222324',
-      //   tertiary: "#282A2D",
-      //   quaternary: "#707070",
-      //   info: colors.teal.lighten3,
-      //   warning: colors.amber.base,
-      //   error: colors.deepOrange.accent4,
-      //   success: colors.green.accent3
+      //   title: '#EBEDEF',
+      //   background: '#2C3E50',
+      //   itemBgColor: '#31465B',
+      //   primary: '#01B1FF',
+      //   secondary: '#b0bec5',
+      //   accent: '#8c9eff',
+      //   error: '#b71c1c',
+      //   text: '#919191'
       // },
 
       light: {
