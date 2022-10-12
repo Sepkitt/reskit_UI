@@ -1,10 +1,10 @@
 <template>
-  <v-app  id="app">
-     <v-main >
-        <nuxt />
+   <v-app id="app">
+      <v-main>
+         <nuxt />
 
-     </v-main>
-  </v-app>
+      </v-main>
+   </v-app>
 </template>
 
 <script>
@@ -21,7 +21,7 @@ export default {
 
 
 <style >
- /* .v-application {
+/* .v-application {
     background-image: url('../static/svg/Mobile_Background.svg') !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
@@ -29,26 +29,34 @@ export default {
   } */
 
 
-     /* html, body {margin: 0; height: 100%; }  */
+
+::-webkit-scrollbar {
+   display: none;
+}
 
 /* md and below */
-@media screen and (max-width: 1264px) {
-
-}
+/* @media screen and (max-width: 1264px) {
+   ::-webkit-scrollbar {
+      display: none;
+   }
+} */
 
 /* lg and up */
-
+/* 
 @media screen and (min-width: 1264px) {
 
-  html, body {margin: 0; height: 100%; overflow: hidden;
- } 
-    ::-webkit-scrollbar {
-  display: none;
-}
- 
-}
+   html,
+   body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+   }
 
-  /* .theme--light.v-application {
-    background: red !important;
+   ::-webkit-scrollbar {
+      display: none;
+   }
+
 } */
+
+
 </style>

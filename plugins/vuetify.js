@@ -61,7 +61,7 @@ export default {
       // },
 
       light: {
-        text: '#416BA2',
+        text: '#8A96AB',
         focused: '#014694',
         midnight: '#1C2D4A',
         darkness: '#192841',

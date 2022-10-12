@@ -1,8 +1,7 @@
 # RESKIT
 
-Resolution KIT
-a tool specifically designed to aid resonsive design
-Simulator to allow approximate testing of responsive web pages
+Resolution KIT (RESKIT) is a tool specifically designed to aid resonsive design.
+Create responsive websites on both mobile and desktop simultaneously
 
 ## Made with Nuxt + Vuetify
 

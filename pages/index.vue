@@ -1,35 +1,36 @@
 <template>
-      <v-row align="center" justify="center">
-        <v-col cols="3" class="d-flex justify-center">
-          <v-img width="150px" src="/Reskit_Logo.svg" lazy-src="/Reskit_Logo.svg">
+  <v-row align="center">
 
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular indeterminate color="grey lighten-5">
-                </v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
 
-        </v-col>
-
-        <v-col cols="12">
-          <h1 class="subtitle white--text font-weight-thin text-center">
+    <v-col cols="12" md="6" order-sm=12>
+      <v-row>
+        <v-col cols="12" :class="{'text-center mt-3': $vuetify.breakpoint.smAndDown}">
+          <h1 class="white--text">Reskit <span class="primary--text">UI</span></h1>
+          <h2 class="subtitle text--text font-weight-thin ">
             Simulate devices in an array of diferent sizes
-          </h1>
+          </h2>
         </v-col>
-        <v-btn class="button pa-6 mt-5 primary--text" dark to="UI" color="background">
-          navigate to UI
+        <v-col :class="{'text-center': $vuetify.breakpoint.smAndDown}">
+          <v-btn class="pa-6" dark to="UI" color="darkness">
+            navigate to <span class="ml-2 primary--text">UI</span></v-btn>
 
-
-          <CoreChevron class="d-flex align-center justify-center hover mx-5" size="40px" rotate="90" variant="path"
-            strokeWidth="6" flip="y" />
-          <!-- <v-row justify="center" class="hover">
-             
-             </v-row> -->
-
-        </v-btn>
+        </v-col>
       </v-row>
+    </v-col>
+    <v-col cols="3" class="mx-auto d-flex justify-end" order-sm=1>
+      <v-img width="150px" src="/Reskit_Logo.svg" lazy-src="/Reskit_Logo.svg">
+
+        <template v-slot:placeholder>
+          <v-row class="fill-height ma-0" align="center" justify="center">
+            <v-progress-circular indeterminate color="grey lighten-5">
+            </v-progress-circular>
+          </v-row>
+        </template>
+      </v-img>
+
+    </v-col>
+
+  </v-row>
 </template>
 
 <script>
@@ -60,5 +61,9 @@ export default {
   100% {
     left: 0;
   }
+}
+
+a {
+  text-decoration: none;
 }
 </style>
