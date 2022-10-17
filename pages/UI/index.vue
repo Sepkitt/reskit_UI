@@ -1,143 +1,70 @@
 <template>
   <div>
 
-    <v-app-bar
-      app
-      color="info"
-    >
+    <v-app-bar app color="info">
 
-      <v-toolbar-title class="white--text"><img src=""/></v-toolbar-title>
+      <v-toolbar-title class="white--text"><img src="" /></v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-text-field
-        class="pt-8 shadow"
-        v-model="url"
-        solo
-        dark
-        background-color="darkness"
-      >
+      <v-text-field class="pt-8 shadow" v-model="url" solo dark background-color="darkness">
         <template #append>
 
-          <div
-            class="d-flex align-center justify-center  button-click "
-            @click="src = url"
-          >
-            <CoreArrow
-              variant='path'
-              strokeWidth='6'
-              flip='y'
-              rotate="90"
-            ></CoreArrow>
+          <div class="d-flex align-center justify-center  button-click " @click="src = url">
+            <CoreArrow variant='path' strokeWidth='6' flip='y' rotate="90"></CoreArrow>
           </div>
         </template>
 
       </v-text-field>
       <v-spacer></v-spacer>
-      <IconClick
-        title="View on mobile"
-        icon="mdi-qrcode"
-        @click="dialog=true"
-      />
+      <IconClick title="View on mobile" icon="mdi-qrcode" @click="dialog=true" />
 
     </v-app-bar>
-    <v-card
-      color="background"
-      :height="$vuetify.breakpoint.lgAndUp ? '100vh' : '100%'"
-    >
+    <v-card color="background" :height="$vuetify.breakpoint.lgAndUp ? '100vh' : '100%'">
       <v-row dense>
-        <v-col
-          class="px-2"
-          cols="12"
-          ref="deviceRef"
-          :xl="device.xl"
-          :lg="device.lg"
-          v-for="(device, index) in devices"
-          :key="index"
-        >
+        <v-col class="px-2" cols="12" ref="deviceRef" :xl="device.xl" :lg="device.lg" v-for="(device, index) in devices"
+          :key="index">
 
-          <v-card
-            :height="maxHeight"
-            class="child mt-3"
-            color="infoBg"
-          >
+          <v-card :height="maxHeight" class="child mt-3" color="infoBg">
 
             <v-toolbar color="info">
-              <div
-                color="secondary"
-                class="d-flex align-center pa-5 sheet text--text"
-              >
+              <div color="secondary" class="d-flex align-center pa-5 sheet text--text">
 
                 {{simulationBreakpoints(device)}}
               </div>
               <v-spacer></v-spacer>
-              <v-select
-                dark
-                background-color="darkness"
-                class="mt-8 mx-5 shadow"
-                label="devices"
-                v-model="device.breakpoint"
-                :items="device.items"
-                solo
-                cul
-              >
+              <v-select dark background-color="darkness" class="mt-8 mx-5 shadow" label="devices"
+                v-model="device.breakpoint" :items="device.items" solo cul>
                 <template #append>
-                  <div
-                    class="d-flex align-center justify-center  button-click "
-                    @click="src = url"
-                  >
+                  <div class="d-flex align-center justify-center  button-click " @click="src = url">
 
-                    <CoreChevron
-                      variant='path'
-                      strokeWidth='6'
-                      flip='x'
-                    />
+                    <CoreChevron variant='path' strokeWidth='6' flip='x' />
 
                   </div>
                 </template>
-                <template
-                  slot="selection"
-                  slot-scope="data"
-                >
+                <template slot="selection" slot-scope="data">
                   <!-- HTML that describe how select should render selected items -->
 
                   {{ data.item.name }} - {{ data.item.width }} x {{ data.item.height }}
                 </template>
-                <template
-                  slot="item"
-                  slot-scope="data"
-                >
+                <template slot="item" slot-scope="data">
                   <!-- HTML that describe how select should render items when the select is open -->
 
                   {{ data.item.name }} - {{ data.item.width }} x {{ data.item.height }}
                 </template>
               </v-select>
               <v-spacer />
-              <IconClick
-              v-if="device.screenSize === 'mdAndDown'"
-                title="rotate"
-                icon="mdi-phone-rotate-landscape"
-                @click="device.rotate = !device.rotate"
-              />
+              <IconClick v-if="device.screenSize === 'mdAndDown'" title="rotate" icon="mdi-phone-rotate-landscape"
+                @click="device.rotate = !device.rotate" />
 
-              <IconClick
-                title="fullscreen"
-                icon="mdi-circle-expand"
-                @click.prevent="device.fullscreen = !device.fullscreen
-"
-              />
+              <IconClick title="fullscreen" icon="mdi-circle-expand" @click.prevent="device.fullscreen = !device.fullscreen
+              " />
             </v-toolbar>
 
-            <fullscreen
-              fullscreenClass="overlay"
-              v-model="device.fullscreen"
-            >
+            <fullscreen fullscreenClass="overlay" v-model="device.fullscreen">
 
-              <div
-                ref="node"
-                id="rotate"
-              >
-            <!-- <v-fab-transition>
+              <div ref="node" id="rotate">
+                <v-fab-transition>
                 <v-btn
                   absolute
                   dark
@@ -148,20 +75,14 @@
                 >
                <v-icon>mdi-plus</v-icon>
                
-                </v-btn> </v-fab-transition> -->
+                </v-btn> </v-fab-transition>
 
-                <Device
-                  :fullscreen="device.fullscreen"
-                  :rotate="device.rotate"
-                  class="mt-5"
+                <Device :fullscreen="device.fullscreen" :rotate="device.rotate" class="mt-5"
                   :height="device.rotate === false ? device.breakpoint.height : device.breakpoint.width "
                   :width="device.rotate === false ? device.breakpoint.width : device.breakpoint.height "
-                  :screen="device.breakpoint.screen"
-                  :types="types"
-                  :src="src"
-                /> 
+                  :screen="device.breakpoint.screen" :types="types" :src="src" />
               </div>
-                  
+
             </fullscreen>
 
           </v-card>
@@ -172,24 +93,9 @@
 
     </v-card>
 
-    <Dialog
-      v-model="dialog"
-      header="sdsd"
-      maxWidth="500"
-      closeBTNName="Not Now"
-    >
-      <v-container slot="content">
-        <div class="text-h6 text-center font-weight-bold">Test on mobile device</div>
-        <vue-qr
-        colorLight="#1D2E4B"
-        colorDark="#f2f2f2"
-        autoColor
-        backgroundColor="#1D2E4B"
-          :text="url"
-          qid="testid"
-        ></vue-qr>
-
-      </v-container>
+    <Dialog v-model="dialog" maxWidth="250" closeBTNName="Not Now">
+    
+      <cardsQrCard :url="url" slot="content"/>
 
     </Dialog>
 
@@ -197,6 +103,7 @@
 </template>
 
 <script>
+
 import {
   phones,
   tablets,
@@ -207,13 +114,12 @@ import {
 import Structure from '~/components/Structure.vue'
 import Device from '~/components/Device.vue'
 
-console.log('devices-module')
 export default {
   components: {
     Structure,
     Device
   },
-  asyncData (context) {
+  asyncData(context) {
     console.log(context)
     const lgAndUp = [...laptops, ...televisions]
     const mdAndDown = [...phones, ...tablets]
@@ -249,9 +155,15 @@ export default {
       devices,
     }
   },
-  data () {
+
+  setup() {
+    const dialog = ref(false)
+
+    return {dialog}
+  },
+  data() {
     return {
-      dialog: false,
+      // dialog: false,
       url: 'https://nuxtjs.org/',
       src: 'https://nuxtjs.org/',
       // Device types
@@ -288,7 +200,7 @@ export default {
   },
 
   computed: {
-    maxHeight () {
+    maxHeight() {
       //refractored switch function to make use of array
       for (const item of this.cardSizes) {
         switch (this.$vuetify.breakpoint.name) {
@@ -301,13 +213,13 @@ export default {
       }
     },
   },
-  mounted () { },
+  mounted() { },
   methods: {
-    toggle (device) {
+    toggle(device) {
       device.fullscreen = false
     },
 
-    simulationBreakpoints (device) {
+    simulationBreakpoints(device) {
       for (const item of this.devices) {
         if (item.id === device.id) {
           switch (true) {
