@@ -1,5 +1,5 @@
 {
-    "devices": [
+    "data": [
         {
             "type": "television",
             "breakpoints": [
@@ -8,27 +8,27 @@
                     "simulations": [
                         {
                             "screen": "simultated-4k",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.28, 0.28)"
                         },
                         {
                             "screen": "simultated-xl",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.56, 0.56)"
                         },
                         {
                             "screen": "simultated-lg",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.6, 0.6)"
                         },
                         {
                             "screen": "simultated-md",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.4, 0.4)"
                         },
                         {
                             "screen": "simultated-sm",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.4, 0.4)"
                         },
                         {
                             "screen": "simultated-xs",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.4, 0.4)"
                         }
                     ]
                 },
@@ -37,32 +37,61 @@
                     "simulations": [
                         {
                             "screen": "simultated-4k",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.25, 0.25)"
                         },
                         {
                             "screen": "simultated-xl",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.5, 0.5)"
                         },
                         {
                             "screen": "simultated-lg",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.7, 0.7)"
                         },
                         {
                             "screen": "simultated-md",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.4, 0.4)"
                         },
                         {
                             "screen": "simultated-sm",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.4, 0.4)"
                         },
                         {
                             "screen": "simultated-xs",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.4, 0.4)"
                         }
                     ]
                 },
                 {
                     "name": "md",
+                    "simulations": [
+                        {
+                            "screen": "simultated-4k",
+                            "scale": "scale(0.2, 0.2)"
+                        },
+                        {
+                            "screen": "simultated-xl",
+                            "scale": "scale(0.5, 0.5)"
+                        },
+                        {
+                            "screen": "simultated-lg",
+                            "scale": "scale(0.4, 0.4)"
+                        },
+                        {
+                            "screen": "simultated-md",
+                            "scale": "scale(0.4, 0.4)"
+                        },
+                        {
+                            "screen": "simultated-sm",
+                            "scale": "scale(0.4, 0.4)"
+                        },
+                        {
+                            "screen": "simultated-xs",
+                            "scale": "scale(0.4, 0.4)"
+                        }
+                    ]
+                },
+                {
+                    "name": "sm",
                     "simulations": [
                         {
                             "screen": "simultated-4k",
@@ -74,19 +103,48 @@
                         },
                         {
                             "screen": "simultated-lg",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.4, 0.4)"
                         },
                         {
                             "screen": "simultated-md",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.4, 0.4)"
                         },
                         {
                             "screen": "simultated-sm",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.4, 0.4)"
                         },
                         {
                             "screen": "simultated-xs",
+                            "scale": "scale(0.4, 0.4)"
+                        }
+                    ]
+                },
+                {
+                    "name": "xs",
+                    "simulations": [
+                        {
+                            "screen": "simultated-4k",
                             "scale": "scale(0.3, 0.3)"
+                        },
+                        {
+                            "screen": "simultated-xl",
+                            "scale": "scale(0.1, 0.1)"
+                        },
+                        {
+                            "screen": "simultated-lg",
+                            "scale": "scale(0.4, 0.4)"
+                        },
+                        {
+                            "screen": "simultated-md",
+                            "scale": "scale(0.4, 0.4)"
+                        },
+                        {
+                            "screen": "simultated-sm",
+                            "scale": "scale(0.4, 0.4)"
+                        },
+                        {
+                            "screen": "simultated-xs",
+                            "scale": "scale(0.4, 0.4)"
                         }
                     ]
                 }
@@ -98,29 +156,26 @@
                     {
                         "name": "xl",
                         "simulations": [
-                            {
-                                "screen": "simultated-4k",
-                                "scale": "scale(0.3, 0.3)"
-                            },
+                      
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.1, 0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.75, 0.75)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.4, 0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.4, 0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.4, 0.4)"
                             }
                         ]
                     },
@@ -128,28 +183,24 @@
                         "name": "lg",
                         "simulations": [
                             {
-                                "screen": "simultated-4k",
-                                "scale": "scale(0.3, 0.3)"
-                            },
-                            {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.1, 0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.6, 0.6)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.6, 0.6)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.6, 0.6)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.5, 0.5)"
                             }
                         ]
                     },
@@ -157,20 +208,97 @@
                         "name": "md",
                         "simulations": [
                             {
-                                "screen": "simultated-4k",
-                                "scale": "scale(0.3, 0.3)"
-                            },
-                            {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.5, 0.5)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.4, 0.4)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "sm",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.2, 0.2)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "sm",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.2, 0.2)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "tablet",
+                "breakpoints": [
+                    {
+                        "name": "xl",
+                        "simulations": [
+                      
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.6, 0.6)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
@@ -178,7 +306,238 @@
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "lg",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.6, 0.6)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.6, 0.6)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.5, 0.5)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "md",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.5, 0.5)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "sm",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.2, 0.2)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "sm",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.2, 0.2)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "phone",
+                "breakpoints": [
+                    {
+                        "name": "xl",
+                        "simulations": [
+                      
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.75, 0.75)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "lg",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "md",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "sm",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "xs",
+                        "simulations": [
+                            {
+                                "screen": "simultated-xl",
+                                "scale": "scale(0.1, 0.1)"
+                            },
+                            {
+                                "screen": "simultated-lg",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-md",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-sm",
+                                "scale": "scale(0.4, 0.4)"
+                            },
+                            {
+                                "screen": "simultated-xs",
+                                "scale": "scale(0.4, 0.4)"
                             }
                         ]
                     }

@@ -1,7 +1,7 @@
 
 <script setup lang="ts">
 
-interface Props {
+interface PROPS {
   value: boolean;
   title?: string;
   maxWidth: string;
@@ -9,7 +9,7 @@ interface Props {
   showDefaultClose?: boolean
 }
 // props with default values
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<PROPS>(), {
   maxWidth: '500px',
   closeBTNName: 'Close',
   showDefaultClose: true

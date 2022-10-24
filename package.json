@@ -22,7 +22,8 @@
     "dev": "nuxi dev",
     "build": "nuxi build",
     "start": "nuxi preview",
-    "generate": "nuxi generate"
+    "generate": "nuxi generate",
+    "typecheck": "nuxi typecheck"
   },
   "dependencies": {
     "@glyphs/vue-core": "0.0.8",
@@ -40,7 +41,7 @@
     "vue-qr": "^3.2.2"
   },
   "devDependencies": {
-    "@nuxt/bridge": "npm:@nuxt/bridge-edge",
+    "@nuxt/bridge": "^0.10.1",
     "@nuxt/components": "^2.2.1",
     "@nuxtjs/vuetify": "^1.12.3"
   }

@@ -1,10 +1,7 @@
 <template>
   <v-tooltip bottom color="background" class="shadow">
     <template v-slot:activator="{ on, attrs }">
-      <div
-        v-bind="attrs"
-        v-on="on"
-      >
+      <div v-bind="attrs" v-on="on">
         <slot name="content" />
       </div>
     </template>
@@ -13,14 +10,11 @@
 
 </template>
 
-<script>
-export default {
-  props: {
-    title: {
-      type: String
-    }
-  }
+<script setup lang="ts">
+interface PROPS {
+  title: string;
 }
+const props = defineProps<PROPS>();
 </script>
 
 <style lang="scss" scoped>

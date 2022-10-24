@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO:: Try to get this to work with nuxt's main loadder -->
   <div>
     <div class="scaling-squares-spinner">
       <div class="square"></div>
