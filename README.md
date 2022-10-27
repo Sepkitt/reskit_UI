@@ -3,7 +3,7 @@
 Resolution KIT (RESKIT) is a tool specifically designed to aid resonsive design.
 Create responsive websites on both mobile and desktop simultaneously
 
-## Made with Nuxt + Vuetify
+## Made with Nuxt-Bridge + Vuetify2 + Typescript
 
 Test your site here https://reskitui.netlify.app/ui
 
