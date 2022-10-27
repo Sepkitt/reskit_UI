@@ -8,27 +8,27 @@
                     "simulations": [
                         {
                             "screen": "simultated-4k",
-                            "scale": "scale(0.28, 0.28)"
+                            "scale": "scale(0.28)"
                         },
                         {
                             "screen": "simultated-xl",
-                            "scale": "scale(0.56, 0.56)"
+                            "scale": "scale(0.56)"
                         },
                         {
                             "screen": "simultated-lg",
-                            "scale": "scale(0.6, 0.6)"
+                            "scale": "scale(0.88)"
                         },
                         {
                             "screen": "simultated-md",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-sm",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-xs",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         }
                     ]
                 },
@@ -41,7 +41,7 @@
                         },
                         {
                             "screen": "simultated-xl",
-                            "scale": "scale(0.5, 0.5)"
+                            "scale": "scale(0.5)"
                         },
                         {
                             "screen": "simultated-lg",
@@ -49,15 +49,15 @@
                         },
                         {
                             "screen": "simultated-md",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-sm",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-xs",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         }
                     ]
                 },
@@ -70,23 +70,23 @@
                         },
                         {
                             "screen": "simultated-xl",
-                            "scale": "scale(0.5, 0.5)"
+                            "scale": "scale(0.42)"
                         },
                         {
                             "screen": "simultated-lg",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-md",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-sm",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-xs",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         }
                     ]
                 },
@@ -95,27 +95,27 @@
                     "simulations": [
                         {
                             "screen": "simultated-4k",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.1)"
                         },
                         {
                             "screen": "simultated-xl",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(0.5)"
                         },
                         {
                             "screen": "simultated-lg",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-md",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-sm",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-xs",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         }
                     ]
                 },
@@ -124,27 +124,27 @@
                     "simulations": [
                         {
                             "screen": "simultated-4k",
-                            "scale": "scale(0.3, 0.3)"
+                            "scale": "scale(1)"
                         },
                         {
                             "screen": "simultated-xl",
-                            "scale": "scale(0.1, 0.1)"
+                            "scale": "scale(0.1)"
                         },
                         {
                             "screen": "simultated-lg",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-md",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-sm",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         },
                         {
                             "screen": "simultated-xs",
-                            "scale": "scale(0.4, 0.4)"
+                            "scale": "scale(0.4)"
                         }
                     ]
                 }
@@ -159,23 +159,23 @@
                       
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.75, 0.75)"
+                                "scale": "scale(0.75)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     },
@@ -184,23 +184,23 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.6, 0.6)"
+                                "scale": "scale(0.6)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.6, 0.6)"
+                                "scale": "scale(0.6)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.6, 0.6)"
+                                "scale": "scale(0.6)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.5, 0.5)"
+                                "scale": "scale(0.5)"
                             }
                         ]
                     },
@@ -209,23 +209,23 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.5, 0.5)"
+                                "scale": "scale(0.5)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     },
@@ -234,23 +234,23 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.2, 0.2)"
+                                "scale": "scale(0.2"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     },
@@ -259,23 +259,23 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.2, 0.2)"
+                                "scale": "scale(0.2"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     }
@@ -290,23 +290,23 @@
                       
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.6, 0.6)"
+                                "scale": "scale(0.6)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.3, 0.3)"
+                                "scale": "scale(0.3)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     },
@@ -315,23 +315,23 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.6, 0.6)"
+                                "scale": "scale(0.6)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.6, 0.6)"
+                                "scale": "scale(0.6)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.5, 0.5)"
+                                "scale": "scale(0.5)"
                             }
                         ]
                     },
@@ -340,23 +340,23 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.5, 0.5)"
+                                "scale": "scale(0.5)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     },
@@ -365,23 +365,23 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.2, 0.2)"
+                                "scale": "scale(0.2"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     },
@@ -390,23 +390,23 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.2, 0.2)"
+                                "scale": "scale(0.2"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     }
@@ -421,48 +421,41 @@
                       
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.75, 0.75)"
+                                "scale": "scale(0.75)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.8, 0.8)"
                             }
                         ]
                     },
                     {
                         "name": "lg",
                         "simulations": [
-                            {
-                                "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
-                            },
-                            {
-                                "screen": "simultated-lg",
-                                "scale": "scale(0.4, 0.4)"
-                            },
+                       
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.6)"
                             }
                         ]
                     },
@@ -471,23 +464,23 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     },
@@ -496,48 +489,41 @@
                         "simulations": [
                             {
                                 "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
+                                "scale": "scale(0.1)"
                             },
                             {
                                 "screen": "simultated-lg",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             }
                         ]
                     },
                     {
                         "name": "xs",
                         "simulations": [
-                            {
-                                "screen": "simultated-xl",
-                                "scale": "scale(0.1, 0.1)"
-                            },
-                            {
-                                "screen": "simultated-lg",
-                                "scale": "scale(0.4, 0.4)"
-                            },
+                          
                             {
                                 "screen": "simultated-md",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.4)"
                             },
                             {
                                 "screen": "simultated-sm",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.8, 0.8)"
                             },
                             {
                                 "screen": "simultated-xs",
-                                "scale": "scale(0.4, 0.4)"
+                                "scale": "scale(0.8, 0.8)"
                             }
                         ]
                     }

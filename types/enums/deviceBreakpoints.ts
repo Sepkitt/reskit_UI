@@ -18,5 +18,8 @@
     LG = 'lg',
     MD = 'md',
     SM = 'sm',
-    XS = 'xs'
+    XS = 'xs',
+    LGANDUP = 'lgAndUp',
+    MDANDDOWN = 'mdAndDown'
+
   }

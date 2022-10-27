@@ -1,3 +1,127 @@
+<script setup lang="ts">
+import { phones, tablets, laptops, televisions, TYPES } from "~/assets/devices.json";
+import { VuetifyBreakpoints } from "~/types/enums/deviceBreakpoints";
+import { Breakpoint } from "../../types/interfaces/simulationscale";
+import { Device } from "../../.nuxt/components";
+// import { SimulatedBreakpoints } from "../../types/enums/deviceBreakpoints";
+const lgAndUp = [...laptops, ...televisions];
+const mdAndDown = [...phones, ...tablets];
+const { $vuetify } = useNuxtApp();
+
+interface Device {
+  id: number;
+  rotate: boolean;
+  lg: number;
+  xl: number;
+  screenSize: VuetifyBreakpoints;
+  items: object[];
+  breakpoint: object;
+  fullscreen: boolean;
+}
+
+const devices = ref([
+  {
+    id: 1,
+    rotate: false,
+    lg: 8,
+    xl: 7,
+    screenSize: VuetifyBreakpoints.LGANDUP,
+    items: lgAndUp,
+    breakpoint: lgAndUp[3],
+    fullscreen: false,
+  },
+  {
+    id: 2,
+    rotate: false,
+    xl: 5,
+    lg: 4,
+    screenSize: VuetifyBreakpoints.MDANDDOWN,
+    items: mdAndDown,
+    breakpoint: mdAndDown[6],
+    fullscreen: false,
+  },
+]);
+// const devices: Device[] = [
+const dialog = ref(false);
+const url = ref("https://nuxtjs.org/");
+const src = ref("https://nuxtjs.org/");
+
+interface CardSizes {
+  breakpoint: VuetifyBreakpoints;
+  size: string;
+}
+
+const cardSizes: CardSizes[] = [
+  {
+    breakpoint: VuetifyBreakpoints.XS,
+    size: "100%",
+  },
+  {
+    breakpoint: VuetifyBreakpoints.SM,
+    size: "100%",
+  },
+  {
+    breakpoint: VuetifyBreakpoints.MD,
+    size: "600px",
+  },
+  {
+    breakpoint: VuetifyBreakpoints.LG,
+    size: "700px",
+  },
+  {
+    breakpoint: VuetifyBreakpoints.XL,
+    size: "850px",
+  },
+];
+
+const maxHeight = computed(() => {
+  //refractored switch function to make use of array
+  for (const item of cardSizes) {
+    switch ($vuetify.breakpoint.name) {
+      case item.breakpoint:
+        console.log({
+          item,
+        });
+        return item.size;
+    }
+  }
+});
+
+const toggle = (device) => {
+  return (device.fullscreen = false);
+};
+
+const simulationBreakpoints = (device) => {
+  console.log({ "Device Here": device });
+
+  // console.log({ devices: devices });
+  // for (const item of devices) {
+  //   if (item.id === device.id) {
+  switch (true) {
+    //4k
+    case device.breakpoint.width > 2160:
+      return "4k";
+    // xl
+    case device.breakpoint.width < 2160 && device.breakpoint.width > 1904:
+      return "xl";
+    // lg
+    case device.breakpoint.width < 1904 && device.breakpoint.width >= 1264:
+      return "lg";
+    // md
+    case device.breakpoint.width < 1264 && device.breakpoint.width >= 960:
+      return "md";
+    // sm
+    case device.breakpoint.width < 960 && device.breakpoint.width >= 600:
+      return "sm";
+    // xs
+    case device.breakpoint.width < 600:
+      return "xs";
+  }
+  // }
+  // }
+};
+</script>
+
 <template>
   <div>
     <v-app-bar app color="info">
@@ -21,7 +145,7 @@
       <v-spacer></v-spacer>
       <IconClick title="View on mobile" icon="mdi-qrcode" @click="dialog = true" />
     </v-app-bar>
-    <v-card color="background" :height="$vuetify.breakpoint.lgAndUp ? '100vh' : '100%'">
+    <v-card color="background">
       <v-row dense>
         <v-col
           class="px-2"
@@ -51,7 +175,7 @@
                 <template #append>
                   <div
                     class="d-flex align-center justify-center button-click"
-                    @click="src = url"
+                    @click.stop="src = url"
                   >
                     <CoreChevron variant="path" strokeWidth="6" flip="x" />
                   </div>
@@ -59,12 +183,14 @@
                 <template slot="selection" slot-scope="data">
                   <!-- HTML that describe how select should render selected items -->
 
-                  {{ data.item.name }} - {{ data.item.width }} x {{ data.item.height }}
+                  {{ data.item.name }} - {{ data.item.width }} x
+                  {{ data.item.height }}
                 </template>
                 <template slot="item" slot-scope="data">
                   <!-- HTML that describe how select should render items when the select is open -->
 
-                  {{ data.item.name }} - {{ data.item.width }} x {{ data.item.height }}
+                  {{ data.item.name }} - {{ data.item.width }} x
+                  {{ data.item.height }}
                 </template>
               </v-select>
               <v-spacer />
@@ -82,42 +208,46 @@
               />
             </v-toolbar>
 
-            <fullscreen fullscreenClass="overlay" v-model="device.fullscreen">
+            <fullscreen
+              v-if="device.fullscreen === true"
+              fullscreenClass="overlay"
+              v-model="device.fullscreen"
+              class="fullscreen"
+            >
               <!--TODO:: Move exit full screeen button to a more apropriate location -->
-              <div ref="node" id="rotate">
-                <v-fab-transition>
-                  <v-btn
-                    absolute
-                    dark
-                    right
-                    fab
-                    @click="device.fullscreen = !device.fullscreen"
-                    v-if="device.fullscreen"
-                  >
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
-                </v-fab-transition>
+              <v-fab-transition>
+                <v-btn
+                  absolute
+                  dark
+                  right
+                  fab
+                  @click="device.fullscreen = !device.fullscreen"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </v-fab-transition>
 
-                <Device
-                  :fullscreen="device.fullscreen"
-                  :simulationBreakpoints="simulationBreakpoints"
-                  :rotate="device.rotate"
-                  class="mt-5"
-                  :height="
-                    device.rotate === false
-                      ? device.breakpoint.height
-                      : device.breakpoint.width
-                  "
-                  :width="
-                    device.rotate === false
-                      ? device.breakpoint.width
-                      : device.breakpoint.height
-                  "
-                  :screen="device.breakpoint.screen"
-                  :src="src"
-                />
-              </div>
+              <Device
+                :fullscreen="device.fullscreen"
+                :simulationBreakpoints="simulationBreakpoints"
+                :rotate="device.rotate"
+                class="mt-5"
+                :height="device.breakpoint.height"
+                :width="device.breakpoint.width"
+                :screen="device.breakpoint.screen"
+                :src="src"
+              />
             </fullscreen>
+            <Device
+              :fullscreen="device.fullscreen"
+              :simulationBreakpoints="simulationBreakpoints"
+              :rotate="device.rotate"
+              class="mt-5"
+              :height="device.breakpoint.height"
+              :width="device.breakpoint.width"
+              :screen="device.breakpoint.screen"
+              :src="src"
+            />
           </v-card>
         </v-col>
       </v-row>
@@ -128,150 +258,3 @@
     </Dialog>
   </div>
 </template>
-
-<script>
-import { phones, tablets, laptops, televisions, TYPES } from "~/assets/devices.json";
-import Structure from "~/components/Structure.vue";
-import Device from "~/components/Device.vue";
-
-export default {
-  components: {
-    Structure,
-    Device,
-  },
-  asyncData(context) {
-    // console.log(context)
-    const lgAndUp = [...laptops, ...televisions];
-    const mdAndDown = [...phones, ...tablets];
-    //initial selection for Vmodel
-    const devices = [
-      {
-        id: 1,
-        rotate: false,
-        lg: 8,
-        xl: 7,
-
-        screenSize: "lgAndUp",
-        items: lgAndUp,
-        breakpoint: lgAndUp[3],
-        viewport: "",
-        fullscreen: false,
-      },
-      {
-        id: 2,
-        rotate: false,
-        xl: 5,
-        lg: 4,
-        screenSize: "mdAndDown",
-        items: mdAndDown,
-        breakpoint: mdAndDown[6],
-        viewport: "",
-        fullscreen: false,
-      },
-    ];
-
-    return {
-      devices,
-    };
-  },
-
-  setup() {
-    const dialog = ref(false);
-
-    return { dialog };
-  },
-  data() {
-    return {
-      // dialog: false,
-      url: "https://nuxtjs.org/",
-      src: "https://nuxtjs.org/",
-      // Device types
-      types: TYPES,
-
-      // Devices
-      phones: phones,
-      tablets: tablets,
-      laptops: laptops,
-      televisions: televisions,
-
-      cardSizes: [
-        {
-          breakpoint: "xs",
-          size: "100%",
-        },
-        {
-          breakpoint: "sm",
-          size: "100%",
-        },
-        {
-          breakpoint: "md",
-          size: "600px",
-        },
-        {
-          breakpoint: "lg",
-          size: "700px",
-        },
-        {
-          breakpoint: "xl",
-          size: "850px",
-        },
-      ],
-    };
-  },
-
-  computed: {
-    maxHeight() {
-      //refractored switch function to make use of array
-      for (const item of this.cardSizes) {
-        switch (this.$vuetify.breakpoint.name) {
-          case item.breakpoint:
-            console.log({
-              item,
-            });
-            return item.size;
-        }
-      }
-    },
-  },
-  mounted() {},
-  methods: {
-    toggle(device) {
-      device.fullscreen = false;
-    },
-
-    simulationBreakpoints(device) {
-      for (const item of this.devices) {
-        if (item.id === device.id) {
-          switch (true) {
-            //4k
-            case device.breakpoint.width > 2160:
-              return "4k";
-            // xl
-            case device.breakpoint.width < 2160 && device.breakpoint.width > 1904:
-              return "xl";
-            // lg
-            case device.breakpoint.width < 1904 && device.breakpoint.width > 1264:
-              return "lg";
-            // md
-            case device.breakpoint.width < 1264 && device.breakpoint.width > 960:
-              return "md";
-            // sm
-            case device.breakpoint.width < 960 && device.breakpoint.width > 600:
-              return "sm";
-            // xs
-            case device.breakpoint.width < 600:
-              return "xs";
-          }
-        }
-      }
-    },
-  },
-  // watch: {
-  //   simulationBreakpoints() {
-  //     this.simulationBreakpoints
-  //   }
-  // }
-};
-</script>
-
-<style></style>

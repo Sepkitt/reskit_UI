@@ -1,15 +1,13 @@
 <template>
-   <v-app id="app">
-      <v-main>
-         <nuxt />
-
-      </v-main>
-   </v-app>
+  <v-app id="app">
+    <v-main>
+      <nuxt />
+    </v-main>
+  </v-app>
 </template>
 
-
-<style >
+<style>
 ::-webkit-scrollbar {
-   display: none;
+  display: auto;
 }
 </style>
