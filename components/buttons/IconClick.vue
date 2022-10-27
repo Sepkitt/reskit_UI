@@ -1,3 +1,16 @@
+
+<script setup lang="ts">
+
+interface PROPS {
+  title: string;
+  icon: string;
+
+}
+const props = defineProps<PROPS>();// export default {
+
+</script>
+
+
 <template>
   <ToolTip :title="title">
     <template #content>
@@ -24,19 +37,6 @@
   </ToolTip>
 </template>
 
-<script>
-export default {
-  props: {
-    title: {
-      type: String
-    },
-    icon: {
-      type: String
-    }
-  }
-
-}
-</script>
 
 <style lang="scss" scoped>
 .button-action {

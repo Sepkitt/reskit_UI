@@ -1,6 +1,7 @@
 import colors from "vuetify/es5/util/colors";
+import { defineNuxtConfig } from '@nuxt/bridge'
 
-module.exports = {
+export default defineNuxtConfig({
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -29,7 +30,11 @@ module.exports = {
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ["~/plugins/lottie.js", "~/plugins/vueQr.js","~/plugins/vueFullScreen.js"],
+  plugins: [
+    "~/plugins/lottie.js", 
+    "~/plugins/vueQr.js",
+    "~/plugins/vueFullScreen.ts"
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
@@ -74,4 +79,4 @@ module.exports = {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-};
+})
