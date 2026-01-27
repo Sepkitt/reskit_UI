@@ -1,0 +1,58 @@
+/* 1. Tell the browser to allow dark scrollbars */
+html {
+  color-scheme: light dark; /* Critical for removing the 'white' gutter in dark mode */
+}
+
+.v-theme--lightTheme {
+  color-scheme: light;
+}
+
+.v-theme--darkTheme {
+  color-scheme: dark;
+}
+
+/* 2. Thin, modern scrollbar logic */
+::-webkit-scrollbar {
+  width: 6px; /* 3px is very thin and hard to grab; 6px is usually the 'sweet spot' for modern UIs */
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  /* Using tertiary for the thumb as requested */
+  background: rgb(var(--v-theme-tertiary)); 
+  border-radius: 10px;
+  border: 1px solid transparent; /* Acts as padding */
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* Use color-mix to create a 'hover' version of your tertiary color dynamically */
+  background: color-mix(in srgb, rgb(var(--v-theme-tertiary)), black 20%);
+}
+
+/* 3. Handle Firefox (which doesn't use -webkit) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--v-theme-tertiary)) transparent;
+}
+
+
+
+[class*="tooltip-"] {
+  background-color: color-mix(in srgb, var(--t-color), rgb(var(--v-theme-surface)) 85%) !important;
+  color: var(--t-color) !important;
+  border: 1px solid var(--t-color) !important;
+}
+
+/* Map the CSS variables to the Vuetify Theme colors */
+.tooltip-primary { --t-color: rgb(var(--v-theme-primary)); }
+.tooltip-accent  { --t-color: rgb(var(--v-theme-accent)); }
+.tooltip-success { --t-color: rgb(var(--v-theme-success)); }
+.tooltip-warning { --t-color: rgb(var(--v-theme-warning)); }
+.tooltip-error   { --t-color: rgb(var(--v-theme-error)); }
+.tooltip-info    { --t-color: rgb(var(--v-theme-info)); }
+.tooltip-tertiary { --t-color: rgb(var(--v-theme-tertiary)); }
