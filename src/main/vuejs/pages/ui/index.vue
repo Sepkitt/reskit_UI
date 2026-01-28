@@ -52,11 +52,13 @@ const maxHeight = computed(
 
 // 3. Helper: Identify current simulated size label
 const getSimulatedLabel = (width) => {
-  if (width >= 2160) return "4k";
-  if (width >= 1904) return "xl";
-  if (width >= 1264) return "lg";
-  if (width >= 960) return "md";
-  if (width >= 600) return "sm";
+  const w = Number(width);
+  if (w >= 3840) return "4k";
+  if (w >= 2560) return "2k/qhd";
+  if (w >= 1904) return "xl";
+  if (w >= 1264) return "lg";
+  if (w >= 960)  return "md";
+  if (w >= 600)  return "sm";
   return "xs";
 };
 
@@ -79,7 +81,6 @@ const updateSrc = () => {
         variant="solo"
         bg-color="darkness"
         hide-details
-        class="max-width-600"
         @keyup.enter="updateSrc"
       />
 
@@ -111,10 +112,64 @@ const updateSrc = () => {
             color="infoBg"
             elevation="4"
           >
-            <v-toolbar color="info" density="compact"> </v-toolbar>
+           <v-toolbar color="info" density="compact">
+                <div class="sheet tooltip-primary d-flex align-center px-4 ml-2">
+                  <span class="text-caption font-weight-bold text-uppercase">
+                    {{ getSimulatedLabel(device.breakpoint.width) }}
+                  </span>
+                </div>
+
+                <v-spacer />
+                <div style="width: 120px" class="mx-4 mt-5">
+    <v-slider
+      v-model="device.zoom"
+      min="0"
+      max="1"
+      step="0.1"
+      prepend-icon="mdi-magnify"
+      density="compact"
+      color="white"
+      hide-details
+    >
+      <template #prepend>
+         <v-icon size="small" @click="device.zoom = 0">
+           {{ device.zoom === 0 ? 'mdi-fit-to-screen' : 'mdi-magnify-minus' }}
+         </v-icon>
+      </template>
+    </v-slider>
+  </div>
+
+
+
+                <v-select
+                  v-model="device.breakpoint"
+                  :items="device.items"
+                  item-title="name"
+                  return-object
+                  density="compact"
+                  variant="solo"
+                  bg-color="darkness"
+                  hide-details
+                  class="select-width mx-2"
+                >
+                  <template #selection="{ item }">
+                    {{ item.raw.name }} ({{ item.raw.width }}x{{ item.raw.height }})
+                  </template>
+                  <template #item="{ props, item }">
+                    <v-list-item v-bind="props" :subtitle="`${item.raw.width} x ${item.raw.height}`" />
+                  </template>
+                </v-select>
+
+                <v-btn
+                  icon="mdi-phone-rotate-landscape"
+                  variant="text"
+                  @click="device.rotate = !device.rotate"
+                />
+              </v-toolbar>
 
             <div class="device-viewport-container">
               <Device
+              :zoom="device.zoom"
                 :height="
                   device.rotate
                     ? device.breakpoint.width
@@ -150,24 +205,21 @@ const updateSrc = () => {
 
 <style scoped lang="scss">
 .device-viewport-container {
-  flex-grow: 1;      /* Fill the remaining space in the v-card */
-  position: relative; /* Needed for the absolute positioning inside Device.vue */
-  width: 100%;
+flex-grow: 1;
+  position: relative;
+  overflow: hidden; /* Clips the absolutely positioned device */
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.1) 100%);
 }
 .max-width-600 {
   max-width: 600px;
 }
 
-.select-width {
-  max-width: 250px;
-}
+
 
 .sheet {
-  border: 1px solid rgb(var(--v-theme-primary));
-  height: 32px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  color: white;
+  height: 2.2rem;
+  // border-radius: 5px;
+  
 }
 
 .qr-placeholder {

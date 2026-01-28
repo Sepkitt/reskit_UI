@@ -1,15 +1,64 @@
+<template>
+  <div ref="containerRef" class="device-viewport" @mousedown="startPan" @mousemove="onPan">
+    <client-only>
+      <v-fade-transition>
+        <div v-if="isLoading" class="loader-overlay">
+          <v-progress-circular indeterminate color="primary" size="64" width="6" />
+        </div>
+      </v-fade-transition>
+    </client-only>
+
+    <div class="scaling-wrapper" :style="wrapperStyles">
+      <v-sheet elevation="24" class="device-frame">
+        <div 
+          v-if="finalScale > fitScale && panningLocked"
+          class="pan-overlay"
+          :class="{ 'is-dragging': isDragging }"
+        />
+
+        <iframe 
+          ref="iframeRef"
+          class="iframe-element" 
+          :style="{ pointerEvents: (isDragging || (finalScale > fitScale && panningLocked)) ? 'none' : 'auto' }"
+          @load="isLoading = false"
+        />
+      </v-sheet>
+    </div>
+
+    <v-fade-transition>
+      <v-btn
+        v-if="finalScale > fitScale"
+        :icon="panningLocked ? 'mdi-hand-back-right' : 'mdi-cursor-default-click'"
+        size="small"
+        :color="panningLocked ? 'primary' : 'success'"
+        class="interaction-toggle"
+        @click="panningLocked = !panningLocked"
+      />
+    </v-fade-transition>
+  </div>
+</template>
+
+
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
 const props = defineProps({
   height: { type: [String, Number], default: 1080 },
   width: { type: [String, Number], default: 1920 },
-  screen: { type: String, default: 'laptop' },
-  src: { type: String, default: 'https://nuxtjs.org/' },
+  src: { type: String, default: '' },
+  zoom: { type: Number, default: 0 }
 });
 
 const containerRef = ref(null);
+const iframeRef = ref(null); // Direct reference to the iframe
 const displayDimensions = ref({ w: 0, h: 0 });
+const isLoading = ref(true);
+const panningLocked = ref(true);
+
+// 1. Panning Logic
+const isDragging = ref(false);
+const pan = ref({ x: 0, y: 0 });
+const startPos = ref({ x: 0, y: 0 });
 
 const updateSize = () => {
   if (containerRef.value) {
@@ -20,82 +69,104 @@ const updateSize = () => {
   }
 };
 
-let observer = null;
-onMounted(() => {
-  updateSize();
-  observer = new ResizeObserver(updateSize);
-  observer.observe(containerRef.value);
-});
-onUnmounted(() => observer?.disconnect());
-
-const dynamicScale = computed(() => {
+// 2. Optimized Scaling (Memoized)
+const fitScale = computed(() => {
   if (displayDimensions.value.w === 0) return 0.2;
-  const padding = 40; 
-  const availW = displayDimensions.value.w - padding;
-  const availH = displayDimensions.value.h - padding;
-
-  const scaleW = availW / Number(props.width);
-  const scaleH = availH / Number(props.height);
-
+  const scaleW = (displayDimensions.value.w - 40) / Number(props.width);
+  const scaleH = (displayDimensions.value.h - 40) / Number(props.height);
   return Math.min(scaleW, scaleH, 1);
 });
 
-// Styles for the iframe wrapper
+const finalScale = computed(() => {
+  return props.zoom === 0 ? fitScale.value : Math.max(props.zoom, fitScale.value);
+});
+
+// 3. Efficiency Fix: Only update iframe SRC when it actually changes
+// This prevents the iframe from flickering or reloading during pans/zooms
+watch(() => props.src, (newVal) => {
+  if (newVal && iframeRef.value) {
+    isLoading.value = true;
+    iframeRef.value.src = newVal; // Direct DOM manipulation is faster for iframes
+  }
+}, { immediate: false });
+
+const startPan = (e) => {
+  if (!panningLocked.value || finalScale.value <= fitScale.value) return;
+  isDragging.value = true;
+  startPos.value = { x: e.clientX - pan.value.x, y: e.clientY - pan.value.y };
+};
+
+const onPan = (e) => {
+  if (!isDragging.value) return;
+  pan.value = { x: e.clientX - startPos.value.x, y: e.clientY - startPos.value.y };
+};
+
+const stopPan = () => { isDragging.value = false; };
+
+onMounted(() => {
+  updateSize();
+  const observer = new ResizeObserver(updateSize);
+  observer.observe(containerRef.value);
+  window.addEventListener('mouseup', stopPan);
+  
+  // Set initial SRC manually to ensure loading state triggers correctly
+  if (props.src && iframeRef.value) {
+    iframeRef.value.src = props.src;
+  }
+});
+
+onUnmounted(() => window.removeEventListener('mouseup', stopPan));
+
 const wrapperStyles = computed(() => ({
   width: `${props.width}px`,
   height: `${props.height}px`,
-  transform: `translate(-50%, -50%) scale(${dynamicScale.value})`,
-  transition: 'transform 0.3s ease-out',
+  // Use translate3d for GPU acceleration (smoother panning)
+  transform: `translate3d(calc(-50% + ${pan.value.x}px), calc(-50% + ${pan.value.y}px), 0) scale(${finalScale.value})`,
   position: 'absolute',
   left: '50%',
   top: '50%',
-  transformOrigin: 'center center'
+  transformOrigin: 'center center',
+  cursor: panningLocked.value && finalScale.value > fitScale.value ? (isDragging.value ? 'grabbing' : 'grab') : 'default',
+  transition: isDragging.value ? 'none' : 'transform 0.2s ease-out'
 }));
 </script>
 
-<template>
-  <div ref="containerRef" class="device-viewport">
-    <div class="scaling-wrapper" :style="wrapperStyles">
-      <v-sheet 
-        elevation="24" 
-        class="device-frame" 
-        :width="width" 
-        :height="height"
-      >
-        <iframe :src="src" class="iframe-element" />
-      </v-sheet>
-    </div>
-  </div>
-</template>
-
 <style scoped lang="scss">
 .device-viewport {
-  /* This container occupies the space in your card */
-  width: 100%;
-  height: 100%;
-  position: relative; /* Essential for absolute child */
-  overflow: hidden; 
-  background: rgba(var(--v-theme-on-surface), 0.05);
-  display: block; /* Removed flex to avoid alignment conflicts with absolute child */
+  width: 100%; height: 100%;
+  position: relative; overflow: hidden;
+  background: #121212; // Dark background helps iframe contrast
 }
 
-.scaling-wrapper {
-  /* Dimensions and scale handled by computed wrapperStyles */
-  pointer-events: auto;
+.loader-overlay {
+  position: absolute; inset: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.pan-overlay {
+  position: absolute; inset: 0;
+  z-index: 10;
+  background: transparent;
+}
+
+.interaction-toggle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 110;
 }
 
 .device-frame {
-  border-radius: 12px;
-  overflow: hidden;
-  background: white;
-  display: flex;
+  width: 100%; height: 100%;
+  border-radius: 8px; overflow: hidden;
+  background: white; // Iframes usually expect a white base
   
-  .iframe-element {
-    border: 0;
-    flex-grow: 1;
-    width: 100%;
-    height: 100%;
-    background: #fff;
+  .iframe-element { 
+    border: 0; width: 100%; height: 100%; 
+    display: block; // Removes whitespace at bottom
   }
 }
 </style>

@@ -43,9 +43,10 @@ html {
 
 
 [class*="tooltip-"] {
-  background-color: color-mix(in srgb, var(--t-color), rgb(var(--v-theme-surface)) 85%) !important;
-  color: var(--t-color) !important;
-  border: 1px solid var(--t-color) !important;
+  background-color: color-mix(in srgb, var(--t-color), rgb(var(--v-theme-surface)) 85%);
+  color: var(--t-color);
+  border: 1px solid var(--t-color);
+  border-radius:5px;
 }
 
 /* Map the CSS variables to the Vuetify Theme colors */
