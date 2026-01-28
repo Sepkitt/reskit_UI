@@ -1,40 +1,33 @@
 {
   "TYPES": ["phone", "tablet", "laptop", "television"],
   "phones": [
-    { "name": "iPhone SE", "width": 320, "height": 568, "os": "iOS", "touch": true },
-    { "name": "iPhone 13/14 Pro", "width": 390, "height": 844, "os": "iOS", "touch": true },
-    { "name": "iPhone 14 Pro Max", "width": 430, "height": 932, "os": "iOS", "touch": true },
-    { "name": "Pixel 7", "width": 412, "height": 915, "os": "Android", "touch": true },
-    { "name": "Galaxy S23 Ultra", "width": 384, "height": 854, "os": "Android", "touch": true },
-    { "name": "Small Android", "width": 360, "height": 640, "os": "Android", "touch": true },
-    {
-  "name": "iPhone 15 Pro",
-  "width": 393,
-  "height": 852,
-  "browser": "safari",
-  "safeAreaTop": 59,
-  "safeAreaBottom": 34
-}
+    { "name": "iPhone SE", "width": 320, "height": 568, "os": "iOS", "browser": "safari", "touch": true },
+    { "name": "iPhone 13/14 Pro", "width": 390, "height": 844, "os": "iOS", "browser": "safari", "touch": true },
+    { "name": "iPhone 15 Pro", "width": 393, "height": 852, "os": "iOS", "browser": "safari", "touch": true, "safeAreaTop": 59, "safeAreaBottom": 34 },
+    { "name": "iPhone 14 Pro Max", "width": 430, "height": 932, "os": "iOS", "browser": "safari", "touch": true },
+    { "name": "Pixel 7", "width": 412, "height": 915, "os": "Android", "browser": "chrome", "touch": true },
+    { "name": "Galaxy S23 Ultra", "width": 384, "height": 854, "os": "Android", "browser": "chrome", "touch": true },
+    { "name": "Small Android", "width": 360, "height": 640, "os": "Android", "browser": "chrome", "touch": true }
   ],
   "tablets": [
-    { "name": "iPad Mini", "width": 768, "height": 1024, "os": "iOS", "touch": true },
-    { "name": "iPad Air", "width": 820, "height": 1180, "os": "iOS", "touch": true },
-    { "name": "iPad Pro 11\"", "width": 834, "height": 1194, "os": "iOS", "touch": true },
-    { "name": "iPad Pro 12.9\"", "width": 1024, "height": 1366, "os": "iOS", "touch": true },
-    { "name": "Nexus 10", "width": 800, "height": 1280, "os": "Android", "touch": true }
+    { "name": "iPad Mini", "width": 768, "height": 1024, "os": "iOS", "browser": "safari", "touch": true },
+    { "name": "iPad Air", "width": 820, "height": 1180, "os": "iOS", "browser": "safari", "touch": true },
+    { "name": "iPad Pro 11\"", "width": 834, "height": 1194, "os": "iOS", "browser": "safari", "touch": true },
+    { "name": "iPad Pro 12.9\"", "width": 1024, "height": 1366, "os": "iOS", "browser": "safari", "touch": true },
+    { "name": "Samsung Galaxy Tab S9", "width": 712, "height": 1138, "os": "Android", "browser": "chrome", "touch": true }
   ],
   "laptops": [
-    { "name": "MacBook Air (13\")", "width": 1280, "height": 800, "os": "macOS", "touch": false },
-    { "name": "MacBook Pro (14\")", "width": 1512, "height": 982, "os": "macOS", "touch": false },
-    { "name": "MacBook Pro (16\")", "width": 1728, "height": 1117, "os": "macOS", "touch": false },
-    { "name": "Dell XPS 15", "width": 1536, "height": 960, "os": "Windows", "touch": true },
-    { "name": "Standard Laptop", "width": 1366, "height": 768, "os": "Windows", "touch": false }
+    { "name": "MacBook Air (13\")", "width": 1280, "height": 800, "os": "macOS", "browser": "none", "touch": false },
+    { "name": "MacBook Pro (14\")", "width": 1512, "height": 982, "os": "macOS", "browser": "none", "touch": false },
+    { "name": "MacBook Pro (16\")", "width": 1728, "height": 1117, "os": "macOS", "browser": "none", "touch": false },
+    { "name": "Dell XPS 15", "width": 1536, "height": 960, "os": "Windows", "browser": "none", "touch": true },
+    { "name": "Standard Laptop", "width": 1366, "height": 768, "os": "Windows", "browser": "none", "touch": false }
   ],
   "televisions": [
-    { "name": "720p HD", "width": 1280, "height": 720, "os": "Smart TV", "touch": false },
-    { "name": "1080p Full HD", "width": 1920, "height": 1080, "os": "Smart TV", "touch": false },
-    { "name": "2K QHD", "width": 2560, "height": 1440, "os": "Monitor", "touch": false },
-    { "name": "4K Ultra HD", "width": 3840, "height": 2160, "os": "Smart TV", "touch": false },
-    { "name": "5K Display", "width": 5120, "height": 2880, "os": "Monitor", "touch": false }
+    { "name": "720p HD", "width": 1280, "height": 720, "os": "Smart TV", "browser": "none", "touch": false },
+    { "name": "1080p Full HD", "width": 1920, "height": 1080, "os": "Smart TV", "browser": "none", "touch": false },
+    { "name": "2K QHD", "width": 2560, "height": 1440, "os": "Monitor", "browser": "none", "touch": false },
+    { "name": "4K Ultra HD", "width": 3840, "height": 2160, "os": "Smart TV", "browser": "none", "touch": false },
+    { "name": "5K Display", "width": 5120, "height": 2880, "os": "Monitor", "browser": "none", "touch": false }
   ]
 }
