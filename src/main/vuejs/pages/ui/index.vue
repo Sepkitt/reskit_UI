@@ -16,6 +16,13 @@ const src = ref("https://nuxtjs.org/");
 const dialog = ref(false);
 const showShells = ref(true);
 
+const display = useDisplay();
+const isHydrated = ref(false);
+
+onMounted(() => {
+  isHydrated.value = true;
+});
+
 const lgAndUpDevices = [...laptops, ...televisions];
 const mdAndDownDevices = [...phones, ...tablets];
 
@@ -49,9 +56,12 @@ const cardSizeMap = {
   xl: "90vh",
 };
 
-const maxHeight = computed(
-  () => cardSizeMap[currentBreakpoint.value] || "100%",
-);
+const maxHeight = computed(() => {
+  // On server/first load, use a fixed default. 
+  // Once hydrated, use the real breakpoint.
+  if (!isHydrated.value) return "86vh"; 
+  return cardSizeMap[display.name.value] || "86vh";
+});
 
 // 3. Helper: Identify current simulated size label
 const getSimulatedLabel = (width) => {
@@ -123,37 +133,16 @@ const updateSrc = () => {
           >
             <v-toolbar color="info" density="compact">
               <div class="sheet tooltip-primary d-flex align-center px-4 ml-2">
+              <ClientOnly>
                 <span class="text-caption font-weight-bold text-uppercase">
                   {{ getSimulatedLabel(device.breakpoint.width) }}
                 </span>
-              </div>
-
+                <template #fallback>
+                  <span class="text-caption font-weight-bold text-uppercase">...</span>
+                </template>
+              </ClientOnly>
+            </div>
               <v-spacer />
-                <!-- <v-slider
-                  v-model="device.zoom"
-                  append-icon="mdi-magnify-plus-outline"
-                  @click:append="device.zoom = (device.zoom + 0.5) || 100"
-                  min="0"
-                  max="1.5"
-                  step="0.05"
-                  density="compact"
-                  color="white"
-                  hide-details
-                >
-                  <template #prepend>
-                    <v-icon
-                      size="small"
-                      @click="device.zoom = 0"
-                      class="cursor-pointer"
-                    >
-                      {{
-                        device.zoom === 0
-                          ? "mdi-fit-to-screen"
-                          : "mdi-magnify-minus"
-                      }}
-                    </v-icon>
-                  </template>
-                </v-slider> -->
 
               <v-select
                 v-model="device.breakpoint"
@@ -162,7 +151,7 @@ const updateSrc = () => {
                 return-object
                 density="compact"
                 variant="solo"
-                bg-color="darkness"
+                bg-color="background"
                 hide-details
                 class="select-width mx-2"
               >
@@ -214,7 +203,7 @@ const updateSrc = () => {
                <v-slider
                   v-model="device.zoom"
                   append-icon="mdi-magnify-plus-outline"
-                  @click:append="device.zoom = (device.zoom + 1) || 100"
+                  @click:append="device.zoom = Math.min(device.zoom + 1, 3)"                  
                   max="3"
                   step="1"
                   tick-size="4"

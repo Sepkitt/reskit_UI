@@ -6,7 +6,6 @@
     @mousedown="startPan"
     @mousemove="onPan"
   >
-    <client-only>
       <v-fade-transition>
         <div v-if="isLoading" class="loader-overlay">
           <v-progress-circular
@@ -17,7 +16,6 @@
           />
         </div>
       </v-fade-transition>
-    </client-only>
 
     <div class="scaling-wrapper" :style="wrapperStyles">
       <div class="browser-shell" :class="[device?.browser || 'none']">
