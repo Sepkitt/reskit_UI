@@ -219,14 +219,14 @@ const updateSrc = () => {
                   step="1"
                   tick-size="4"
                   density="compact"
-                  color="primary"
+                  color="accent"
                   direction="vertical"
                   show-ticks="always"
                   hide-details
                 >
                   <template #prepend>
                     <v-icon
-                     
+                      color="accent"
                       @click="device.zoom = 0"
                       class="cursor-pointer"
                     >
@@ -353,4 +353,6 @@ const updateSrc = () => {
 :deep(.v-list) {
   max-height: 400px;
 }
+
+
 </style>
