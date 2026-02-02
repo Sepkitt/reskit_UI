@@ -60,8 +60,8 @@ const getSimulatedLabel = (width) => {
   if (w >= 2560) return "2k/qhd";
   if (w >= 1904) return "xl";
   if (w >= 1264) return "lg";
-  if (w >= 960)  return "md";
-  if (w >= 600)  return "sm";
+  if (w >= 960) return "md";
+  if (w >= 600) return "sm";
   return "xs";
 };
 
@@ -69,7 +69,7 @@ const updateSrc = () => {
   // Simple validation to prepend https if missing
   let target = url.value.trim();
   if (!/^https?:\/\//i.test(target)) {
-    target = 'https://' + target;
+    target = "https://" + target;
     url.value = target;
   }
   src.value = target;
@@ -118,76 +118,129 @@ const updateSrc = () => {
             :height="maxHeight"
             max-width="100vw"
             class="d-flex flex-column"
-            color="infoBg"
+            color="background"
             elevation="4"
           >
-           <v-toolbar color="info" density="compact">
-                <div class="sheet tooltip-primary d-flex align-center px-4 ml-2">
-                  <span class="text-caption font-weight-bold text-uppercase">
-                    {{ getSimulatedLabel(device.breakpoint.width) }}
-                  </span>
-                </div>
-
-                <v-spacer />
-               <div style="width: 140px" class="mx-4 mt-5">
-               <v-slider
-  v-model="device.zoom"
-  min="0"
-  max="1.5"
-  step="0.05"
-  density="compact"
-  color="white"
-  hide-details
->
-  <template #prepend>
-    <v-icon 
-      size="small" 
-      @click="device.zoom = 0" 
-      class="cursor-pointer"
-    >
-      {{ device.zoom === 0 ? 'mdi-fit-to-screen' : 'mdi-magnify-minus' }}
-    </v-icon>
-  </template>
-</v-slider>
+            <v-toolbar color="info" density="compact">
+              <div class="sheet tooltip-primary d-flex align-center px-4 ml-2">
+                <span class="text-caption font-weight-bold text-uppercase">
+                  {{ getSimulatedLabel(device.breakpoint.width) }}
+                </span>
               </div>
 
-
-
-                <v-select
-                  v-model="device.breakpoint"
-                  :items="device.items"
-                  item-title="name"
-                  return-object
+              <v-spacer />
+                <!-- <v-slider
+                  v-model="device.zoom"
+                  append-icon="mdi-magnify-plus-outline"
+                  @click:append="device.zoom = (device.zoom + 0.5) || 100"
+                  min="0"
+                  max="1.5"
+                  step="0.05"
                   density="compact"
-                  variant="solo"
-                  bg-color="darkness"
+                  color="white"
                   hide-details
-                  class="select-width mx-2"
                 >
-                  <template #selection="{ item }">
-                    {{ item.raw.name }} ({{ item.raw.width }}x{{ item.raw.height }})
+                  <template #prepend>
+                    <v-icon
+                      size="small"
+                      @click="device.zoom = 0"
+                      class="cursor-pointer"
+                    >
+                      {{
+                        device.zoom === 0
+                          ? "mdi-fit-to-screen"
+                          : "mdi-magnify-minus"
+                      }}
+                    </v-icon>
                   </template>
-                  <template #item="{ props, item }">
-                    <v-list-item v-bind="props" :subtitle="`${item.raw.width} x ${item.raw.height}`" />
-                  </template>
-                </v-select>
+                </v-slider> -->
 
-                <v-btn
-                  :icon="device.rotate ? 'mdi-phone-rotate-landscape' : 'mdi-phone-rotate-portrait'"
-                  variant="text"
-                  @click="device.rotate = !device.rotate"
-                />
-              </v-toolbar>
+              <v-select
+                v-model="device.breakpoint"
+                :items="device.items"
+                item-title="name"
+                return-object
+                density="compact"
+                variant="solo"
+                bg-color="darkness"
+                hide-details
+                class="select-width mx-2"
+              >
+                <template #selection="{ item }">
+                  {{ item.raw.name }} ({{ item.raw.width }}x{{
+                    item.raw.height 
+                  }})
+                </template>
+                <template #item="{ props, item }">
+                  <v-list-item
+                    v-bind="props"
+                    :subtitle="`${item.raw.width} x ${item.raw.height}`"
+                  />
+                </template>
+              </v-select>
 
-            <div class="device-viewport-container" :class="device.id === 1 ? 'grid-primary' : 'grid-tertiary'">
+              <v-btn
+                :icon="
+                  device.rotate
+                    ? 'mdi-phone-rotate-landscape'
+                    : 'mdi-phone-rotate-portrait'
+                "
+                variant="text"
+                @click="device.rotate = !device.rotate"
+              />
+            </v-toolbar>
+
+            <div
+              class="device-viewport-container"
+              :class="'grid-tertiary'"
+            >
               <Device
-                v-model:zoom="device.zoom" 
-                :height="device.rotate ? device.breakpoint.width : device.breakpoint.height"
-                :width="device.rotate ? device.breakpoint.height : device.breakpoint.width"
+                v-model:zoom="device.zoom"
+                :height="
+                  device.rotate
+                    ? device.breakpoint.width
+                    : device.breakpoint.height
+                "
+                :width="
+                  device.rotate
+                    ? device.breakpoint.height
+                    : device.breakpoint.width
+                "
                 :device="device.breakpoint"
                 :src="src"
                 :show-browser-ui="showShells"
-              />
+              >
+              <template #content>
+               <v-slider
+                  v-model="device.zoom"
+                  append-icon="mdi-magnify-plus-outline"
+                  @click:append="device.zoom = (device.zoom + 1) || 100"
+                  max="3"
+                  step="1"
+                  tick-size="4"
+                  density="compact"
+                  color="primary"
+                  direction="vertical"
+                  show-ticks="always"
+                  hide-details
+                >
+                  <template #prepend>
+                    <v-icon
+                     
+                      @click="device.zoom = 0"
+                      class="cursor-pointer"
+                    >
+                      {{
+                        device.zoom === 0
+                          ? "mdi-fit-to-screen"
+                          : "mdi-magnify-minus"
+                      }}
+                    </v-icon>
+                  </template>
+                </v-slider>
+              </template>
+              
+              </Device>
             </div>
           </v-card>
         </v-col>
@@ -209,35 +262,9 @@ const updateSrc = () => {
 </template>
 
 <style scoped lang="scss">
-// .device-viewport-container {
-// flex-grow: 1;
-//   position: relative;
-//   overflow: hidden; /* Clips the absolutely positioned device */
-//   background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.1) 100%);
-// }
-
-// .device-viewport-container {
-//   flex-grow: 1;
-//   position: relative;
-//   overflow: hidden;
-  
-//   /* Grid Blueprint Background */
-//   background-color: rgba(var(--v-theme-infoBg), 0.8);
-//   background-image: 
-//     linear-gradient(rgba(255,255,255, .05) 1px, transparent 1px),
-//     linear-gradient(90deg, rgba(255,255,255, .05) 1px, transparent 1px);
-//   background-size: 20px 20px;
-// }
-// .max-width-600 {
-//   max-width: 600px;
-// }
-
-
-
 .sheet {
   height: 2.2rem;
   // border-radius: 5px;
-  
 }
 
 .qr-placeholder {
@@ -263,35 +290,60 @@ const updateSrc = () => {
   flex-grow: 1;
   position: relative;
   overflow: hidden;
-  
+
   // 1. Establish the color variable (Defaults to Info if no class is provided)
-  --t-color: rgb(var(--v-theme-info)); 
+  --t-color: rgb(var(--v-theme-info));
 
   // 2. Background: Mix 15% of your theme color into the surface
-  background-color: color-mix(in srgb, var(--t-color), rgb(var(--v-theme-surface)) 85%);
-  
+  background-color: color-mix(
+    in srgb,
+    var(--t-color),
+    rgb(var(--v-theme-surface)) 85%
+  );
+
   // 3. Grid Lines: Use the theme color at a very low opacity (5%)
-  background-image: 
-    linear-gradient(color-mix(in srgb, var(--t-color), transparent 95%) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--t-color), transparent 95%) 1px, transparent 1px);
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--t-color), transparent 95%) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--t-color), transparent 95%) 1px,
+      transparent 1px
+    );
   background-size: 20px 20px;
 
   // Optional: Add a subtle vignette to give it depth
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.1) 100%);
+    background: radial-gradient(
+      circle at center,
+      transparent 0%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
   }
 }
 
 // 4. Re-use your existing mapping to switch the grid theme dynamically
-.grid-primary { --t-color: rgb(var(--v-theme-primary)); }
-.grid-accent  { --t-color: rgb(var(--v-theme-accent)); }
-.grid-success { --t-color: rgb(var(--v-theme-success)); }
-.grid-info    { --t-color: rgb(var(--v-theme-info)); }
-.grid-tertiary{ --t-color: rgb(var(--v-theme-tertiary)); }
+.grid-primary {
+  --t-color: rgb(var(--v-theme-primary));
+}
+.grid-accent {
+  --t-color: rgb(var(--v-theme-accent));
+}
+.grid-success {
+  --t-color: rgb(var(--v-theme-success));
+}
+.grid-info {
+  --t-color: rgb(var(--v-theme-info));
+}
+.grid-tertiary {
+  --t-color: rgb(var(--v-theme-tertiary));
+}
 
 .cursor-pointer {
   cursor: pointer;

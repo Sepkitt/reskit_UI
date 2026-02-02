@@ -59,18 +59,22 @@
     </div>
 
     <v-fade-transition>
-      <div v-if="props.zoom !== 0" class="device-controls">
+
+    
+      <div class="slider-controls">
+              <slot name="content" v-bind="props"/>
+
+      <div  v-if="props.zoom !== 0" class="device-controls">
         <v-chip
           size="x-small"
-          :color="isPanActive ? 'primary' : 'grey-darken-3'"
-          variant="flat"
-          class="mb-2 shadow-sm"
+          :color="isPanActive ? 'primary' : 'tooltip-primary '"
+          class="shadow-sm"
         >
           {{ isDragging ? "Dragging..." : isPanActive ? "Hand Tool Active" : "Zoomed In" }}
         </v-chip>
 
         <div class="d-flex flex-column gap-2">
-          <v-btn size="small" color="primary" icon elevation="4" @click="resetAndRefresh">
+          <v-btn size="small" color="primary" class="mb-2" icon elevation="4" @click="resetAndRefresh">
             <v-icon size="small">mdi-refresh</v-icon>
           </v-btn>
 
@@ -86,6 +90,7 @@
             </v-icon>
           </v-btn>
         </div>
+      </div>
       </div>
     </v-fade-transition>
   </div>
@@ -342,12 +347,19 @@ onUnmounted(() => {
 
 .device-controls {
   position: absolute;
-  bottom: 24px;
-  right: 24px;
+  bottom: 1rem;
+  right: 30px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   z-index: 110;
   align-items: flex-end;
+}
+
+.slider-controls {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+
 }
 </style>
