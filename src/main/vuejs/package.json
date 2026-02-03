@@ -17,6 +17,9 @@
     "vue": "^3.5.27",
     "vue-router": "^4.6.4"
   },
+  "overrides": {
+    "@pinia/nuxt": "$@pinia/nuxt"
+  },
   "devDependencies": {
     "@mdi/font": "^7.4.47",
     "i": "^0.3.7",
