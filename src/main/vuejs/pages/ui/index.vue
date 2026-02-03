@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useDisplay } from "vuetify";
+
 import {
   phones,
   tablets,
@@ -9,7 +10,7 @@ import {
   TYPES,
 } from "~/assets/devices.json";
 
-const { isDark, toggleTheme } = useMyTheme();
+const { isDark, toggleTheme,themeColor } = useMyTheme();
 
 
 // 1. Reactive State
@@ -287,45 +288,18 @@ const updateSrc = () => {
 }
 
 .device-viewport-container {
-  flex-grow: 1;
+ flex-grow: 1;
   position: relative;
   overflow: hidden;
-
-  // 1. Establish the color variable (Defaults to Info if no class is provided)
-  --t-color: rgb(var(--v-theme-info));
-
-  // 2. Background: Mix 15% of your theme color into the surface
-  background-color: color-mix(
-    in srgb,
-    var(--t-color),
-    rgb(var(--v-theme-surface)) 85%
-  );
-
-  // 3. Grid Lines: Use the theme color at a very low opacity (5%)
+  // Use the 'outline' color you defined in your plugin!
+  --t-color: v-bind("themeColor('outline')"); 
+  
+  background-color: v-bind("themeColor('baseCard')");
+  
   background-image:
-    linear-gradient(
-      color-mix(in srgb, var(--t-color), transparent 95%) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--t-color), transparent 95%) 1px,
-      transparent 1px
-    );
-  background-size: 20px 20px;
-
-  // Optional: Add a subtle vignette to give it depth
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(
-      circle at center,
-      transparent 0%,
-      rgba(0, 0, 0, 0.1) 100%
-    );
-  }
+    linear-gradient(var(--t-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--t-color) 1px, transparent 1px);
+  background-size: 40px 40px; // Larger grid for a "blueprint" look
 }
 
 // 4. Re-use your existing mapping to switch the grid theme dynamically

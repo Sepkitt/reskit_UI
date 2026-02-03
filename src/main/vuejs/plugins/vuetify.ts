@@ -8,6 +8,7 @@ export const lightTheme = {
   colors: {
     background: "#FFFFFF",
     surface: "#F8FAFC",
+    baseCard: "#FFFFFF",
     "surface-variant": "#E2E8F0", // Use this for the grid lines
     primary: "#01C5FF",
     "on-primary": "#FFFFFF",
@@ -28,6 +29,7 @@ export const darkTheme = {
   colors: {
     background: "#192841",
     surface: "#213556",
+    baseCard: "#1d2f4f",
     "surface-variant": "#263F68", // Darker grid tint
     primary: "#01C5FF",
     "on-primary": "#000000",

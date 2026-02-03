@@ -1,27 +1,26 @@
 import { defineStore } from "pinia";
-import { ref, watch } from "vue";
-import { useNuxtApp } from "#app";
+import { ref } from "vue";
 
-export const useThemeStore = defineStore("theme", () => {
-  const isDark = ref(false);
+export const useThemeStore = defineStore(
+  "theme",
+  () => {
+    // 1. Initial State
+    const isDark = ref(true);
 
-  if (import.meta.client) {
-    isDark.value = localStorage.getItem("isDark") === "true";
-  }
+    // 2. Actions
+    function toggleTheme() {
+      isDark.value = !isDark.value;
+    }
 
-  function toggleTheme() {
-    isDark.value = !isDark.value;
-  }
+    function setTheme(theme: "lightTheme" | "darkTheme") {
+      isDark.value = theme === "darkTheme";
+    }
 
-  function setTheme(theme: "lightTheme" | "darkTheme") {
-    isDark.value = theme === "darkTheme";
-  }
-
-  if (import.meta.client) {
-    watch(isDark, (newVal) => {
-      localStorage.setItem("isDark", newVal.toString());
-    });
-  }
-
-  return { isDark, toggleTheme, setTheme };
-});
+    // 3. Return state and actions
+    return { isDark, toggleTheme, setTheme };
+  },
+  {
+    // 4. Persistence Configuration
+    persist: true,
+  },
+);

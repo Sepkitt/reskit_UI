@@ -1,35 +1,52 @@
 // ~/composables/useMyTheme.ts
+import { computed, watch } from "vue";
 import { useTheme } from "vuetify";
 import { useThemeStore } from "~/stores/themeStore";
-import type { ColorKeys } from "~/plugins/vuetify"; // imported from Vuetify plugin
+import type { ColorKeys } from "~/plugins/vuetify";
 
 export default function useMyTheme() {
   const vuetifyTheme = useTheme();
   const themeStore = useThemeStore();
 
-  // Computed theme name based on Pinia store
-  const currentTheme = computed(() =>
-    themeStore.isDark ? "darkTheme" : "lightTheme"
+  // 1. Reactive theme name helper
+  const currentThemeName = computed(() =>
+    themeStore.isDark ? "darkTheme" : "lightTheme",
   );
 
-  // Sync Vuetify theme with Pinia store
-   const toggleTheme = () => {
-    themeStore.toggleTheme();
-    vuetifyTheme.change(currentTheme.value);
-  };
-  // Reactive flag
-  const isDark = computed(() => themeStore.isDark);
+  // 2. The Sync Watcher
+  // Using .change() to satisfy the Vuetify upgrade warning
+  watch(
+    () => themeStore.isDark,
+    () => {
+      vuetifyTheme.change(currentThemeName.value);
+    },
+    { immediate: true },
+  );
 
-  // Reactive colors for the current theme
+  // 3. Actions
+  const toggleTheme = () => {
+    themeStore.toggleTheme();
+    // The watcher above picks up the change and runs vuetifyTheme.change()
+  };
+
+  // 4. Reactive Colors
+  // vuetifyTheme.current is the safest way to grab the active palette
   const colors = computed<Record<ColorKeys, string>>(() => {
-    return vuetifyTheme.themes.value[currentTheme.value]
-      ?.colors as unknown as Record<ColorKeys, string>;
+    return vuetifyTheme.current.value.colors as unknown as Record<
+      ColorKeys,
+      string
+    >;
   });
 
-  // Minimal helper to get a color by key
   function themeColor(key: ColorKeys): string {
     return colors.value[key];
   }
 
-  return { isDark, toggleTheme, colors, themeColor };
+  return {
+    isDark: computed(() => themeStore.isDark),
+    toggleTheme,
+    colors,
+    themeColor,
+    currentTheme: currentThemeName,
+  };
 }
