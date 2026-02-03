@@ -3,7 +3,7 @@ import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 
-const lightTheme = {
+export const lightTheme = {
   dark: false,
   colors: {
     background: "#FFFFFF",
@@ -16,14 +16,14 @@ const lightTheme = {
     accent: "#C0F1FF",
     error: "#FE7484",
     info: "#263F68",
-    success: "#74FEA2",
+    success: "#16A34A",
     "on-success": "#263F68",
     warning: "#FE9E74",
     outline: "#CBD5E1", // Dedicated color for borders/grids
   },
-};
+} as const;
 
-const darkTheme = {
+export const darkTheme = {
   dark: true,
   colors: {
     background: "#192841",
@@ -38,11 +38,16 @@ const darkTheme = {
     // Standard utility colors stay consistent for UX patterns
     error: "#FE7484",
     info: "#263F68",
-    success: "#74FEA2",
+    success: "#22C55E",
     "on-success": "#263F68",
     warning: "#FE9E74",
   },
-};
+} as const;
+// Export union type of color keys
+export type ColorKeys = keyof typeof darkTheme.colors;
+
+// Optional: exact literal values
+export type ColorValues = (typeof darkTheme.colors)[ColorKeys];
 
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({

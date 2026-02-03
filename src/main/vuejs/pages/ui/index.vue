@@ -9,6 +9,9 @@ import {
   TYPES,
 } from "~/assets/devices.json";
 
+const { isDark, toggleTheme } = useMyTheme();
+
+
 // 1. Reactive State
 const { name: currentBreakpoint } = useDisplay();
 const url = ref("https://nuxtjs.org/");
@@ -112,6 +115,14 @@ const updateSrc = () => {
       <v-btn icon @click="dialog = true">
         <v-icon>mdi-qrcode</v-icon>
       </v-btn>
+<TooltipButton 
+              color="success"
+              :icon="
+                isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'
+              "
+              :text="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+              @click="toggleTheme"
+            />
     </v-app-bar>
 
     <v-container fluid class="fill-height bg-background pa-0">

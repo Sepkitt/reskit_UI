@@ -23,7 +23,7 @@ html {
 
 ::-webkit-scrollbar-thumb {
   /* Using tertiary for the thumb as requested */
-  background: rgb(var(--v-theme-tertiary)); 
+  background: rgb(var(--v-theme-tertiary));
   border-radius: 10px;
   border: 1px solid transparent; /* Acts as padding */
   background-clip: content-box;
@@ -40,20 +40,53 @@ html {
   scrollbar-color: rgb(var(--v-theme-tertiary)) transparent;
 }
 
-
+/* Base styles for all custom tooltips */
+.custom-themed-tooltip.v-overlay__content {
+  opacity: 1 !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  padding: 8px 12px !important;
+}
 
 [class*="tooltip-"] {
-  background-color: color-mix(in srgb, var(--t-color), rgb(var(--v-theme-surface)) 85%);
+  background-color: color-mix(
+    in srgb,
+    var(--t-color),
+    rgb(var(--v-theme-surface)) 50%
+  );
   color: var(--t-color);
   border: 1px solid var(--t-color);
-  border-radius:5px;
+  border-radius: 5px;
 }
 
 /* Map the CSS variables to the Vuetify Theme colors */
-.tooltip-primary { --t-color: rgb(var(--v-theme-primary)); }
-.tooltip-accent  { --t-color: rgb(var(--v-theme-accent)); }
-.tooltip-success { --t-color: rgb(var(--v-theme-success)); }
-.tooltip-warning { --t-color: rgb(var(--v-theme-warning)); }
-.tooltip-error   { --t-color: rgb(var(--v-theme-error)); }
-.tooltip-info    { --t-color: rgb(var(--v-theme-info)); }
-.tooltip-tertiary { --t-color: rgb(var(--v-theme-tertiary)); }
+.tooltip-primary {
+  --t-color: rgb(var(--v-theme-primary));
+}
+.tooltip-accent {
+  --t-color: rgb(var(--v-theme-accent));
+}
+.tooltip-success {
+  --t-color: rgb(var(--v-theme-success));
+}
+.tooltip-warning {
+  --t-color: rgb(var(--v-theme-warning));
+}
+.tooltip-error {
+  --t-color: rgb(var(--v-theme-error));
+}
+.tooltip-info {
+  --t-color: rgb(var(--v-theme-info));
+}
+.tooltip-tertiary {
+  --t-color: rgb(var(--v-theme-tertiary));
+}
+
+.v-theme--darkTheme .custom-themed-tooltip.v-overlay__content {
+  background-color: color-mix(
+    in srgb,
+    var(--t-color),
+    rgb(var(--v-theme-surface)) 75%
+  ) !important;
+}

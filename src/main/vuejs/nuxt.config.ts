@@ -9,6 +9,7 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  modules: ['@pinia/nuxt'],
   css: ["~/assets/css/main.css"],
   devtools: { enabled: false },
   build: {
