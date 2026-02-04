@@ -36,12 +36,14 @@
 
         <div class="device-frame" :style="frameDimensions">
           <div
+          
             v-if="isPanActive"
             class="pan-overlay"
             :class="{ 'is-dragging': isDragging }"
           />
 
           <iframe
+          
             ref="iframeRef"
             :src="props.src"
             class="iframe-element"
@@ -75,7 +77,7 @@
       <div class="slider-controls">
         <slot name="content" v-bind="props" />
 
-        <div v-if="props.zoom !== 0" class="device-controls">
+        <div v-if="props.zoom !== 0" class="device-controls mr-2">
           <v-chip
             :class="isPanActive ? 'tooltip-success' : 'tooltip-secondary'"
             :color="isPanActive ? 'success' : 'secondary '"
@@ -322,7 +324,7 @@ onUnmounted(() => {
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
   background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+ border: 1px solid rgb(var(--v-theme-outline));
   width: 100%;
   height: 100%;
 

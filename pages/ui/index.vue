@@ -92,39 +92,87 @@ const updateSrc = () => {
 
 <template>
   <div>
-    <v-app-bar color="info" elevation="2" flat>
-      <v-toolbar-title class="text-white font-weight-bold"
-        >resKit</v-toolbar-title
-      >
+    <v-app-bar
+      color="background"
+      elevation="0"
+      class="border-b"
+      :style="{ borderColor: 'rgb(var(--v-theme-outline)) !important' }"
+    >
+      <v-toolbar-title class="text-primary font-weight-black letter-spacing-1">
+        RES<span class="text-text">KIT</span>
+      </v-toolbar-title>
+
       <v-spacer />
 
       <v-text-field
         v-model="url"
         density="compact"
-        variant="solo"
-        bg-color="background"
+        variant="solo-filled"
+        flat
+        bg-color="surface-variant"
+        placeholder="Enter URL..."
         hide-details
+        class="url-bar-refined"
         @keyup.enter="updateSrc"
-      />
+      >
+        <template #prepend-inner>
+          <v-icon size="small" color="primary" class="mr-1"
+            >mdi-link-variant</v-icon
+          >
+        </template>
 
-      <v-btn color="primary" variant="elevated" class="ml-3" @click="updateSrc">
-        update
+        <template #append-inner>
+          <v-fade-transition>
+            <v-icon
+              v-if="url"
+              size="x-small"
+              color="grey"
+              class="cursor-pointer"
+              @click="url = ''"
+            >
+              mdi-close-circle
+            </v-icon>
+          </v-fade-transition>
+        </template>
+      </v-text-field>
+
+      <v-btn
+        color="primary"
+        variant="elevated"
+        elevation="1"
+        class="ml-2 px-6 update-btn-refined"
+        height="40"
+        @click="updateSrc"
+      >
+        <v-icon start size="small">mdi-refresh</v-icon>
+        Update
       </v-btn>
 
       <v-spacer />
 
-      <v-btn icon @click="dialog = true">
+      <v-btn
+        icon
+        size="small"
+        variant="text"
+        class="mr-2"
+        @click="dialog = true"
+      >
         <v-icon>mdi-qrcode</v-icon>
       </v-btn>
-      <TooltipButton
-        color="success"
+
+         <TooltipButton
+         size="small"
+         variant="tonal"
+        color="primary"
         :icon="isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'"
         :text="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+
+
         @click="toggleTheme"
       />
     </v-app-bar>
 
-    <v-container fluid class="fill-height pa-0">
+    <v-container fluid class="fill-height bg-darkness pa-0">
       <v-row no-gutters class="fill-height">
         <v-col
           v-for="device in devices"
@@ -136,24 +184,22 @@ const updateSrc = () => {
         >
           <v-card
             :height="maxHeight"
-            max-width="100vw"
-            class="d-flex flex-column"
+            class="d-flex flex-column rounded-lg overflow-hidden border-themed"
             color="background"
-            elevation="4"
+            elevation="0"
           >
-            <v-toolbar color="info" density="compact">
-              <div class="d-flex align-center pa-5 sheet text--text px-4 ml-2">
+            <v-toolbar color="surface" density="compact" class="border-b px-2">
+              <div class="simulated-label-container mr-2">
                 <ClientOnly>
-                  <span class=" text-caption font-weight-bold text-uppercase">
+                  <span class="label-text">
                     {{ getSimulatedLabel(device.breakpoint.width) }}
                   </span>
                   <template #fallback>
-                    <span class="text-caption font-weight-bold text-uppercase"
-                      >...</span
-                    >
+                    <span class="label-text">...</span>
                   </template>
                 </ClientOnly>
               </div>
+
               <v-spacer />
 
               <v-select
@@ -162,21 +208,45 @@ const updateSrc = () => {
                 item-title="name"
                 return-object
                 density="compact"
-                bg-color="surface"
-                base-color="primary"
+                variant="outlined"
                 hide-details
-                class="select-width   mx-2 "
+                class="select-width-refined mx-4"
               >
                 <template #selection="{ item }">
-                  {{ item.raw.name }} ({{ item.raw.width }}x{{
-                    item.raw.height
-                  }})
+                  <div class="d-flex align-center">
+                    <span
+                      class="text-caption font-weight-bold text-primary mr-2"
+                    >
+                      {{ getSimulatedLabel(item.raw.width) }}
+                    </span>
+                    <span class="text-caption font-weight-medium">
+                      {{ item.raw.name }}
+                    </span>
+                  </div>
                 </template>
+
                 <template #item="{ props, item }">
-                  <v-list-item
-                    v-bind="props"
-                    :subtitle="`${item.raw.width} x ${item.raw.height}`"
-                  />
+                  <v-list-item v-bind="props" class="device-list-item">
+                    <template #title>
+                      <div
+                        class="d-flex align-center justify-space-between w-100"
+                      >
+                        <span class="text-body-2 font-weight-medium">{{
+                          item.raw.name
+                        }}</span>
+
+                        <div class="mini-label-badge ml-4">
+                          {{ getSimulatedLabel(item.raw.width) }}
+                        </div>
+                      </div>
+                    </template>
+
+                    <template #subtitle>
+                      <span class="text-grey-darken-1"
+                        >{{ item.raw.width }} x {{ item.raw.height }}</span
+                      >
+                    </template>
+                  </v-list-item>
                 </template>
               </v-select>
 
@@ -186,12 +256,14 @@ const updateSrc = () => {
                     ? 'mdi-phone-rotate-landscape'
                     : 'mdi-phone-rotate-portrait'
                 "
+                size="small"
                 variant="text"
+                :color="device.rotate ? 'primary' : 'default'"
                 @click="device.rotate = !device.rotate"
               />
             </v-toolbar>
 
-            <div class="device-viewport-container" :class="'grid-tertiary'">
+            <div class="device-viewport-container blueprint-grid">
               <Device
                 v-model:zoom="device.zoom"
                 :height="
@@ -217,23 +289,19 @@ const updateSrc = () => {
                     step="1"
                     tick-size="4"
                     density="compact"
-                    color="accent"
+                    color="primary"
                     direction="vertical"
-                    show-ticks="always"
                     hide-details
+                    class="zoom-slider-ui"
                   >
-                    <template #prepend>
-                      <v-icon
-                        color="accent"
+                   <template #prepend>
+                      <v-btn
+                        icon="mdi-fit-to-screen"
+                        size="x-small"
+                        variant="flat"
+                        color="background"
                         @click="device.zoom = 0"
-                        class="cursor-pointer"
-                      >
-                        {{
-                          device.zoom === 0
-                            ? "mdi-fit-to-screen"
-                            : "mdi-magnify-minus"
-                        }}
-                      </v-icon>
+                      />
                     </template>
                   </v-slider>
                 </template>
@@ -243,43 +311,6 @@ const updateSrc = () => {
         </v-col>
       </v-row>
     </v-container>
-
-    <v-dialog v-model="dialog" max-width="400">
-      <v-card color="surface" class="rounded-xl border-themed">
-        <v-card-text class="text-center pa-8">
-          <div class="text-h5 font-weight-bold mb-2">Mobile Sync</div>
-          <p class="text-body-2 text-medium-emphasis mb-6">
-            Scan to test <span class="text-primary">{{ url }}</span>
-          </p>
-
-          <v-sheet
-            elevation="12"
-            class="mx-auto mb-6 pa-4 d-inline-block rounded-lg qr-container"
-            :color="isDark ? '#FFFFFF' : '#F8FAFC'"
-          >
-            <qrcode-vue
-              :value="url"
-              :size="220"
-              level="H"
-              render-as="svg"
-              :foreground="isDark ? '#192841' : '#000000'"
-              background="#FFFFFF"
-            />
-          </v-sheet>
-
-          <v-btn
-            block
-            size="large"
-            color="primary"
-            variant="tonal"
-            class="rounded-pill"
-            @click="dialog = false"
-          >
-            Got it
-          </v-btn>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -351,5 +382,68 @@ const updateSrc = () => {
 /* Custom Scrollbar for the list */
 :deep(.v-list) {
   max-height: 400px;
+}
+
+.url-bar-refined {
+  max-width: 500px;
+
+  :deep(.v-field) {
+    border-radius: 8px !important;
+    font-size: 0.9rem;
+    // Add a very subtle border so it doesn't disappear in light mode
+    border: 1px solid rgba(var(--v-theme-outline), 0.2);
+  }
+
+  :deep(.v-field__input) {
+    // This ensures the text uses the theme's text color specifically
+    color: rgb(var(--v-theme-text)) !important;
+    opacity: 1 !important;
+  }
+}
+
+.update-btn-refined {
+  border-radius: 8px !important; // Match the text-field's radius
+  text-transform: none !important; // Keeps it looking modern/web-standard
+  font-weight: 600 !important;
+  letter-spacing: 0.5px;
+
+  // Optional: Add a subtle glow in dark mode
+  &:hover {
+    box-shadow: 0 0 12px rgba(var(--v-theme-primary), 0.3) !important;
+  }
+}
+
+.simulated-label-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Sizing
+  min-width: 48px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 4px;
+
+  // Colors & Inset Shadow
+  // Uses your blueprint primary blue for the border
+  border: 1px solid rgba(var(--v-theme-primary), 0.5);
+  background-color: rgb(var(--v-theme-surface));
+
+  // The "Inset" look you liked, refined for modern UI
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+
+  .label-text {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgb(var(--v-theme-primary));
+  }
+}
+
+// Optional: Change the background in Dark Mode to be slightly deeper
+.v-theme--darkTheme .simulated-label-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 2px 6px 0 rgba(0, 0, 0, 0.5);
 }
 </style>

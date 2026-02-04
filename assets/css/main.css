@@ -13,7 +13,7 @@ html {
 
 /* 2. Thin, modern scrollbar logic */
 ::-webkit-scrollbar {
-  width: 6px; /* 3px is very thin and hard to grab; 6px is usually the 'sweet spot' for modern UIs */
+  width: 6px; 
   height: 6px;
 }
 
@@ -22,7 +22,6 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  /* Using tertiary for the thumb as requested */
   background: rgb(var(--v-theme-tertiary));
   border-radius: 10px;
   border: 1px solid transparent; /* Acts as padding */
