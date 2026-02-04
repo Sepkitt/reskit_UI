@@ -3,7 +3,7 @@
     <v-col cols="12" md="6" order="2" order-md="1">
       <v-row :class="{ 'text-center': mobile }">
         <v-col cols="12">
-          <h1 class="text-text text-h2 font-weight-bold">
+          <h1 class="text-  text-h2 font-weight-bold">
             Reskit <span class="text-primary">UI</span>
           </h1>
           <h2 class="text-subtitle-1 text-grey-lighten-1 font-weight-thin">
@@ -12,14 +12,14 @@
         </v-col>
         
         <v-col>
-          <v-btn 
-            size="x-large" 
-            to="/UI" 
-            color="darkness"
-            class="px-8 shadow-inset"
-          >
-            navigate to <span class="ml-2 text-primary">UI</span>
-          </v-btn>
+         <v-btn 
+  size="x-large" 
+  to="/UI" 
+  flat
+  class="px-8 tooltip-btn tooltip-primary"
+>
+  navigate to <span class="ml-2">UI</span>
+</v-btn>
         </v-col>
       </v-row>
     </v-col>
