@@ -162,7 +162,6 @@ const updateSrc = () => {
                 item-title="name"
                 return-object
                 density="compact"
-                
                 bg-color="surface"
                 base-color="primary"
                 hide-details

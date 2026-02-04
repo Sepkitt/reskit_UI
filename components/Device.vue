@@ -6,16 +6,19 @@
     @mousedown="startPan"
     @mousemove="onPan"
   >
-      <v-fade-transition>
-        <div v-if="isLoading" class="loader-overlay">
-          <v-progress-circular
-            indeterminate
-            color="primary"
-            size="48"
-            width="4"
-          />
+    <v-fade-transition>
+      <v-container v-if="isLoading" class="loader-overlay">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          size="64"
+          width="6"
+        />
+        <div class="mt-4 text-overline text-white">
+          Establishing Connection...
         </div>
-      </v-fade-transition>
+      </v-container>
+    </v-fade-transition>
 
     <div class="scaling-wrapper" :style="wrapperStyles">
       <div class="browser-shell" :class="[device?.browser || 'none']">
@@ -96,7 +99,7 @@
               elevation="4"
               @click="resetAndRefresh"
             >
-              <v-icon >mdi-refresh</v-icon>
+              <v-icon>mdi-refresh</v-icon>
             </v-btn>
 
             <v-btn
@@ -106,7 +109,7 @@
               elevation="4"
               @click="panningLocked = !panningLocked"
             >
-              <v-icon >
+              <v-icon>
                 {{
                   panningLocked
                     ? "mdi-hand-back-right"
@@ -305,10 +308,11 @@ onUnmounted(() => {
   inset: 0;
   z-index: 100;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgb(var(--v-theme-info), 80%);
+  backdrop-filter: blur(12px);
 }
 
 .browser-shell {
