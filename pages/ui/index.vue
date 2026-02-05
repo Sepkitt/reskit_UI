@@ -149,26 +149,16 @@ const updateSrc = () => {
 
       <v-spacer />
 
-      <!-- <v-btn
-        icon
-        size="small"
-        variant="text"
-        class="mr-2"
-        @click="dialog = true"
-      >
-        <v-icon>mdi-qrcode</v-icon>
-      </v-btn> -->
-      <TooltipButton
-       
+      <TooltipButton    
         variant="tonal"
         color="secondary"
-        icon="mdi-qrcode"
-        text="Test on mobile"
-        @click="toggleTheme"
+        icon="mdi-cellphone"
+        text="Test on your mobile"
+        @click="dialog = true"
       />
 
       <TooltipButton
-         class="mx-4"
+        class="mx-4"
         variant="tonal"
         color="primary"
         :icon="isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'"
