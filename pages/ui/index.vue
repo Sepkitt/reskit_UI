@@ -1,4 +1,5 @@
 <script setup>
+import QrcodeVue from "qrcode.vue";
 import { ref, computed } from "vue";
 import { useDisplay } from "vuetify";
 
@@ -10,8 +11,7 @@ import {
   TYPES,
 } from "~/assets/devices.json";
 
-const { isDark, toggleTheme,themeColor } = useMyTheme();
-
+const { isDark, toggleTheme, themeColor } = useMyTheme();
 
 // 1. Reactive State
 const { name: currentBreakpoint } = useDisplay();
@@ -61,9 +61,9 @@ const cardSizeMap = {
 };
 
 const maxHeight = computed(() => {
-  // On server/first load, use a fixed default. 
+  // On server/first load, use a fixed default.
   // Once hydrated, use the real breakpoint.
-  if (!isHydrated.value) return "86vh"; 
+  if (!isHydrated.value) return "86vh";
   return cardSizeMap[display.name.value] || "86vh";
 });
 
@@ -92,41 +92,92 @@ const updateSrc = () => {
 
 <template>
   <div>
-    <v-app-bar color="info" elevation="2">
-      <v-toolbar-title class="text-white font-weight-bold"
-        >resKit</v-toolbar-title
-      >
+    <v-app-bar
+      color="background"
+      elevation="0"
+      class="border-b"
+      :style="{ borderColor: 'rgb(var(--v-theme-outline)) !important' }"
+    >
+      <v-toolbar-title class="text-primary font-weight-black letter-spacing-1">
+        RES<span class="text-text">KIT</span> <span class="text-overline" >V2.0</span>
+      </v-toolbar-title>
+
       <v-spacer />
 
       <v-text-field
         v-model="url"
         density="compact"
-        variant="solo"
-        bg-color="background"
+        variant="solo-filled"
+        flat
+        bg-color="surface-variant"
+        placeholder="Enter URL..."
         hide-details
+        class="url-bar-refined"
         @keyup.enter="updateSrc"
-      />
+      >
+        <template #prepend-inner>
+          <v-icon size="small" color="primary" class="mr-1"
+            >mdi-link-variant</v-icon
+          >
+        </template>
 
-      <v-btn color="primary" variant="elevated" class="ml-3" @click="updateSrc">
-        update
+        <template #append-inner>
+          <v-fade-transition>
+            <v-icon
+              v-if="url"
+              size="x-small"
+              color="grey"
+              class="cursor-pointer"
+              @click="url = ''"
+            >
+              mdi-close-circle
+            </v-icon>
+          </v-fade-transition>
+        </template>
+      </v-text-field>
+
+      <v-btn
+        color="primary"
+        variant="flat"
+        class="ml-2 px-6 tooltip-btn tooltip-primary"
+        height="40"
+        @click="updateSrc"
+      >
+        <v-icon start size="small">mdi-refresh</v-icon>
+        Update
       </v-btn>
 
       <v-spacer />
 
-      <v-btn icon @click="dialog = true">
+      <!-- <v-btn
+        icon
+        size="small"
+        variant="text"
+        class="mr-2"
+        @click="dialog = true"
+      >
         <v-icon>mdi-qrcode</v-icon>
-      </v-btn>
-<TooltipButton 
-              color="success"
-              :icon="
-                isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'
-              "
-              :text="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-              @click="toggleTheme"
-            />
+      </v-btn> -->
+      <TooltipButton
+       
+        variant="tonal"
+        color="secondary"
+        icon="mdi-qrcode"
+        text="Test on mobile"
+        @click="toggleTheme"
+      />
+
+      <TooltipButton
+         class="mx-4"
+        variant="tonal"
+        color="primary"
+        :icon="isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'"
+        :text="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+        @click="toggleTheme"
+      />
     </v-app-bar>
 
-    <v-container fluid class="fill-height bg-background pa-0">
+    <v-container fluid class="fill-height bg-darkness pa-0">
       <v-row no-gutters class="fill-height">
         <v-col
           v-for="device in devices"
@@ -138,22 +189,22 @@ const updateSrc = () => {
         >
           <v-card
             :height="maxHeight"
-            max-width="100vw"
-            class="d-flex flex-column"
+            class="d-flex flex-column rounded-lg overflow-hidden border-themed"
             color="background"
-            elevation="4"
+            elevation="0"
           >
-            <v-toolbar color="info" density="compact">
-              <div class="sheet tooltip-primary d-flex align-center px-4 ml-2">
-              <ClientOnly>
-                <span class="text-caption font-weight-bold text-uppercase">
-                  {{ getSimulatedLabel(device.breakpoint.width) }}
-                </span>
-                <template #fallback>
-                  <span class="text-caption font-weight-bold text-uppercase">...</span>
-                </template>
-              </ClientOnly>
-            </div>
+            <v-toolbar color="surface" density="compact" class="border-b px-2">
+              <div class="simulated-label-container mr-2">
+                <ClientOnly>
+                  <span class="label-text">
+                    {{ getSimulatedLabel(device.breakpoint.width) }}
+                  </span>
+                  <template #fallback>
+                    <span class="label-text">...</span>
+                  </template>
+                </ClientOnly>
+              </div>
+
               <v-spacer />
 
               <v-select
@@ -162,21 +213,45 @@ const updateSrc = () => {
                 item-title="name"
                 return-object
                 density="compact"
-                variant="solo"
-                bg-color="background"
+                variant="outlined"
                 hide-details
-                class="select-width mx-2"
+                class="select-width-refined mx-4"
               >
                 <template #selection="{ item }">
-                  {{ item.raw.name }} ({{ item.raw.width }}x{{
-                    item.raw.height 
-                  }})
+                  <div class="d-flex align-center">
+                    <span
+                      class="text-caption font-weight-bold text-primary mr-2"
+                    >
+                      {{ getSimulatedLabel(item.raw.width) }}
+                    </span>
+                    <span class="text-caption font-weight-medium">
+                      {{ item.raw.name }}
+                    </span>
+                  </div>
                 </template>
+
                 <template #item="{ props, item }">
-                  <v-list-item
-                    v-bind="props"
-                    :subtitle="`${item.raw.width} x ${item.raw.height}`"
-                  />
+                  <v-list-item v-bind="props" class="device-list-item">
+                    <template #title>
+                      <div
+                        class="d-flex align-center justify-space-between w-100"
+                      >
+                        <span class="text-body-2 font-weight-medium">{{
+                          item.raw.name
+                        }}</span>
+
+                        <div class="mini-label-badge ml-4">
+                          {{ getSimulatedLabel(item.raw.width) }}
+                        </div>
+                      </div>
+                    </template>
+
+                    <template #subtitle>
+                      <span class="text-grey-darken-1"
+                        >{{ item.raw.width }} x {{ item.raw.height }}</span
+                      >
+                    </template>
+                  </v-list-item>
                 </template>
               </v-select>
 
@@ -186,15 +261,14 @@ const updateSrc = () => {
                     ? 'mdi-phone-rotate-landscape'
                     : 'mdi-phone-rotate-portrait'
                 "
+                size="small"
                 variant="text"
+                :color="device.rotate ? 'primary' : 'default'"
                 @click="device.rotate = !device.rotate"
               />
             </v-toolbar>
 
-            <div
-              class="device-viewport-container"
-              :class="'grid-tertiary'"
-            >
+            <div class="device-viewport-container blueprint-grid">
               <Device
                 v-model:zoom="device.zoom"
                 :height="
@@ -211,36 +285,31 @@ const updateSrc = () => {
                 :src="src"
                 :show-browser-ui="showShells"
               >
-              <template #content>
-               <v-slider
-                  v-model="device.zoom"
-                  append-icon="mdi-magnify-plus-outline"
-                  @click:append="device.zoom = Math.min(device.zoom + 1, 3)"                  
-                  max="3"
-                  step="1"
-                  tick-size="4"
-                  density="compact"
-                  color="accent"
-                  direction="vertical"
-                  show-ticks="always"
-                  hide-details
-                >
-                  <template #prepend>
-                    <v-icon
-                      color="accent"
-                      @click="device.zoom = 0"
-                      class="cursor-pointer"
-                    >
-                      {{
-                        device.zoom === 0
-                          ? "mdi-fit-to-screen"
-                          : "mdi-magnify-minus"
-                      }}
-                    </v-icon>
-                  </template>
-                </v-slider>
-              </template>
-              
+                <template #content>
+                  <v-slider
+                    v-model="device.zoom"
+                    append-icon="mdi-magnify-plus-outline"
+                    @click:append="device.zoom = Math.min(device.zoom + 1, 3)"
+                    max="3"
+                    step="1"
+                    tick-size="4"
+                    density="compact"
+                    color="primary"
+                    direction="vertical"
+                    hide-details
+                    class="zoom-slider-ui"
+                  >
+                    <template #prepend>
+                      <v-btn
+                        icon="mdi-fit-to-screen"
+                        size="x-small"
+                        variant="flat"
+                        color="background"
+                        @click="device.zoom = 0"
+                      />
+                    </template>
+                  </v-slider>
+                </template>
               </Device>
             </div>
           </v-card>
@@ -249,13 +318,38 @@ const updateSrc = () => {
     </v-container>
 
     <v-dialog v-model="dialog" max-width="400">
-      <v-card color="surface">
-        <v-card-text class="text-center pa-6">
-          <div class="text-h6 mb-4">Test on Mobile</div>
-          <div class="qr-placeholder mx-auto mb-4">
-            <p class="text-caption">QR Code for:<br />{{ url }}</p>
-          </div>
-          <v-btn block color="primary" @click="dialog = false">Close</v-btn>
+      <v-card color="surface" class="rounded-xl border-themed">
+        <v-card-text class="text-center pa-8">
+          <div class="text-h5 font-weight-bold mb-2">Mobile Sync</div>
+          <p class="text-body-2 text-medium-emphasis mb-6">
+            Scan to test <span class="text-primary">{{ url }}</span>
+          </p>
+
+          <v-sheet
+            elevation="12"
+            class="mx-auto mb-6 pa-4 d-inline-block rounded-lg qr-container"
+            :color="isDark ? '#FFFFFF' : '#F8FAFC'"
+          >
+            <qrcode-vue
+              :value="url"
+              :size="220"
+              level="H"
+              render-as="svg"
+              :foreground="isDark ? '#192841' : '#000000'"
+              background="#FFFFFF"
+            />
+          </v-sheet>
+
+          <v-btn
+            block
+            size="large"
+            color="primary"
+            variant="tonal"
+            class="rounded-pill"
+            @click="dialog = false"
+          >
+            Got it
+          </v-btn>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -264,8 +358,12 @@ const updateSrc = () => {
 
 <style scoped lang="scss">
 .sheet {
-  height: 2.2rem;
-  // border-radius: 5px;
+  border: solid 1px #416ba2;
+  height: 40px;
+  border-radius: 5px;
+  -moz-box-shadow: inset 0 0 10px #00000021;
+  -webkit-box-shadow: inset 0 0 10px #00000021;
+  box-shadow: inset 0 0 10px #0000004f;
 }
 
 .qr-placeholder {
@@ -288,14 +386,14 @@ const updateSrc = () => {
 }
 
 .device-viewport-container {
- flex-grow: 1;
+  flex-grow: 1;
   position: relative;
   overflow: hidden;
   // Use the 'outline' color you defined in your plugin!
-  --t-color: v-bind("themeColor('outline')"); 
-  
+  --t-color: v-bind("themeColor('outline')");
+
   background-color: v-bind("themeColor('baseCard')");
-  
+
   background-image:
     linear-gradient(var(--t-color) 1px, transparent 1px),
     linear-gradient(90deg, var(--t-color) 1px, transparent 1px);
@@ -328,5 +426,54 @@ const updateSrc = () => {
   max-height: 400px;
 }
 
+.url-bar-refined {
+  max-width: 500px;
 
+  :deep(.v-field) {
+    border-radius: 8px !important;
+    font-size: 0.9rem;
+    // Add a very subtle border so it doesn't disappear in light mode
+    border: 1px solid rgba(var(--v-theme-outline), 0.2);
+  }
+
+  :deep(.v-field__input) {
+    // This ensures the text uses the theme's text color specifically
+    color: rgb(var(--v-theme-text)) !important;
+    opacity: 1 !important;
+  }
+}
+
+.simulated-label-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Sizing
+  min-width: 48px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 4px;
+
+  // Colors & Inset Shadow
+  // Uses your blueprint primary blue for the border
+  border: 1px solid rgba(var(--v-theme-primary), 0.5);
+  background-color: rgb(var(--v-theme-surface));
+
+  // The "Inset" look you liked, refined for modern UI
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+
+  .label-text {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgb(var(--v-theme-primary));
+  }
+}
+
+// Optional: Change the background in Dark Mode to be slightly deeper
+.v-theme--darkTheme .simulated-label-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+}
 </style>

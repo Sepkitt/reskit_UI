@@ -6,43 +6,55 @@ import { createVuetify } from "vuetify";
 export const lightTheme = {
   dark: false,
   colors: {
-    background: "#FFFFFF",
-    surface: "#F8FAFC",
-    baseCard: "#FFFFFF",
-    "surface-variant": "#E2E8F0", // Use this for the grid lines
-    primary: "#01C5FF",
+    // Shifting from pure white to a soft workspace grey
+    background: "#F1F5F9",
+    surface: "#FFFFFF",
+    baseCard: "#f6f3f3",
+    "surface-variant": "#F8FAFC", // Used for URL bars/nested areas
+
+    primary: "#1976D2",
+    darkness: "#E2E8F0", // Darker neutral for secondary backgrounds
+    text: "#0F172A", // Deep navy-black for better readability
     "on-primary": "#FFFFFF",
-    secondary: "#D97706",
-    "on-secondary": "#263F68",
-    accent: "#C0F1FF",
-    error: "#FE7484",
-    info: "#263F68",
-    success: "#16A34A",
-    "on-success": "#263F68",
-    warning: "#FE9E74",
-    outline: "#CBD5E1", // Dedicated color for borders/grids
+
+    secondary: "#D27519",
+    "on-secondary": "#FFFFFF",
+    accent: "#00B0FF",
+
+    error: "#EF4444",
+    info: "#334155", // Navy for professional toolbars
+    success: "#10B981",
+    warning: "#F59E0B",
+
+    // Grid and border colors
+    outline: "#CBD5E1", // Subtle borders
   },
 } as const;
 
 export const darkTheme = {
   dark: true,
   colors: {
-    background: "#192841",
-    surface: "#213556",
-    baseCard: "#1d2f4f",
-    "surface-variant": "#263F68", // Darker grid tint
-    primary: "#01C5FF",
+    // Deeper, inkier black for the foundation
+    background: "#020617",
+    surface: "#0F172A", // Navy-tinted dark grey for depth
+    baseCard: "#1E293B", // The "blueprint" area
+    "surface-variant": "#1E293B",
+
+    primary: "#3B82F6", // Brighter blue for dark mode visibility
+    darkness: "#000000",
+    text: "#F8FAFC",
     "on-primary": "#000000",
-    secondary: "#FBBF24",
-    "on-secondary": "#263F68",
-    accent: "#C0F1FF",
-    outline: "#334155",
-    // Standard utility colors stay consistent for UX patterns
-    error: "#FE7484",
-    info: "#263F68",
-    success: "#22C55E",
-    "on-success": "#263F68",
-    warning: "#FE9E74",
+
+    secondary: "#D27519",
+    "on-secondary": "#1E293B",
+    accent: "#7DD3FC",
+
+    error: "#F87171",
+    info: "#94A3B8", // Lighter slate for icons/secondary text
+    success: "#34D399",
+    warning: "#FBBF24",
+
+    outline: "#334155", // Darker borders
   },
 } as const;
 // Export union type of color keys

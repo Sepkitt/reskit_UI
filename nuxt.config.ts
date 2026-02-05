@@ -9,6 +9,14 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
+      ]
+    }
+  },
+  
   modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
   // Optional: Global configuration for persistence
   piniaPersistedstate: {
