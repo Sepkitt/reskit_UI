@@ -35,21 +35,30 @@
         </div>
 
         <div class="device-frame" :style="frameDimensions">
+          <v-fade-transition>
+            <div
+              v-if="isLoading"
+              class="loading-curtain blueprint-grid-pattern"
+            >
+              <div class="scan-line"></div>
+            </div>
+          </v-fade-transition>
+
           <div
-          
             v-if="isPanActive"
             class="pan-overlay"
             :class="{ 'is-dragging': isDragging }"
           />
-
-          <iframe
-          
-            ref="iframeRef"
-            :src="props.src"
-            class="iframe-element"
-            :style="{ pointerEvents: isPanActive ? 'none' : 'auto' }"
-            @load="isLoading = false"
-          />
+          <div class="iframe-wrapper" style="height: 100%; width: 100%">
+            <iframe
+              v-if="renderIframe"
+              ref="iframeRef"
+              :src="props.src"
+              class="iframe-element transition-opacity"
+              :class="{ 'opacity-0': isLoading }"
+              @load="isLoading = false"
+            />
+          </div>
         </div>
 
         <div
@@ -146,7 +155,7 @@ const isLoading = ref(true);
 const panningLocked = ref(false);
 const spacePressed = ref(false);
 const displayDimensions = ref({ w: 0, h: 0 });
-
+const renderIframe = ref(true);
 const isDragging = ref(false);
 const pan = ref({ x: 0, y: 0 });
 const startPos = ref({ x: 0, y: 0 });
@@ -232,19 +241,28 @@ const updateSize = () => {
   }
 };
 
-const resetAndRefresh = () => {
+const resetAndRefresh = async () => {
   pan.value = { x: 0, y: 0 };
   emit("update:zoom", 0);
-  if (iframeRef.value) {
-    isLoading.value = true;
-    const currentSrc = iframeRef.value.src;
-    iframeRef.value.src = "about:blank";
-    setTimeout(() => {
-      iframeRef.value.src = currentSrc;
-    }, 50);
-  }
-};
+  
+  isLoading.value = true;
+  
+  // 1. Nuke the iframe from the DOM entirely
+  renderIframe.value = false;
 
+  // 2. Wait for the DOM to clear (nextTick)
+  await nextTick();
+
+  // 3. Bring it back after a tiny delay
+  setTimeout(() => {
+    renderIframe.value = true;
+  }, 50);
+
+  // Safety Timeout
+  setTimeout(() => {
+    if (isLoading.value) isLoading.value = false;
+  }, 8000);
+};
 const startPan = (e) => {
   if (!isPanActive.value) return;
   isDragging.value = true;
@@ -313,7 +331,7 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgb(var(--v-theme-baseCard), 80%); 
+  background: rgb(var(--v-theme-baseCard), 80%);
   backdrop-filter: blur(12px);
 }
 
@@ -323,23 +341,45 @@ onUnmounted(() => {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-  background: #fff;
- border: 1px solid rgb(var(--v-theme-outline));
+
+  /* CHANGE THIS: Use the theme surface or transparent so it doesn't flash white */
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgb(var(--v-theme-outline));
   width: 100%;
   height: 100%;
 
   &.safari {
-    background: #f9f9f9;
+    /* Ensure Safari mode also doesn't have a white base */
+    background: rgb(var(--v-theme-surface));
   }
 }
 
+/* Ensure the curtain is high enough z-index to cover everything */
+.loading-curtain {
+  position: absolute;
+  inset: 0;
+  z-index: 20; /* Bump this up */
+  background-color: rgb(var(--v-theme-surface));
+  background-image: radial-gradient(
+    rgba(var(--v-theme-primary), 0.1) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+}
 .device-frame {
   position: relative;
-  background: white;
+  background-color: rgb(var(--v-theme-surface));
+  background-image: radial-gradient(
+    rgba(var(--v-theme-primary), 0.1) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+
   overflow: hidden;
   flex-grow: 1;
 
   .iframe-element {
+    background-color: transparent;
     border: 0;
     width: calc(100% + 20px);
     height: 100%;
@@ -423,5 +463,67 @@ onUnmounted(() => {
   position: absolute;
   bottom: 24px;
   right: 24px;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--v-theme-primary), 0),
+    rgba(var(--v-theme-primary), 0.5),
+    rgba(var(--v-theme-primary), 0)
+  );
+  box-shadow: 0 0 15px rgba(var(--v-theme-primary), 0.5);
+  z-index: 5;
+  animation: scan 3s cubic-bezier(0.4, 0, 0.2, 1) infinite; // Smoother movement
+  // Add a trail effect
+  &::after {
+    content: "";
+    position: absolute;
+    top: -100px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(
+      to top,
+      rgba(var(--v-theme-primary), 0.1),
+      transparent
+    );
+  }
+}
+
+@keyframes scan {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+.transition-opacity {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.opacity-0 {
+  opacity: 0 !important;
+  visibility: hidden !important; /* Prevents the "white box" paint */
+  transition:
+    opacity 0.5s ease-in-out,
+    visibility 0.5s;
+}
+
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.6s ease, filter 0.6s ease;
+}
+
+.v-leave-to {
+  opacity: 0;
+  filter: blur(10px); /* Makes the curtain melt away */
 }
 </style>

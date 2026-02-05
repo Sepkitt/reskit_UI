@@ -3,6 +3,8 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
+  ssr: false,
+  spaLoadingTemplate: "spa-loading-template.html",
   components: [
     {
       path: "~/components/",
@@ -10,13 +12,12 @@ export default defineNuxtConfig({
     },
   ],
   app: {
+    pageTransition: { name: "blur-fade", mode: "out-in" },
     head: {
-      link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
-      ]
-    }
+      link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+    },
   },
-  
+
   modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
   // Optional: Global configuration for persistence
   piniaPersistedstate: {
