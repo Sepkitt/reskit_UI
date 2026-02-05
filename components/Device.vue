@@ -313,7 +313,7 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgb(var(--v-theme-info), 80%);
+  background: rgb(var(--v-theme-baseCard), 80%); 
   backdrop-filter: blur(12px);
 }
 
