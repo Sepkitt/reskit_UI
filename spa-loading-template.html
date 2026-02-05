@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RESKIT // Loading</title>
+  <style>
+    /* 1. Reset and Theme Colors */
+    :root {
+      --bg: #0B0E14;
+      --primary: #00ffff;
+      /* Your blueprint cyan */
+    }
+
+    body {
+      background: var(--bg);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: ui-monospace, 'Cascadia Code', monospace;
+    }
+
+    /* 2. The Main Frame Container */
+    .blueprint-loader {
+      position: relative;
+      width: 240px;
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 3. SVG Animation (Inspiration: Stroke Drawing) */
+    .loader-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .frame-path {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 1.5;
+      stroke-dasharray: 600;
+      /* Total length of path */
+      stroke-dashoffset: 600;
+      animation: drawFrame 3s ease-in-out infinite;
+      vector-effect: non-scaling-stroke;
+    }
+
+    @keyframes drawFrame {
+      0% {
+        stroke-dashoffset: 600;
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      50% {
+        stroke-dashoffset: 0;
+      }
+
+      80% {
+        opacity: 1;
+      }
+
+      100% {
+        stroke-dashoffset: -600;
+        opacity: 0;
+      }
+    }
+
+    /* 4. Text and Glitch Effect */
+    .loader-text {
+      color: var(--primary);
+      font-size: 10px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      animation: pulseText 1.5s ease-in-out infinite;
+    }
+
+    .data-stream {
+      color: var(--primary);
+      font-size: 8px;
+      opacity: 0.4;
+      animation: flash 0.1s infinite;
+    }
+
+    @keyframes pulseText {
+
+      0%,
+      100% {
+        opacity: 0.6;
+        filter: blur(0px);
+      }
+
+      50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 5px var(--primary));
+      }
+    }
+
+    @keyframes flash {
+      0% {
+        opacity: 0.2;
+      }
+
+      100% {
+        opacity: 0.5;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="nuxt-loading">
+    <div class="blueprint-loader">
+      <svg class="loader-svg" viewBox="0 0 240 80">
+        <path class="frame-path" d="M10,10 L230,10 L230,70 L10,70 Z" />
+
+        <path class="frame-path" d="M0,40 L20,40 M220,40 L240,40" style="animation-delay: 0.2s;" />
+        <path class="frame-path" d="M120,0 L120,20 M120,60 L120,80" style="animation-delay: 0.4s;" />
+      </svg>
+
+      <div class="loader-text">Initializing</div>
+      <div class="data-stream" id="counter">00%</div>
+    </div>
+  </div>
+
+  <script>
+    // Simple JS for a tech-style counter
+    let count = 0;
+    const counterEl = document.getElementById('counter');
+    const interval = setInterval(() => {
+      count += Math.floor(Math.random() * 15);
+      if (count >= 100) {
+        count = 100;
+        clearInterval(interval);
+      }
+      counterEl.innerText = `SYS_LOAD: ${count.toString().padStart(2, '0')}%`;
+    }, 150);
+  </script>
+
+</body>
+
+</html>
