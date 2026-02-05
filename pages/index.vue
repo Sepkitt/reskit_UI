@@ -22,12 +22,22 @@
         <div class="ruler-line"></div>
       </div>
 
-      <v-container class="fill-height position-relative" style="z-index: 2" fluid>
-        <v-row align="center" justify="space-between" class="fill-height px-md-16">
+      <v-container
+        class="fill-height position-relative"
+        style="z-index: 2"
+        fluid
+      >
+        <v-row
+          align="center"
+          justify="space-between"
+          class="fill-height px-md-16"
+        >
           <v-col cols="12" md="5" lg="4" order="2" order-md="1">
             <v-fade-transition appear>
               <div :class="{ 'text-center': mobile }">
-                <div class="text-overline text-primary font-weight-bold mb-1 letter-spacing-2">
+                <div
+                  class="text-overline text-primary font-weight-bold mb-1 letter-spacing-2"
+                >
                   PROJECT_RESKIT // UNIT_01
                 </div>
 
@@ -35,20 +45,34 @@
                   RES<span class="text-primary">KIT</span>
                 </h1>
 
-                <div class="d-flex align-center mb-6 justify-center justify-md-start">
+                <div
+                  class="d-flex align-center mb-6 justify-center justify-md-start"
+                >
                   <span class="version-tag">v2.0.4-BETA</span>
-                  <span class="text-caption text-grey ml-4 font-mono opacity-50">
+                  <span
+                    class="text-caption text-grey ml-4 font-mono opacity-50"
+                  >
                     INIT_ID: {{ mouseCoord }}
                   </span>
                 </div>
 
-                <h2 class="text-h6 text-grey font-weight-light mb-10 landing-subtitle">
+                <h2
+                  class="text-h6 text-grey font-weight-light mb-10 landing-subtitle"
+                >
                   An expansive
-                  <span class="text-primary font-weight-medium">blueprint environment</span>
-                  designed for precision device simulation and high-fidelity validation.
+                  <span class="text-primary font-weight-medium"
+                    >blueprint environment</span
+                  >
+                  designed for precision device simulation and high-fidelity
+                  validation.
                 </h2>
 
-                <v-btn size="x-large" flat class="px-10 init-btn" @click="startInitialization">
+                <v-btn
+                  size="x-large"
+                  flat
+                  class="px-10 init-btn"
+                  @click="startInitialization"
+                >
                   Initialize System
                   <v-icon end size="small">mdi-chevron-right</v-icon>
                 </v-btn>
@@ -56,7 +80,14 @@
             </v-fade-transition>
           </v-col>
 
-          <v-col cols="12" md="5" lg="5" class="d-flex justify-center justify-md-end position-relative" order="1" order-md="2">
+          <v-col
+            cols="12"
+            md="5"
+            lg="5"
+            class="d-flex justify-center justify-md-end position-relative"
+            order="1"
+            order-md="2"
+          >
             <div class="logo-blueprint-frame hover-blueprint">
               <div class="crosshair ch-tl"></div>
               <div class="crosshair ch-tr"></div>
@@ -66,8 +97,12 @@
               <ReskitLogo :size="dynamicLogoSize" />
 
               <div class="data-label">
-                <div class="text-caption font-weight-black">OBJ_REF: UI_GLOBAL</div>
-                <div class="text-caption opacity-60">XY_POS: {{ mouseCoord }}</div>
+                <div class="text-caption font-weight-black">
+                  OBJ_REF: UI_GLOBAL
+                </div>
+                <div class="text-caption opacity-60">
+                  XY_POS: {{ mouseCoord }}
+                </div>
               </div>
             </div>
           </v-col>
@@ -77,12 +112,24 @@
 
     <div v-else class="pre-mount-loader d-flex align-center justify-center">
       <div class="loader-content text-center">
-        <v-progress-circular indeterminate color="primary" size="64" width="2" />
-        <div class="mt-4 font-mono text-primary text-caption">CALIBRATING_VIEWPORT...</div>
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          size="64"
+          width="2"
+        />
+        <div class="mt-4 font-mono text-primary text-caption">
+          CALIBRATING_VIEWPORT...
+        </div>
       </div>
     </div>
 
-    <v-overlay v-model="isInitializing" persistent class="align-center justify-center boot-overlay" scrim="black">
+    <v-overlay
+      v-model="isInitializing"
+      persistent
+      class="align-center justify-center boot-overlay"
+      scrim="black"
+    >
       <div class="terminal-loader">
         <div class="blueprint-scanner"></div>
         <div class="logs mt-4 font-mono">
@@ -113,7 +160,9 @@ onMounted(() => {
 // Interactivity States
 const mouseX = ref(0);
 const mouseY = ref(0);
-const mouseCoord = computed(() => `${Math.round(mouseX.value)},${Math.round(mouseY.value)}`);
+const mouseCoord = computed(
+  () => `${Math.round(mouseX.value)},${Math.round(mouseY.value)}`,
+);
 
 const handleMouseMove = (e) => {
   mouseX.value = e.clientX / 60;
@@ -167,16 +216,24 @@ const startInitialization = () => {
 
 .blueprint-landing {
   position: relative;
-  background-image: 
+  background-image:
     linear-gradient(rgba(var(--v-theme-primary), 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--v-theme-primary), 0.08) 1px, transparent 1px);
+    linear-gradient(
+      90deg,
+      rgba(var(--v-theme-primary), 0.08) 1px,
+      transparent 1px
+    );
   background-size: 60px 60px;
 
   &::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 50%, transparent 0%, rgb(var(--v-theme-background)) 85%);
+    background: radial-gradient(
+      circle at 50% 50%,
+      transparent 0%,
+      rgb(var(--v-theme-background)) 85%
+    );
     pointer-events: none;
   }
 }
@@ -196,7 +253,12 @@ const startInitialization = () => {
   .ruler-line {
     width: 1px;
     flex-grow: 1;
-    background: linear-gradient(to bottom, transparent, rgb(var(--v-theme-primary)), transparent);
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--v-theme-primary)),
+      transparent
+    );
   }
 
   .ruler-measurements {
@@ -218,7 +280,8 @@ const startInitialization = () => {
   }
 }
 
-.coordinates-x, .coordinates-y {
+.coordinates-x,
+.coordinates-y {
   position: absolute;
   display: flex;
   font-family: monospace;
@@ -229,17 +292,53 @@ const startInitialization = () => {
   transition: transform 0.1s ease-out;
   white-space: nowrap;
 }
-.coordinates-x { top: 15px; left: 15px; right: 15px; justify-content: space-between; }
-.coordinates-y { left: 15px; top: 15px; bottom: 15px; flex-direction: column; justify-content: space-between; }
+.coordinates-x {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  justify-content: space-between;
+}
+.coordinates-y {
+  left: 15px;
+  top: 15px;
+  bottom: 15px;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 .logo-blueprint-frame {
   position: relative;
   padding: 60px;
-  .crosshair { position: absolute; width: 20px; height: 20px; border: 1px solid rgb(var(--v-theme-primary)); }
-  .ch-tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
-  .ch-tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
-  .ch-bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
-  .ch-br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+  .crosshair {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgb(var(--v-theme-primary));
+  }
+  .ch-tl {
+    top: 0;
+    left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .ch-tr {
+    top: 0;
+    right: 0;
+    border-left: 0;
+    border-bottom: 0;
+  }
+  .ch-bl {
+    bottom: 0;
+    left: 0;
+    border-right: 0;
+    border-top: 0;
+  }
+  .ch-br {
+    bottom: 0;
+    right: 0;
+    border-left: 0;
+    border-top: 0;
+  }
 }
 
 .data-label {
@@ -252,12 +351,26 @@ const startInitialization = () => {
   font-family: monospace;
 }
 
-.main-title { letter-spacing: -3px !important; line-height: 0.9; }
-.version-tag { font-size: 10px; font-weight: 900; padding: 2px 8px; border: 1px solid rgb(var(--v-theme-primary)); color: rgb(var(--v-theme-primary)); border-radius: 4px; }
+.main-title {
+  letter-spacing: -3px !important;
+  line-height: 0.9;
+}
+.version-tag {
+  font-size: 10px;
+  font-weight: 900;
+  padding: 2px 8px;
+  border: 1px solid rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-primary));
+  border-radius: 4px;
+}
 
 .init-btn {
   --t-color: rgb(var(--v-theme-primary));
-  background-color: color-mix(in srgb, var(--t-color), rgb(var(--v-theme-surface)) 85%) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--t-color),
+    rgb(var(--v-theme-surface)) 85%
+  ) !important;
   color: var(--t-color) !important;
   border: 1px solid var(--t-color) !important;
   border-radius: 4px !important;
@@ -265,20 +378,80 @@ const startInitialization = () => {
   font-weight: 800;
   transition: all 0.3s ease;
   &:hover {
-    background-color: color-mix(in srgb, var(--t-color), rgb(var(--v-theme-surface)) 70%) !important;
+    background-color: color-mix(
+      in srgb,
+      var(--t-color),
+      rgb(var(--v-theme-surface)) 70%
+    ) !important;
     transform: translateY(-2px);
     box-shadow: 0 15px 35px rgba(var(--v-theme-primary), 0.25) !important;
   }
 }
 
-.hover-blueprint { animation: floatCalibrate 10s infinite ease-in-out; }
-@keyframes floatCalibrate { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(10px, -15px) rotate(1deg); } }
-.boot-overlay { backdrop-filter: blur(12px); }
-.terminal-loader { width: 400px; position: relative; .blueprint-scanner { width: 100%; height: 2px; background: rgb(var(--v-theme-primary)); box-shadow: 0 0 20px rgb(var(--v-theme-primary)); position: absolute; top: 0; animation: scan 2s infinite linear; } }
-.log-line { font-size: 0.8rem; color: #fff; margin-bottom: 6px; font-family: monospace; }
-.cursor { display: inline-block; width: 8px; height: 15px; background: white; animation: blink 0.8s infinite; vertical-align: middle; }
-@keyframes scan { 0% { top: -20px; opacity: 0; } 50% { opacity: 1; } 100% { top: 200px; opacity: 0; } }
-@keyframes blink { 50% { opacity: 0; } }
-.font-mono { font-family: monospace !important; }
-.letter-spacing-2 { letter-spacing: 2px !important; }
+.hover-blueprint {
+  animation: floatCalibrate 10s infinite ease-in-out;
+}
+@keyframes floatCalibrate {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(10px, -15px) rotate(1deg);
+  }
+}
+.boot-overlay {
+  backdrop-filter: blur(12px);
+}
+.terminal-loader {
+  width: 400px;
+  position: relative;
+  .blueprint-scanner {
+    width: 100%;
+    height: 2px;
+    background: rgb(var(--v-theme-primary));
+    box-shadow: 0 0 20px rgb(var(--v-theme-primary));
+    position: absolute;
+    top: 0;
+    animation: scan 2s infinite linear;
+  }
+}
+.log-line {
+  font-size: 0.8rem;
+  color: #fff;
+  margin-bottom: 6px;
+  font-family: monospace;
+}
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: white;
+  animation: blink 0.8s infinite;
+  vertical-align: middle;
+}
+@keyframes scan {
+  0% {
+    top: -20px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 200px;
+    opacity: 0;
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.font-mono {
+  font-family: monospace !important;
+}
+.letter-spacing-2 {
+  letter-spacing: 2px !important;
+}
 </style>

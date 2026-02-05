@@ -6,28 +6,12 @@
       </v-container>
 
       <div class="theme-toggle-wrapper">
-        <!-- <v-btn
-          icon
-          size="large"
-          color="primary"
-          elevation="8"
-          @click="toggleTheme"
-        >
-          <v-icon>
-            {{ isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent' }}
-          </v-icon>
-          <v-tooltip activator="parent" location="top">
-            Switch to {{ isDark ? 'Light' : 'Dark' }} Mode
-          </v-tooltip>
-        </v-btn> -->
       
           <TooltipButton
           size="large"
           color="primary"
         :icon="isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'"
         :text="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-
-
         @click="toggleTheme"
       />
       </div>
@@ -66,5 +50,27 @@ function toggleTheme() {
 /* Smooth transition for theme changes across the whole app */
 :deep(.v-application) {
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Kill the scrollbar on the root level */
+html, body {
+  overflow: hidden !important;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  /* Extra precaution for mobile browsers */
+  position: fixed; 
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 </style>
