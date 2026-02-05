@@ -99,7 +99,7 @@ const updateSrc = () => {
       :style="{ borderColor: 'rgb(var(--v-theme-outline)) !important' }"
     >
       <v-toolbar-title class="text-primary font-weight-black letter-spacing-1">
-        RES<span class="text-text">KIT</span>
+        RES<span class="text-text">KIT</span> <span class="text-overline" >V2.0</span>
       </v-toolbar-title>
 
       <v-spacer />
@@ -138,9 +138,8 @@ const updateSrc = () => {
 
       <v-btn
         color="primary"
-        variant="elevated"
-        elevation="1"
-        class="ml-2 px-6 update-btn-refined"
+        variant="flat"
+        class="ml-2 px-6 tooltip-btn tooltip-primary"
         height="40"
         @click="updateSrc"
       >
@@ -150,7 +149,7 @@ const updateSrc = () => {
 
       <v-spacer />
 
-      <v-btn
+      <!-- <v-btn
         icon
         size="small"
         variant="text"
@@ -158,16 +157,22 @@ const updateSrc = () => {
         @click="dialog = true"
       >
         <v-icon>mdi-qrcode</v-icon>
-      </v-btn>
+      </v-btn> -->
+      <TooltipButton
+       
+        variant="tonal"
+        color="secondary"
+        icon="mdi-qrcode"
+        text="Test on mobile"
+        @click="toggleTheme"
+      />
 
-         <TooltipButton
-         size="small"
-         variant="tonal"
+      <TooltipButton
+         class="mx-4"
+        variant="tonal"
         color="primary"
         :icon="isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'"
         :text="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
-
-
         @click="toggleTheme"
       />
     </v-app-bar>
@@ -294,7 +299,7 @@ const updateSrc = () => {
                     hide-details
                     class="zoom-slider-ui"
                   >
-                   <template #prepend>
+                    <template #prepend>
                       <v-btn
                         icon="mdi-fit-to-screen"
                         size="x-small"
@@ -312,7 +317,7 @@ const updateSrc = () => {
       </v-row>
     </v-container>
 
-      <v-dialog v-model="dialog" max-width="400">
+    <v-dialog v-model="dialog" max-width="400">
       <v-card color="surface" class="rounded-xl border-themed">
         <v-card-text class="text-center pa-8">
           <div class="text-h5 font-weight-bold mb-2">Mobile Sync</div>
@@ -435,18 +440,6 @@ const updateSrc = () => {
     // This ensures the text uses the theme's text color specifically
     color: rgb(var(--v-theme-text)) !important;
     opacity: 1 !important;
-  }
-}
-
-.update-btn-refined {
-  border-radius: 8px !important; // Match the text-field's radius
-  text-transform: none !important; // Keeps it looking modern/web-standard
-  font-weight: 600 !important;
-  letter-spacing: 0.5px;
-
-  // Optional: Add a subtle glow in dark mode
-  &:hover {
-    box-shadow: 0 0 12px rgba(var(--v-theme-primary), 0.3) !important;
   }
 }
 

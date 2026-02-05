@@ -71,37 +71,7 @@ const { mobile } = useDisplay()
 :deep(a) {
   text-decoration: none;
 }
-/* Target the button specifically to use your tooltip logic */
-.tooltip-btn {
-  // Use your existing color-mix logic
-  background-color: color-mix(
-    in srgb,
-    var(--t-color),
-    rgb(var(--v-theme-surface)) 50%
-  ) !important;
-  
-  color: var(--t-color) !important;
-  border: 1px solid var(--t-color) !important;
-  border-radius: 5px !important; // Match your tooltip-radius
-  
-  font-weight: 700;
-  text-transform: none; // Keeps it modern
-  letter-spacing: 0.5px;
-  
-  // Transition for the hover state
-  transition: all 0.2s ease-in-out;
 
-  &:hover {
-    // Make it pop a bit more on hover like a real UI element
-    background-color: color-mix(
-      in srgb,
-      var(--t-color),
-      rgb(var(--v-theme-surface)) 40%
-    ) !important;
-    box-shadow: 0 0 15px rgba(var(--v-theme-primary), 0.2);
-    transform: translateY(-1px);
-  }
-}
 
 /* Ensure the Dark Mode mix ratio also applies to the button */
 .v-theme--darkTheme .tooltip-btn {

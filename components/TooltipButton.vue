@@ -34,7 +34,7 @@ withDefaults(defineProps<Props>(), {
   color: 'primary',
   location: 'bottom',
   variant: 'text',
-  density: 'compact'
+  density: 'comfortable'
 })
 
 const emit = defineEmits(['click'])

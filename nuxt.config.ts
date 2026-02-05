@@ -16,6 +16,7 @@ export default defineNuxtConfig({
       ]
     }
   },
+  
   modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
   // Optional: Global configuration for persistence
   piniaPersistedstate: {

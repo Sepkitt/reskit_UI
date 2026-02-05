@@ -63,6 +63,9 @@ html {
 .tooltip-primary {
   --t-color: rgb(var(--v-theme-primary));
 }
+.tooltip-secondary {
+  --t-color: rgb(var(--v-theme-secondary));
+}
 .tooltip-accent {
   --t-color: rgb(var(--v-theme-accent));
 }
@@ -88,4 +91,34 @@ html {
     var(--t-color),
     rgb(var(--v-theme-surface)) 75%
   ) !important;
+}
+
+/* Target the button specifically to use your tooltip logic */
+.tooltip-btn {
+  background-color: color-mix(
+    in srgb,
+    var(--t-color),
+    rgb(var(--v-theme-surface)) 75%
+  ) !important;
+  
+  color: var(--t-color) !important;
+  border: 1px solid var(--t-color) !important;
+  border-radius: 5px !important;
+  
+  font-weight: 700;
+  text-transform: none; 
+  letter-spacing: 0.5px;
+  
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    color:white !important;
+    background-color: color-mix(
+      in srgb,
+      var(--t-color),
+      rgb(var(--v-theme-surface)) 40%
+    ) !important;
+    box-shadow: 0 0 15px rgba(var(--v-theme-primary), 0.2);
+    transform: translateY(-1px);
+  }
 }

@@ -9,7 +9,7 @@ export const lightTheme = {
     // Shifting from pure white to a soft workspace grey
     background: "#F1F5F9",
     surface: "#FFFFFF",
-    baseCard: "#FFFFFF",
+    baseCard: "#f6f3f3",
     "surface-variant": "#F8FAFC", // Used for URL bars/nested areas
 
     primary: "#1976D2",
@@ -17,7 +17,7 @@ export const lightTheme = {
     text: "#0F172A", // Deep navy-black for better readability
     "on-primary": "#FFFFFF",
 
-    secondary: "#D97706",
+    secondary: "#D27519",
     "on-secondary": "#FFFFFF",
     accent: "#00B0FF",
 
@@ -45,7 +45,7 @@ export const darkTheme = {
     text: "#F8FAFC",
     "on-primary": "#000000",
 
-    secondary: "#FBBF24",
+    secondary: "#D27519",
     "on-secondary": "#1E293B",
     accent: "#7DD3FC",
 
