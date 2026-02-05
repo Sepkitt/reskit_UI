@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     },
   ],
   app: {
+    pageTransition: { name: 'blur-fade', mode: 'out-in' },
     head: {
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }

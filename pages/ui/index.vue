@@ -96,10 +96,11 @@ const updateSrc = () => {
       color="background"
       elevation="0"
       class="border-b"
-      :style="{ borderColor: 'rgb(var(--v-theme-outline)) !important' }"
-    >
+      :style="{ borderColor: 'primary' }"
+      ><ReskitLogo :size="40" />
       <v-toolbar-title class="text-primary font-weight-black letter-spacing-1">
-        RES<span class="text-text">KIT</span> <span class="text-overline" >V2.0</span>
+        RES<span class="text-text">KIT</span>
+        <span class="text-overline">V2.0</span>
       </v-toolbar-title>
 
       <v-spacer />
@@ -149,7 +150,7 @@ const updateSrc = () => {
 
       <v-spacer />
 
-      <TooltipButton    
+      <TooltipButton
         variant="tonal"
         color="secondary"
         icon="mdi-cellphone"
@@ -208,14 +209,20 @@ const updateSrc = () => {
                 class="select-width-refined mx-4"
               >
                 <template #selection="{ item }">
-                  <div class="d-flex align-center">
+                  <div class="d-flex align-center w-100">
                     <span
                       class="text-caption font-weight-bold text-primary mr-2"
                     >
                       {{ getSimulatedLabel(item.raw.width) }}
                     </span>
-                    <span class="text-caption font-weight-medium">
+                    <span class="text-caption font-weight-medium mr-2">
                       {{ item.raw.name }}
+                    </span>
+                    <span
+                      class="ml-auto text-mono text-grey-darken-1"
+                      style="font-size: 0.7rem"
+                    >
+                      {{ item.raw.width }}×{{ item.raw.height }}
                     </span>
                   </div>
                 </template>
@@ -260,6 +267,7 @@ const updateSrc = () => {
 
             <div class="device-viewport-container blueprint-grid">
               <Device
+                class="device-transition"
                 v-model:zoom="device.zoom"
                 :height="
                   device.rotate
@@ -379,18 +387,46 @@ const updateSrc = () => {
   flex-grow: 1;
   position: relative;
   overflow: hidden;
-  // Use the 'outline' color you defined in your plugin!
-  --t-color: v-bind("themeColor('outline')");
 
-  background-color: v-bind("themeColor('baseCard')");
+  /* Use Vuetify variables directly - no more JS parsing errors */
+  background-color: rgb(var(--v-theme-baseCard));
+
+  /* Map the grid color to the outline theme color */
+  --grid-color: rgba(var(--v-theme-outline), 0.15);
 
   background-image:
-    linear-gradient(var(--t-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--t-color) 1px, transparent 1px);
-  background-size: 40px 40px; // Larger grid for a "blueprint" look
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(var(--v-theme-primary));
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Top Left Bracket */
+  &::before {
+    top: 10px;
+    left: 10px;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  /* Bottom Right Bracket */
+  &::after {
+    bottom: 10px;
+    right: 10px;
+    border-left: 0;
+    border-top: 0;
+  }
 }
 
-// 4. Re-use your existing mapping to switch the grid theme dynamically
 .grid-primary {
   --t-color: rgb(var(--v-theme-primary));
 }
@@ -418,16 +454,13 @@ const updateSrc = () => {
 
 .url-bar-refined {
   max-width: 500px;
-
   :deep(.v-field) {
     border-radius: 8px !important;
     font-size: 0.9rem;
-    // Add a very subtle border so it doesn't disappear in light mode
-    border: 1px solid rgba(var(--v-theme-outline), 0.2);
+    border: 1px solid rgba(var(--v-theme-primary), 0.4) !important;
   }
 
   :deep(.v-field__input) {
-    // This ensures the text uses the theme's text color specifically
     color: rgb(var(--v-theme-text)) !important;
     opacity: 1 !important;
   }
@@ -438,18 +471,14 @@ const updateSrc = () => {
   align-items: center;
   justify-content: center;
 
-  // Sizing
   min-width: 48px;
   height: 28px;
   padding: 0 10px;
   border-radius: 4px;
 
-  // Colors & Inset Shadow
-  // Uses your blueprint primary blue for the border
   border: 1px solid rgba(var(--v-theme-primary), 0.5);
   background-color: rgb(var(--v-theme-surface));
 
-  // The "Inset" look you liked, refined for modern UI
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.15);
 
   .label-text {
@@ -461,9 +490,60 @@ const updateSrc = () => {
   }
 }
 
-// Optional: Change the background in Dark Mode to be slightly deeper
 .v-theme--darkTheme .simulated-label-container {
   background-color: rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
+.select-width-refined {
+  :deep(.v-field) {
+    border-radius: 8px !important;
+    background-color: rgb(var(--v-theme-surface));
+
+    /* The Blueprint Primary Outline */
+    border: 1px solid rgba(var(--v-theme-primary), 0.4) !important;
+
+    /* transition for hover/focus */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hover State */
+  &:hover :deep(.v-field) {
+    border-color: rgba(var(--v-theme-primary), 0.8) !important;
+    background-color: color-mix(
+      in srgb,
+      rgb(var(--v-theme-primary)),
+      transparent 96%
+    );
+  }
+
+  /* Focus State (When dropdown is open) */
+  &.v-input--active :deep(.v-field) {
+    border-color: rgb(var(--v-theme-primary)) !important;
+    box-shadow: 0 0 15px rgba(var(--v-theme-primary), 0.2) !important;
+  }
+
+  /* Ensure the text matches the theme */
+  :deep(.v-field__input) {
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+}
+
+.mini-label-badge {
+  font-size: 9px;
+  font-weight: 900;
+  padding: 1px 4px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  color: rgb(var(--v-theme-primary));
+}
+
+.device-transition {
+  /* This animates width, height, and the zoom transform simultaneously */
+  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1) !important;
+
+  /* Optimization to keep the animation buttery smooth */
+  will-change: width, height, transform;
 }
 </style>

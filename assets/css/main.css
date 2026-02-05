@@ -122,3 +122,14 @@ html {
     transform: translateY(-1px);
   }
 }
+
+
+.blur-fade-enter-active,
+.blur-fade-leave-active {
+  transition: all 0.4s ease;
+}
+.blur-fade-enter-from,
+.blur-fade-leave-to {
+  opacity: 0;
+  filter: blur(8px);
+}
