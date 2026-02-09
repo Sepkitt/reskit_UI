@@ -5,152 +5,194 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RESKIT // Loading</title>
-  <style>
-    /* 1. Reset and Theme Colors */
-    :root {
-      --bg: #0B0E14;
-      --primary: #00ffff;
-      /* Your blueprint cyan */
-    }
+<style>
+  /* 1. YOUR EXISTING THEME VARIABLES */
+  :root {
+    --bg: #0B0E14;
+    --primary: #00ffff;
+  }
 
-    body {
-      background: var(--bg);
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      font-family: ui-monospace, 'Cascadia Code', monospace;
-    }
+  html.light-mode {
+    --bg: #F8FAFC;
+    --primary: #008080;
+  }
 
-    /* 2. The Main Frame Container */
-    .blueprint-loader {
-      position: relative;
-      width: 240px;
-      height: 80px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+  /* 2. ATMOSPHERIC OVERLAYS (The new stuff) */
+  #nuxt-loading::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    inset: 0;
+    /* Uses a very faint version of the primary color for the lines */
+    background: linear-gradient(
+      rgba(var(--v-theme-primary), 0) 50%, 
+      rgba(0, 0, 0, 0.03) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.3;
+  }
 
-    /* 3. SVG Animation (Inspiration: Stroke Drawing) */
-    .loader-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
+  /* 3. BASE STYLES */
+  body {
+    background: var(--bg);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: ui-monospace, 'Cascadia Code', monospace;
+    transition: background-color 0.3s ease;
+  }
 
-    .frame-path {
-      fill: none;
-      stroke: var(--primary);
-      stroke-width: 1.5;
-      stroke-dasharray: 600;
-      /* Total length of path */
+  .blueprint-loader {
+    position: relative;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* This adds the rolling vertical scanline */
+    overflow: hidden;
+  }
+
+  /* The rolling beam animation */
+  .blueprint-loader::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 255, 255, 0.08), transparent);
+    animation: scanline 4s linear infinite;
+  }
+
+  .loader-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .frame-path {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 1.5;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    animation: drawFrame 3s ease-in-out infinite;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .loader-text {
+    color: var(--primary);
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    /* Added a slight glow/shadow for the "CRT" look */
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+  }
+
+  .data-stream {
+    color: var(--primary);
+    font-size: 8px;
+    opacity: 0.5;
+  }
+
+  /* 5. KEYFRAMES */
+  @keyframes drawFrame {
+    0% {
       stroke-dashoffset: 600;
-      animation: drawFrame 3s ease-in-out infinite;
-      vector-effect: non-scaling-stroke;
+      opacity: 0;
     }
 
-    @keyframes drawFrame {
-      0% {
-        stroke-dashoffset: 600;
-        opacity: 0;
-      }
-
-      20% {
-        opacity: 1;
-      }
-
-      50% {
-        stroke-dashoffset: 0;
-      }
-
-      80% {
-        opacity: 1;
-      }
-
-      100% {
-        stroke-dashoffset: -600;
-        opacity: 0;
-      }
+    20% {
+      opacity: 1;
     }
 
-    /* 4. Text and Glitch Effect */
-    .loader-text {
-      color: var(--primary);
-      font-size: 10px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      animation: pulseText 1.5s ease-in-out infinite;
+    50% {
+      stroke-dashoffset: 0;
     }
 
-    .data-stream {
-      color: var(--primary);
-      font-size: 8px;
-      opacity: 0.4;
-      animation: flash 0.1s infinite;
+    80% {
+      opacity: 1;
     }
 
-    @keyframes pulseText {
+    100% {
+      stroke-dashoffset: -600;
+      opacity: 0;
+    }
+  }
 
-      0%,
-      100% {
-        opacity: 0.6;
-        filter: blur(0px);
-      }
-
-      50% {
-        opacity: 1;
-        filter: drop-shadow(0 0 5px var(--primary));
-      }
+  @keyframes scanline {
+    0% {
+      top: -100%;
     }
 
-    @keyframes flash {
-      0% {
-        opacity: 0.2;
-      }
-
-      100% {
-        opacity: 0.5;
-      }
+    100% {
+      top: 200%;
     }
-  </style>
+  }
+</style>
+<script>
+  (() => {
+    try {
+      // 1. Get all cookies
+      const cookies = document.cookie.split('; ');
+
+      // 2. Find the one matching your Pinia store name
+      // Usually it's the name of the store (e.g., 'user-store' or 'theme')
+      const themeCookie = cookies.find(row => row.startsWith('pinia-') || row.includes('isDark'));
+
+      if (themeCookie) {
+        // Decode the cookie (it's often URI encoded JSON)
+        const cookieValue = decodeURIComponent(themeCookie.split('=')[1]);
+
+        // Check for the specific value. 
+        // If it explicitly says 'false', or the dark value is 0, we switch to light.
+        if (cookieValue.includes('"isDark":false') || cookieValue === 'false') {
+          document.documentElement.classList.add('light-mode');
+        }
+      } else {
+        // FALLBACK: If no cookie exists (first visit), check system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.classList.add('light-mode');
+        }
+      }
+    } catch (e) {
+      console.error("Theme detection failed", e);
+    }
+  })();
+</script>
 </head>
 
 <body>
-
   <div id="nuxt-loading">
     <div class="blueprint-loader">
       <svg class="loader-svg" viewBox="0 0 240 80">
         <path class="frame-path" d="M10,10 L230,10 L230,70 L10,70 Z" />
-
         <path class="frame-path" d="M0,40 L20,40 M220,40 L240,40" style="animation-delay: 0.2s;" />
         <path class="frame-path" d="M120,0 L120,20 M120,60 L120,80" style="animation-delay: 0.4s;" />
       </svg>
-
       <div class="loader-text">Initializing</div>
-      <div class="data-stream" id="counter">00%</div>
+      <div class="data-stream" id="counter">SYS_LOAD: 00%</div>
     </div>
   </div>
 
   <script>
-    // Simple JS for a tech-style counter
     let count = 0;
     const counterEl = document.getElementById('counter');
     const interval = setInterval(() => {
-      count += Math.floor(Math.random() * 15);
-      if (count >= 100) {
-        count = 100;
-        clearInterval(interval);
-      }
-      counterEl.innerText = `SYS_LOAD: ${count.toString().padStart(2, '0')}%`;
-    }, 150);
+      count += Math.floor(Math.random() * 12);
+      if (count >= 100) { count = 100; clearInterval(interval); }
+      counterEl.innerText = `SYS_LOAD: ${count}%`;
+    }, 120);
   </script>
-
 </body>
 
 </html>

@@ -14,7 +14,7 @@
           size="64"
           width="6"
         />
-        <div class="mt-4 text-overline text-white">
+        <div class="mt-4 text-overline text-text">
           Establishing Connection...
         </div>
       </v-container>

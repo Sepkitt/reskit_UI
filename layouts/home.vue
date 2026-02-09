@@ -22,15 +22,10 @@
 <script setup>
 import { computed } from 'vue'
 import { useTheme } from 'vuetify'
+const { isDark, toggleTheme } = useMyTheme();
 
-const theme = useTheme()
 
-// Check if the current theme is your 'darkTheme'
-const isDark = computed(() => theme.global.name.value === 'darkTheme')
 
-function toggleTheme() {
-  theme.global.name.value = isDark.value ? 'lightTheme' : 'darkTheme'
-}
 </script>
 
 <style lang="scss" scoped>
