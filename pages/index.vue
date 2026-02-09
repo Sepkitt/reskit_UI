@@ -4,6 +4,11 @@
     color="background"
     @mousemove="handleMouseMove"
   >
+    <v-fade-transition>
+      <div v-if="isWarmingUp" class="entry-mask">
+        <div class="glitch-text" data-text="SYSTEM_READY">SYSTEM_READY</div>
+      </div>
+    </v-fade-transition>
     <div class="blueprint-grid-overlay"></div>
 
     <template v-if="isMounted">
@@ -132,7 +137,15 @@
     >
       <div class="terminal-loader">
         <div class="blueprint-scanner"></div>
-        <div class="logs mt-4 font-mono">
+
+        <div
+          class="terminal-header d-flex justify-space-between font-mono mb-2"
+        >
+          <span class="text-primary">SECURE_BOOT_V2</span>
+          <span class="text-primary">{{ bootPercent }}%</span>
+        </div>
+
+        <div class="logs font-mono">
           <div v-for="(log, i) in bootLogs" :key="i" class="log-line">
             <span class="text-primary">></span> {{ log }}
           </div>
@@ -150,11 +163,17 @@ import { useDisplay } from "vuetify";
 definePageMeta({ layout: "home" });
 
 const { mobile, name: currentBreakpoint } = useDisplay();
+const isWarmingUp = ref(true);
 
 // The Hydration Guard
 const isMounted = ref(false);
 onMounted(() => {
   isMounted.value = true;
+  // Give the browser 500ms to paint the blueprint grid
+  // then fade out the "warming up" mask
+  setTimeout(() => {
+    isWarmingUp.value = false;
+  }, 800);
 });
 
 // Interactivity States
@@ -190,17 +209,29 @@ const logOptions = [
   "INITIALIZING_RESKIT_CORE_V2...",
 ];
 
-const startInitialization = () => {
+const bootPercent = ref(0);
+
+const startInitialization = async () => {
   isInitializing.value = true;
   bootLogs.value = [];
-  logOptions.forEach((log, index) => {
-    setTimeout(() => {
-      bootLogs.value.push(log);
-      if (index === logOptions.length - 1) {
-        setTimeout(() => navigateTo("/UI"), 800);
-      }
-    }, index * 250);
-  });
+  bootPercent.value = 0;
+
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  for (let i = 0; i < logOptions.length; i++) {
+    const randomDelay = Math.floor(Math.random() * 450) + 150;
+    await wait(randomDelay);
+
+    bootLogs.value.push(logOptions[i]);
+
+    // Increment percent based on progress through logs
+    bootPercent.value = Math.floor(((i + 1) / logOptions.length) * 100);
+
+    if (i === logOptions.length - 1) {
+      await wait(800);
+      navigateTo("/UI");
+    }
+  }
 };
 </script>
 
@@ -404,8 +435,26 @@ const startInitialization = () => {
   backdrop-filter: blur(12px);
 }
 .terminal-loader {
-  width: 400px;
+  width: 450px;
+  background: rgba(var(--v-theme-surface), 0.8);
+  border: 1px solid rgba(var(--v-theme-primary), 0.3);
+  padding: 20px;
   position: relative;
+  backdrop-filter: blur(10px);
+  .terminal-header {
+    font-size: 10px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(var(--v-theme-primary), 0.2);
+    padding-bottom: 8px;
+  }
+
+  .logs {
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
   .blueprint-scanner {
     width: 100%;
     height: 2px;
@@ -414,6 +463,7 @@ const startInitialization = () => {
     position: absolute;
     top: 0;
     animation: scan 2s infinite linear;
+    z-index: 2;
   }
 }
 .log-line {
@@ -453,5 +503,68 @@ const startInitialization = () => {
 }
 .letter-spacing-2 {
   letter-spacing: 2px !important;
+}
+
+.entry-mask {
+  position: fixed;
+  inset: 0;
+  background: rgb(var(--v-theme-background));
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glitch-text {
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(var(--v-theme-primary));
+  position: relative;
+  letter-spacing: 10px;
+
+  &::before,
+  &::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+  }
+
+  &::before {
+    color: #ff00ff;
+    z-index: -1;
+    animation: glitch-anim 0.3s infinite;
+  }
+
+  &::after {
+    color: #00ffff;
+    z-index: -2;
+    animation: glitch-anim 0.3s infinite reverse;
+  }
+}
+
+@keyframes glitch-anim {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-3px, 3px);
+  }
+  40% {
+    transform: translate(-3px, -3px);
+  }
+  60% {
+    transform: translate(3px, 3px);
+  }
+  80% {
+    transform: translate(3px, -3px);
+  }
+  100% {
+    transform: translate(0);
+  }
 }
 </style>
