@@ -50,6 +50,23 @@
             :class="{ 'is-dragging': isDragging }"
           />
           <div class="iframe-wrapper" style="height: 100%; width: 100%">
+            <div
+              v-if="
+                !props.src ||
+                props.src === 'https://' ||
+                props.src === 'about:blank'
+              "
+              style="
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 10;
+              "
+            >
+              <EmptyState :is-mobile="props.width < 600"/>
+            </div>
             <iframe
               v-if="renderIframe"
               ref="iframeRef"
@@ -244,9 +261,9 @@ const updateSize = () => {
 const resetAndRefresh = async () => {
   pan.value = { x: 0, y: 0 };
   emit("update:zoom", 0);
-  
+
   isLoading.value = true;
-  
+
   // 1. Nuke the iframe from the DOM entirely
   renderIframe.value = false;
 
@@ -516,14 +533,17 @@ onUnmounted(() => {
     visibility 0.5s;
 }
 
-
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.6s ease, filter 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    filter 0.6s ease;
 }
 
 .v-leave-to {
   opacity: 0;
   filter: blur(10px); /* Makes the curtain melt away */
 }
+
+//empty State
 </style>
