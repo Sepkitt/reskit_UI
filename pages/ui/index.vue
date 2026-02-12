@@ -3,7 +3,9 @@
     <v-app-bar color="background" elevation="0" class="border-b">
       <div class="d-flex align-center px-4">
         <ReskitLogo :size="40" />
-        <v-toolbar-title class="text-primary font-weight-black letter-spacing-1 ml-2">
+        <v-toolbar-title
+          class="text-primary font-weight-black letter-spacing-1 ml-2"
+        >
           RES<span class="text-text">KIT</span>
           <span class="text-overline">V2.0</span>
         </v-toolbar-title>
@@ -33,7 +35,8 @@
               color="grey"
               class="cursor-pointer"
               @click="urlInput = ''"
-            >mdi-close-circle</v-icon>
+              >mdi-close-circle</v-icon
+            >
           </v-fade-transition>
         </template>
       </v-text-field>
@@ -64,7 +67,9 @@
           class="ml-2"
           variant="tonal"
           color="primary"
-          :icon="isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'"
+          :icon="
+            isDark ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'
+          "
           :text="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
           @click="toggleTheme"
         />
@@ -82,7 +87,7 @@
             :xl="config.xl"
             class="pa-2"
           >
-            <DeviceViewport 
+            <DeviceViewport
               v-model:device="config.activeDevice"
               v-model:zoom="config.zoom"
               v-model:rotate="config.rotate"
@@ -113,15 +118,33 @@ const urlInput = ref("https://nuxtjs.org/");
 const activeSrc = ref("https://nuxtjs.org/");
 const dialog = ref(false);
 
-onMounted(() => { isHydrated.value = true; });
+onMounted(() => {
+  isHydrated.value = true;
+});
 
 // Device Setup
 const lgSet = [...laptops, ...televisions];
 const smSet = [...phones, ...tablets];
 
 const deviceConfigs = ref([
-  { id: 1, xl: 7, lg: 8, zoom: 0, rotate: false, items: lgSet, activeDevice: lgSet[3] },
-  { id: 2, xl: 5, lg: 4, zoom: 0, rotate: false, items: smSet, activeDevice: smSet[6] },
+  {
+    id: 1,
+    xl: 7,
+    lg: 8,
+    zoom: 0,
+    rotate: false,
+    items: lgSet,
+    activeDevice: lgSet[3],
+  },
+  {
+    id: 2,
+    xl: 5,
+    lg: 4,
+    zoom: 0,
+    rotate: false,
+    items: smSet,
+    activeDevice: smSet[6],
+  },
 ]);
 
 // Helpers
@@ -151,9 +174,13 @@ const computedMaxHeight = computed(() => {
     border: 1px solid rgba(var(--v-theme-primary), 0.4) !important;
   }
 
-   :deep(.v-field__input) {
+  :deep(.v-field__input) {
     color: rgb(var(--v-theme-text)) !important;
     opacity: 1 !important;
   }
+}
+
+:deep(.v-btn__content) {
+  color: white;
 }
 </style>

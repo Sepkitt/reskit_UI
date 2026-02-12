@@ -5,16 +5,55 @@
     color="background"
     elevation="0"
   >
-    <v-toolbar color="surface" density="" class="border-b px-2">
+    <v-toolbar color="surface" density="compact" class="border-b px-2">
+      <v-menu :close-on-content-click="false" location="bottom start" offset="10">
+        <template v-slot:activator="{ props: menu }">
+          <v-tooltip :content-class="`custom-themed-tooltip tooltip-primary`" :offset="5" location="left">
+            <template v-slot:activator="{ props: tooltip }">
+              <div
+                v-bind="mergeProps(menu, tooltip)"
+                class="status-led-trigger mr-2"
+              >
+                <div class="mini-wave-container">
+                  <svg viewBox="0 0 60 20" class="mini-wave-svg">
+                    <path 
+                      :d="miniWavePath" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      stroke-width="1.5" 
+                      class="text-primary" 
+                    />
+                  </svg>
+                </div>
+                <div class="status-led" :class="fps < 45 ? 'led-error' : 'led-active'"></div>
+              </div>
+            </template>
+            <span class="text-primary">
+              <v-icon class="text-primary-lighten-1 mx-2" size="small">mdi-pulse</v-icon>
+              {{ fps }} FPS // SYSTEM_HEALTH
+            </span>
+          </v-tooltip>
+        </template>
+
+        <ReskitDiagnosticFeed 
+          :label="getSimulatedLabel(device.width)" 
+          :load-time="loadTime"
+          :fps="fps"
+          :memory="memoryUsage"
+        />
+      </v-menu>
+
       <div class="simulated-label-container mr-2 py-2">
-        <span class="text-uppercase font-weight-bold text-caption text-primary">{{ getSimulatedLabel(device.width) }}</span>
+        <span class="text-uppercase font-weight-bold text-caption text-primary">
+          {{ getSimulatedLabel(device.width) }}
+        </span>
       </div>
 
       <v-spacer />
 
       <v-select
         :model-value="device"
-        @update:model-value="$emit('update:device', $event)"
+        @update:model-value="onDeviceChange"
         :items="items"
         item-title="name"
         return-object
@@ -26,12 +65,8 @@
       >
         <template #selection="{ item }">
           <div class="d-flex align-center w-100">
-            <span class="text-caption font-weight-bold text-primary mr-2">
-              {{ getSimulatedLabel(item.raw.width) }}
-            </span>
-            <span class="text-caption font-weight-medium">{{
-              item.raw.name
-            }}</span>
+            <span class="text-caption font-weight-bold text-primary mr-2">{{ getSimulatedLabel(item.raw.width) }}</span>
+            <span class="text-caption font-weight-medium">{{ item.raw.name }}</span>
           </div>
         </template>
 
@@ -46,18 +81,14 @@
               </div>
             </template>
             <template #subtitle>
-              <span class="text-grey"
-                >{{ item.raw.width }} × {{ item.raw.height }}</span
-              >
+              <span class="text-grey">{{ item.raw.width }} × {{ item.raw.height }}</span>
             </template>
           </v-list-item>
         </template>
       </v-select>
 
       <v-btn
-        :icon="
-          rotate ? 'mdi-phone-rotate-landscape' : 'mdi-phone-rotate-portrait'
-        "
+        :icon="rotate ? 'mdi-phone-rotate-landscape' : 'mdi-phone-rotate-portrait'"
         size="small"
         variant="text"
         :color="rotate ? 'primary' : 'default'"
@@ -75,6 +106,7 @@
         :device="device"
         :src="src"
         show-browser-ui
+        @load="onIframeLoad"
       >
         <template #content>
           <v-slider
@@ -91,13 +123,7 @@
             class="zoom-slider-ui"
           >
             <template #prepend>
-              <v-btn
-                icon="mdi-fit-to-screen"
-                size="x-small"
-                variant="flat"
-                color="background"
-                @click="$emit('update:zoom', 0)"
-              />
+              <v-btn icon="mdi-fit-to-screen" size="x-small" variant="flat" color="background" @click="$emit('update:zoom', 0)" />
             </template>
           </v-slider>
         </template>
@@ -107,7 +133,10 @@
 </template>
 
 <script setup>
-defineProps({
+import { ref, onMounted, onUnmounted, mergeProps } from "vue";
+import ReskitDiagnosticFeed from "./ReskitDiagnosticFeed.vue";
+
+const props = defineProps({
   device: Object,
   items: Array,
   zoom: Number,
@@ -116,7 +145,79 @@ defineProps({
   maxHeight: String,
 });
 
-defineEmits(["update:device", "update:zoom", "update:rotate"]);
+const emit = defineEmits(["update:device", "update:zoom", "update:rotate"]);
+
+// PERFORMANCE LOGIC
+const fps = ref(60);
+const memoryUsage = ref(0);
+const loadTime = ref(0);
+const loadStart = ref(0);
+const miniWavePath = ref("");
+const deltaHistory = ref([]);
+
+let frameCount = 0;
+let lastTime = performance.now();
+let lastSecondTimestamp = performance.now();
+let rafId = null;
+
+const updateWaveform = (delta) => {
+  deltaHistory.value.push(delta);
+  if (deltaHistory.value.length > 30) deltaHistory.value.shift();
+
+  const points = deltaHistory.value.map((d, i) => {
+    const x = (i / 29) * 60;
+    // Normalized wave: 16.6ms (60fps) sits in the middle
+    const y = 10 + (d - 16.6) * 0.8; 
+    const clampedY = Math.max(2, Math.min(18, y));
+    return `${x},${clampedY}`;
+  });
+  miniWavePath.value = points.length > 1 ? `M ${points.join(' L ')}` : "";
+};
+let frameSkipCounter = 0
+
+const trackPerformance = () => {
+  const now = performance.now();
+  const delta = now - lastTime;
+  
+  // SLOW DOWN THE WAVE: Only update every 4 frames
+  frameSkipCounter++;
+  if (frameSkipCounter >= 4) { 
+    updateWaveform(delta);
+    frameSkipCounter = 0;
+  }
+  frameCount++;
+
+  if (now >= lastSecondTimestamp + 1000) {
+    fps.value = Math.round((frameCount * 1000) / (now - lastSecondTimestamp));
+    if (window.performance?.memory) {
+      memoryUsage.value = Math.round(performance.memory.usedJSHeapSize / (1024 * 1024));
+    }
+    frameCount = 0;
+    lastSecondTimestamp = now;
+  }
+
+  lastTime = now;
+  rafId = requestAnimationFrame(trackPerformance);
+};
+
+const onDeviceChange = (newDevice) => {
+  loadStart.value = performance.now();
+  emit("update:device", newDevice);
+};
+
+const onIframeLoad = () => {
+  if (loadStart.value > 0) {
+    loadTime.value = Math.round(performance.now() - loadStart.value);
+  }
+};
+
+onMounted(() => {
+  rafId = requestAnimationFrame(trackPerformance);
+});
+
+onUnmounted(() => {
+  cancelAnimationFrame(rafId);
+});
 
 const getSimulatedLabel = (width) => {
   const w = Number(width);
@@ -131,7 +232,6 @@ const getSimulatedLabel = (width) => {
 </script>
 
 <style scoped lang="scss">
-/* Move your specialized device styles here */
 .device-viewport-container {
   flex-grow: 1;
   position: relative;
@@ -153,17 +253,54 @@ const getSimulatedLabel = (width) => {
     pointer-events: none;
     z-index: 5;
   }
-  &::before {
-    top: 10px;
-    left: 10px;
-    border-right: 0;
-    border-bottom: 0;
+  &::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+  &::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+}
+
+.status-led-trigger {
+  cursor: pointer;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(var(--v-theme-primary), 0.3);
+  background: rgba(var(--v-theme-surface), 0.5);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  &:hover {
+    background: rgba(var(--v-theme-primary), 0.1);
   }
-  &::after {
-    bottom: 10px;
-    right: 10px;
-    border-left: 0;
-    border-top: 0;
+}
+
+.mini-wave-container {
+  width: 50px;
+  height: 14px;
+  overflow: hidden;
+}
+
+.mini-wave-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 0 2px rgba(var(--v-theme-primary), 0.4));
+  transition: d 0.2s ease; /* Smooths the transition between point updates */
+}
+
+.status-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #333;
+  flex-shrink: 0;
+  
+  &.led-active {
+    background: #00ff88;
+    box-shadow: 0 0 8px #00ff8866;
+  }
+  &.led-error {
+    background: rgb(var(--v-theme-error));
+    box-shadow: 0 0 12px rgba(var(--v-theme-error), 0.6);
   }
 }
 
@@ -176,16 +313,12 @@ const getSimulatedLabel = (width) => {
   display: flex;
   align-items: center;
   justify-content: center;
-
   min-width: 48px;
   height: 28px;
   padding: 0 10px;
   border-radius: 4px;
-
   border: 1px solid rgba(var(--v-theme-primary), 0.5);
   background-color: rgb(var(--v-theme-surface));
-
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.15);
 }
 
 .v-theme--darkTheme .simulated-label-container {
@@ -193,12 +326,9 @@ const getSimulatedLabel = (width) => {
   box-shadow: inset 0 2px 6px 0 rgba(0, 0, 0, 0.5);
 }
 
-.select-width-refined {
-  /* Ensure the text matches the theme */
-  :deep(.v-field) {
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
+.select-width-refined :deep(.v-field) {
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .mini-label-badge {
@@ -208,13 +338,5 @@ const getSimulatedLabel = (width) => {
   border: 1px solid currentColor;
   border-radius: 3px;
   color: rgb(var(--v-theme-primary));
-}
-
-.device-transition {
-  /* This animates width, height, and the zoom transform simultaneously */
-  transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1) !important;
-
-  /* Optimization to keep the animation buttery smooth */
-  will-change: width, height, transform;
 }
 </style>
