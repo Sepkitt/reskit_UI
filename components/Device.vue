@@ -132,7 +132,7 @@
 
             <v-btn
               size="small"
-              :color="panningLocked ? 'success' : 'white'"
+              :color="panningLocked ? 'success' : ''"
               icon
               elevation="4"
               @click="panningLocked = !panningLocked"
