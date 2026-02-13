@@ -114,7 +114,7 @@
                 ? "Dragging..."
                 : isPanActive
                   ? "Hand Tool Active"
-                  : "Zoomed In"
+                  : `Zoomed In  ${ Math.round((zoom + 1) * 100)}%`
             }}
           </v-chip>
 

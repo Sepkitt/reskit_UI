@@ -150,7 +150,9 @@
         @load="onIframeLoad"
       >
         <template #content>
-          
+          <div v-if="zoom > 0" class="zoom-percentage-hud">
+    {{ Math.round((zoom + 1) * 100) }}%
+  </div>
           <v-slider
             :model-value="zoom"
             @update:model-value="$emit('update:zoom', $event)"
@@ -411,24 +413,11 @@ const getSimulatedLabel = (width) => {
   background-color: rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 2px 6px 0 rgba(0, 0, 0, 0.5);
 }
-.zoom-slider-ui {
-  z-index: 30; /* Higher than the offline-overlay (20) */
-}
 
-// .offline-overlay {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   background: #111; /* Dark "dead" screen */
-//   z-index: 20;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   pointer-events: all; /* Prevents interaction with the iframe while offline */
-// }
+.zoom-slider-ui {
+  z-index: 30;
+
+}
 
 .network-alert-badge {
   position: absolute;
