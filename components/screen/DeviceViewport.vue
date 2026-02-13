@@ -150,23 +150,15 @@
         @load="onIframeLoad"
       >
         <template #content>
-          <!-- <v-fade-transition>
-            <div v-if="networkStatus === 'offline'" class="offline-overlay">
-              <v-icon size="large" color="grey-darken-2">mdi-wifi-off</v-icon>
-              <div
-                class="mt-2 text-uppercase text-caption font-weight-bold text-grey-darken-2"
-              >
-                Connection_Lost
-              </div>
-            </div>
-          </v-fade-transition> -->
+          
           <v-slider
             :model-value="zoom"
             @update:model-value="$emit('update:zoom', $event)"
             append-icon="mdi-magnify-plus-outline"
-            @click:append="$emit('update:zoom', Math.min(zoom + 1, 3))"
+            @click:append="$emit('update:zoom', Math.min(zoom + 0.5, 3))"
             max="3"
-            step="1"
+            min="0"
+            step="0.1"
             density="compact"
             color="primary"
             direction="vertical"
