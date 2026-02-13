@@ -94,6 +94,7 @@
               :items="config.items"
               :src="activeSrc"
               :max-height="computedMaxHeight"
+              :frameNo="config.id"
             />
           </v-col>
         </v-row>
