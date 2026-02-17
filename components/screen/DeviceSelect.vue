@@ -1,27 +1,33 @@
 <script setup>
+import { useTemplateRef } from "vue";
+
 const props = defineProps({
   modelValue: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   items: {
     type: Array,
-    required: true
-  }
+    required: true,
+  },
 });
 
-const emit = defineEmits(['update:modelValue']);
+const selectRef = useTemplateRef("selectRef ");
+const emit = defineEmits(["update:modelValue"]);
 
 // Internal logic moved from parent to component
 const getSimulatedLabel = (width) => {
-  if (width >= 1200) return 'Desktop';
-  if (width >= 768) return 'Tablet';
-  return 'Mobile';
+  if (width >= 1200) return "Desktop";
+  if (width >= 768) return "Tablet";
+  return "Mobile";
 };
 
 const onDeviceChange = (val) => {
-  emit('update:modelValue', val);
+  emit("update:modelValue", val);
 };
+
+// Expose to parent
+defineExpose({ selectRef });
 </script>
 
 <template>
@@ -35,7 +41,10 @@ const onDeviceChange = (val) => {
     variant="outlined"
     base-color="primary"
     hide-details
+    ref="selectRef "
     class="device-select-refined"
+    color="primary" style="--v-field-color: white;"
+    :menu-props="{ contentClass: 'selector-menu' }"
   >
     <template #selection="{ item }">
       <div class="d-flex align-center w-100">
@@ -70,11 +79,14 @@ const onDeviceChange = (val) => {
 
 <style scoped>
 .device-select-refined {
-  width: 100%
+  width: 100%;
+
+
 }
 .device-select-refined :deep(.v-field) {
   font-size: 0.85rem;
   font-weight: 500;
+  
 }
 .mini-label-badge {
   font-size: 9px;
@@ -84,4 +96,11 @@ const onDeviceChange = (val) => {
   border-radius: 3px;
   color: rgb(var(--v-theme-primary));
 }
+
+.selector-menu {
+    border: 1px solid rgba(var(--v-theme-primary), 0.3)!important;
+
+}
+
+
 </style>

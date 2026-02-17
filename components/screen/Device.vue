@@ -71,7 +71,7 @@
               v-if="renderIframe"
               ref="iframeRef"
               :src="props.src"
-              class="iframe-element transition-opacity"
+              class="iframe-element transition-opacity holds-the-frame"
               :class="{ 'opacity-0': isLoading }"
               @load="isLoading = false"
             />
@@ -407,7 +407,15 @@ onUnmounted(() => {
     }
     scrollbar-width: none;
   }
+.holds-the-frame {
+  //  background: url('https://media.tenor.com/Pq1cZiuhlEEAAAAi/rajinikanth.gif')
+  //    center center no-repeat;
+    background-size: contain;
 }
+}
+
+
+
 
 .pan-overlay {
   position: absolute;

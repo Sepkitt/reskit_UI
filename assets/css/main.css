@@ -18,11 +18,11 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background:  rgb(var(--v-theme-background),0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--v-theme-tertiary));
+  background: rgb(var(--v-theme-baseCard));
   border-radius: 10px;
   border: 1px solid transparent; /* Acts as padding */
   background-clip: content-box;
@@ -34,10 +34,10 @@ html {
 }
 
 /* 3. Handle Firefox (which doesn't use -webkit) */
-* {
+/* * {
   scrollbar-width: thin;
   scrollbar-color: rgb(var(--v-theme-tertiary)) transparent;
-}
+} */
 
 /* Base styles for all custom tooltips */
 .custom-themed-tooltip.v-overlay__content {

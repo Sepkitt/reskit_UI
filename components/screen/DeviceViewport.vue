@@ -65,6 +65,7 @@
       <v-spacer />
 
       <DeviceSelect
+        ref="selectFrame"
         v-if="frameNo === 1"
         :model-value="device"
         @update:model-value="onDeviceChange"
@@ -150,9 +151,6 @@
         @load="onIframeLoad"
       >
         <template #content>
-          <div v-if="zoom > 0" class="zoom-percentage-hud">
-    {{ Math.round((zoom + 1) * 100) }}%
-  </div>
           <v-slider
             :model-value="zoom"
             @update:model-value="$emit('update:zoom', $event)"
@@ -347,11 +345,12 @@ const getSimulatedLabel = (width) => {
 
 .status-led-trigger {
   cursor: pointer;
-  height: 28px;
+  height: 40px;
   padding: 0 10px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid rgba(var(--v-theme-primary), 0.3);
-  background: rgba(var(--v-theme-surface), 0.5);
+  box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
+  background-color: rgb(var(--v-theme-primary),0.1);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -402,16 +401,17 @@ const getSimulatedLabel = (width) => {
   align-items: center;
   justify-content: center;
   min-width: 48px;
-  height: 28px;
+  height: 40px;
   padding: 0 10px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid rgba(var(--v-theme-primary), 0.5);
-  background-color: rgb(var(--v-theme-surface));
+  background-color: rgb(var(--v-theme-primary),0.1);
+  box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
+
 }
 
 .v-theme--darkTheme .simulated-label-container {
-  background-color: rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
 }
 
 .zoom-slider-ui {
