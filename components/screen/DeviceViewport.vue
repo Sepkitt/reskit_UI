@@ -178,7 +178,7 @@
             <TooltipButton icon="mdi-magnify-minus-outline"
                 text="Zoom out"
                 size="small"
-                variant="flat"
+                variant="outlined"
                 color="secondary"
                 :disabled="zoom === 0"
                 @click="$emit('update:zoom', Math.min(zoom - 0.5, 3))"
