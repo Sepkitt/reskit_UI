@@ -42,7 +42,7 @@ defineExpose({ selectRef });
     base-color="primary"
     hide-details
     ref="selectRef "
-    class="device-select-refined"
+    class="device-select-refined tooltip-btn"
     color="primary" style="--v-field-color: white;"
     :menu-props="{ contentClass: 'selector-menu' }"
   >
@@ -58,7 +58,7 @@ defineExpose({ selectRef });
     </template>
 
     <template #item="{ props: itemProps, item }">
-      <v-list-item v-bind="itemProps">
+      <v-list-item class="tooltip-primary" v-bind="itemProps" >
         <template #title>
           <div class="d-flex align-center justify-space-between">
             <span class="text-body-2">{{ item.raw.name }}</span>

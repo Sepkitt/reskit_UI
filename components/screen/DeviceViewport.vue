@@ -75,11 +75,12 @@
       <v-menu offset="10">
         <template v-slot:activator="{ props }">
           <v-btn
+            height="40p"
             v-bind="props"
-            variant="text"
+            class="rounded-lg tooltip-primary tooltip-btn mx-2"
             size="small"
+            variant="outline"
             :color="networkStatus === 'online' ? 'default' : 'warning'"
-            class="text-caption"
           >
             <v-icon start size="small">
               {{
@@ -93,7 +94,7 @@
             {{ networkStatus.toUpperCase() }}
           </v-btn>
         </template>
-        <v-list density="compact" class="font-mono" bg-color="surface">
+        <v-list density="compact" class="font-mono tooltip-primary tooltip-btn" >
           <v-list-item
             @click="setNetwork('online')"
             title="ONLINE (NO LIMIT)"
@@ -113,9 +114,10 @@
         :icon="
           rotate ? 'mdi-phone-rotate-landscape' : 'mdi-phone-rotate-portrait'
         "
+        class="rounded-lg tooltip-primary tooltip-btn"
         size="small"
-        variant="text"
-        :color="rotate ? 'primary' : 'default'"
+        variant="outline"
+        :color="'primary'"
         @click="$emit('update:rotate', !rotate)"
       />
 
@@ -350,7 +352,7 @@ const getSimulatedLabel = (width) => {
   border-radius: 6px;
   border: 1px solid rgba(var(--v-theme-primary), 0.3);
   box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
-  background-color: rgb(var(--v-theme-primary),0.1);
+  background-color: rgb(var(--v-theme-primary), 0.1);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -405,18 +407,16 @@ const getSimulatedLabel = (width) => {
   padding: 0 10px;
   border-radius: 6px;
   border: 1px solid rgba(var(--v-theme-primary), 0.5);
-  background-color: rgb(var(--v-theme-primary),0.1);
+  background-color: rgb(var(--v-theme-primary), 0.1);
   box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
-
 }
 
 .v-theme--darkTheme .simulated-label-container {
-    box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
+  box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
 }
 
 .zoom-slider-ui {
   z-index: 30;
-
 }
 
 .network-alert-badge {
