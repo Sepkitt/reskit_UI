@@ -1,7 +1,6 @@
 <template>
   <v-tooltip
     :location="location"
-    :disabled="!text"
     :content-class="`custom-themed-tooltip tooltip-${color}`"
   >
     <template v-slot:activator="{ props: tooltipProps }">
@@ -12,6 +11,8 @@
         :variant="variant"
         :density="density"
         :size="size"
+        :disabled="disabled"
+
         @click.stop="emit('click', $event)"
       />
     </template>
@@ -28,13 +29,15 @@ interface Props {
   variant?: 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
   density?: 'default' | 'comfortable' | 'compact'
   size?: 'default' | 'x-small' | 'small' | 'large'
+  disabled: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
   color: 'primary',
   location: 'bottom',
   variant: 'text',
-  density: 'comfortable'
+  density: 'comfortable',
+  disabled: false
 })
 
 const emit = defineEmits(['click'])
