@@ -97,10 +97,6 @@ defineExpose({ selectRef });
   color: rgb(var(--v-theme-primary));
 }
 
-.selector-menu {
-    border: 1px solid rgba(var(--v-theme-primary), 0.3)!important;
-
-}
 
 
 </style>

@@ -75,11 +75,10 @@
       <v-menu offset="10">
         <template v-slot:activator="{ props }">
           <v-btn
-            height="40p"
+            height="40px"
             v-bind="props"
             class="rounded-lg tooltip-primary tooltip-btn mx-2"
             size="small"
-            variant="outline"
             :color="networkStatus === 'online' ? 'default' : 'warning'"
           >
             <v-icon start size="small">
@@ -116,7 +115,7 @@
         "
         class="rounded-lg tooltip-primary tooltip-btn"
         size="small"
-        variant="outline"
+        variant="tonal"
         :color="'primary'"
         @click="$emit('update:rotate', !rotate)"
       />
@@ -156,8 +155,6 @@
           <v-slider
             :model-value="zoom"
             @update:model-value="$emit('update:zoom', $event)"
-            append-icon="mdi-magnify-plus-outline"
-            @click:append="$emit('update:zoom', Math.min(zoom + 0.5, 3))"
             max="3"
             min="0"
             step="0.1"
@@ -167,14 +164,25 @@
             hide-details
             class="zoom-slider-ui"
           >
-            <template #prepend>
-              <v-btn
-                icon="mdi-fit-to-screen"
-                size="x-small"
+          <template #append>
+           <TooltipButton 
+                text="Zoom In"
+                icon="mdi-magnify-plus-outline"
+                size="small"
                 variant="flat"
-                color="background"
-                @click="$emit('update:zoom', 0)"
-              />
+                color="secondary"
+                @click="$emit('update:zoom', Math.min(zoom + 0.5, 3))"
+                />
+          </template>
+            <template #prepend>
+            <TooltipButton icon="mdi-magnify-minus-outline"
+                text="Zoom out"
+                size="small"
+                variant="flat"
+                color="secondary"
+                :disabled="zoom === 0"
+                @click="$emit('update:zoom', Math.min(zoom - 0.5, 3))"
+                />
             </template>
           </v-slider>
         </template>
