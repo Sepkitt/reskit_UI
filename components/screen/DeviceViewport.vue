@@ -65,6 +65,7 @@
       <v-spacer />
 
       <DeviceSelect
+        ref="selectFrame"
         v-if="frameNo === 1"
         :model-value="device"
         @update:model-value="onDeviceChange"
@@ -74,11 +75,11 @@
       <v-menu offset="10">
         <template v-slot:activator="{ props }">
           <v-btn
+            height="40px"
             v-bind="props"
-            variant="text"
+            class="rounded-lg tooltip-primary tooltip-btn mx-2"
             size="small"
             :color="networkStatus === 'online' ? 'default' : 'warning'"
-            class="text-caption"
           >
             <v-icon start size="small">
               {{
@@ -92,7 +93,7 @@
             {{ networkStatus.toUpperCase() }}
           </v-btn>
         </template>
-        <v-list density="compact" class="font-mono" bg-color="surface">
+        <v-list density="compact" class="font-mono tooltip-primary tooltip-btn" >
           <v-list-item
             @click="setNetwork('online')"
             title="ONLINE (NO LIMIT)"
@@ -112,9 +113,10 @@
         :icon="
           rotate ? 'mdi-phone-rotate-landscape' : 'mdi-phone-rotate-portrait'
         "
+        class="rounded-lg tooltip-primary tooltip-btn"
         size="small"
-        variant="text"
-        :color="rotate ? 'primary' : 'default'"
+        variant="tonal"
+        :color="'primary'"
         @click="$emit('update:rotate', !rotate)"
       />
 
@@ -150,14 +152,9 @@
         @load="onIframeLoad"
       >
         <template #content>
-          <div v-if="zoom > 0" class="zoom-percentage-hud">
-    {{ Math.round((zoom + 1) * 100) }}%
-  </div>
           <v-slider
             :model-value="zoom"
             @update:model-value="$emit('update:zoom', $event)"
-            append-icon="mdi-magnify-plus-outline"
-            @click:append="$emit('update:zoom', Math.min(zoom + 0.5, 3))"
             max="3"
             min="0"
             step="0.1"
@@ -165,16 +162,29 @@
             color="primary"
             direction="vertical"
             hide-details
-            class="zoom-slider-ui"
+            thumb-color="accent"
+            track-color="background"
+            class="zoom-slider-ui my-1"
           >
+          <template #append>
+           <TooltipButton 
+                text="Zoom In"
+                icon="mdi-magnify-plus-outline"
+                size="small"
+                variant="tonal"
+                color="primary"
+                @click="$emit('update:zoom', Math.min(zoom + 0.5, 3))"
+                />
+          </template>
             <template #prepend>
-              <v-btn
-                icon="mdi-fit-to-screen"
-                size="x-small"
-                variant="flat"
-                color="background"
-                @click="$emit('update:zoom', 0)"
-              />
+            <TooltipButton icon="mdi-magnify-minus-outline"
+                text="Zoom out"
+                size="small"
+                variant="tonal"
+                color="primary"
+                :disabled="zoom <= 0.4" 
+                @click="$emit('update:zoom', Math.min(zoom - 0.5, 3))"
+                />
             </template>
           </v-slider>
         </template>
@@ -347,11 +357,12 @@ const getSimulatedLabel = (width) => {
 
 .status-led-trigger {
   cursor: pointer;
-  height: 28px;
+  height: 40px;
   padding: 0 10px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid rgba(var(--v-theme-primary), 0.3);
-  background: rgba(var(--v-theme-surface), 0.5);
+  box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
+  background-color: rgb(var(--v-theme-primary), 0.1);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -402,21 +413,20 @@ const getSimulatedLabel = (width) => {
   align-items: center;
   justify-content: center;
   min-width: 48px;
-  height: 28px;
+  height: 40px;
   padding: 0 10px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid rgba(var(--v-theme-primary), 0.5);
-  background-color: rgb(var(--v-theme-surface));
+  background-color: rgb(var(--v-theme-primary), 0.1);
+  box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
 }
 
 .v-theme--darkTheme .simulated-label-container {
-  background-color: rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
 }
 
 .zoom-slider-ui {
   z-index: 30;
-
 }
 
 .network-alert-badge {
