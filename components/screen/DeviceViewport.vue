@@ -162,6 +162,8 @@
             color="primary"
             direction="vertical"
             hide-details
+            thumb-color="accent"
+            track-color="background"
             class="zoom-slider-ui"
           >
           <template #append>
@@ -169,8 +171,8 @@
                 text="Zoom In"
                 icon="mdi-magnify-plus-outline"
                 size="small"
-                variant="flat"
-                color="secondary"
+                variant="tonal"
+                color="primary"
                 @click="$emit('update:zoom', Math.min(zoom + 0.5, 3))"
                 />
           </template>
@@ -178,9 +180,9 @@
             <TooltipButton icon="mdi-magnify-minus-outline"
                 text="Zoom out"
                 size="small"
-                variant="outlined"
-                color="secondary"
-                :disabled="zoom === 0"
+                variant="tonal"
+                color="primary"
+                :disabled="zoom <= 0.4" 
                 @click="$emit('update:zoom', Math.min(zoom - 0.5, 3))"
                 />
             </template>

@@ -28,20 +28,14 @@
         <div class="ruler-line"></div>
       </div>
 
-      <v-container
-        class="fill-height position-relative py-10"
-        style="z-index: 2"
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="space-between"
-          class="fill-height px-4 px-md-16"
-        >
+      <v-container class="fill-height position-relative py-10" style="z-index: 2" fluid>
+        <v-row align="center" justify="space-between" class="fill-height px-4 px-md-16">
           <v-col cols="12" md="6" lg="5" order="2" order-md="1">
             <v-fade-transition appear>
               <div :class="{ 'text-center': mobile, 'text-left': !mobile }">
-                <div class="text-overline text-primary font-weight-bold mb-1 letter-spacing-2">
+                <div
+                  class="text-overline text-primary font-weight-bold mb-1 letter-spacing-2"
+                >
                   PROJECT_RESKIT // UNIT_01
                 </div>
 
@@ -56,9 +50,13 @@
                   </span>
                 </div>
 
-                <h2 class="text-body-1 text-md-h6 text-grey font-weight-light mb-10 landing-subtitle">
+                <h2
+                  class="text-body-1 text-md-h6 text-grey font-weight-light mb-10 landing-subtitle"
+                >
                   An expansive
-                  <span class="text-primary font-weight-medium">blueprint environment</span>
+                  <span class="text-primary font-weight-medium"
+                    >blueprint environment</span
+                  >
                   designed for precision device simulation and high-fidelity validation.
                 </h2>
 
@@ -105,7 +103,9 @@
     <div v-else class="pre-mount-loader d-flex align-center justify-center">
       <div class="loader-content text-center">
         <v-progress-circular indeterminate color="primary" size="64" width="2" />
-        <div class="mt-4 font-mono text-primary text-caption">CALIBRATING_VIEWPORT...</div>
+        <div class="mt-4 font-mono text-primary text-caption">
+          CALIBRATING_VIEWPORT...
+        </div>
       </div>
     </div>
 
@@ -115,7 +115,7 @@
       class="align-center justify-center boot-overlay"
       scrim="black"
     >
-      <TerminalLoader :bootPercent="bootPercent" :bootLogs="bootLogs"/>
+      <TerminalLoader :bootPercent="bootPercent" :bootLogs="bootLogs" />
     </v-overlay>
   </v-sheet>
 </template>
@@ -132,13 +132,17 @@ const isMounted = ref(false);
 
 onMounted(() => {
   isMounted.value = true;
-  setTimeout(() => { isWarmingUp.value = false; }, 800);
+  setTimeout(() => {
+    isWarmingUp.value = false;
+  }, 800);
 });
 
 // Parallax
 const mouseX = ref(0);
 const mouseY = ref(0);
-const mouseCoord = computed(() => `${Math.round(mouseX.value)},${Math.round(mouseY.value)}`);
+const mouseCoord = computed(
+  () => `${Math.round(mouseX.value)},${Math.round(mouseY.value)}`
+);
 
 const handleMouseMove = (e) => {
   mouseX.value = e.clientX / 60;
@@ -173,11 +177,11 @@ const startInitialization = async () => {
   bootPercent.value = 0;
 
   for (let i = 0; i < logOptions.length; i++) {
-    await new Promise(r => setTimeout(r, Math.floor(Math.random() * 450) + 150));
+    await new Promise((r) => setTimeout(r, Math.floor(Math.random() * 450) + 150));
     bootLogs.value.push(logOptions[i]);
     bootPercent.value = Math.floor(((i + 1) / logOptions.length) * 100);
     if (i === logOptions.length - 1) {
-      await new Promise(r => setTimeout(r, 800));
+      await new Promise((r) => setTimeout(r, 800));
       navigateTo("/UI");
     }
   }
@@ -193,8 +197,10 @@ const startInitialization = async () => {
 
 .blueprint-landing {
   position: relative;
-  background-image:
-    linear-gradient(rgba(var(--v-theme-primary), 0.08) 1px, transparent 1px),
+  background-image: linear-gradient(
+      rgba(var(--v-theme-primary), 0.08) 1px,
+      transparent 1px
+    ),
     linear-gradient(90deg, rgba(var(--v-theme-primary), 0.08) 1px, transparent 1px);
   background-size: 60px 60px;
 
@@ -202,11 +208,14 @@ const startInitialization = async () => {
     content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 50%, transparent 0%, rgb(var(--v-theme-background)) 85%);
+    background: radial-gradient(
+      circle at 50% 50%,
+      transparent 0%,
+      rgb(var(--v-theme-background)) 85%
+    );
     pointer-events: none;
   }
 }
-
 
 .center-ruler {
   position: absolute;
@@ -223,7 +232,12 @@ const startInitialization = async () => {
   .ruler-line {
     width: 1px;
     flex-grow: 1;
-    background: linear-gradient(to bottom, transparent, rgb(var(--v-theme-primary)), transparent);
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--v-theme-primary)),
+      transparent
+    );
   }
 
   .ruler-measurements {
@@ -245,7 +259,8 @@ const startInitialization = async () => {
   }
 }
 
-.coordinates-x, .coordinates-y {
+.coordinates-x,
+.coordinates-y {
   position: absolute;
   display: flex;
   font-family: monospace;
@@ -256,15 +271,28 @@ const startInitialization = async () => {
   transition: transform 0.1s ease-out;
   white-space: nowrap;
 }
-.coordinates-x { top: 15px; left: 15px; right: 15px; justify-content: space-between; }
-.coordinates-y { left: 15px; top: 15px; bottom: 15px; flex-direction: column; justify-content: space-between; }
+.coordinates-x {
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  justify-content: space-between;
+}
+.coordinates-y {
+  left: 15px;
+  top: 15px;
+  bottom: 15px;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 .logo-blueprint-frame {
   position: relative;
   padding: 10%; // More fluid padding
   max-width: 100%;
-  
-  @media (min-width: 960px) { padding: 60px; }
+
+  @media (min-width: 960px) {
+    padding: 60px;
+  }
 
   .crosshair {
     position: absolute;
@@ -272,10 +300,30 @@ const startInitialization = async () => {
     height: 20px;
     border: 1px solid rgb(var(--v-theme-primary));
   }
-  .ch-tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
-  .ch-tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
-  .ch-bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
-  .ch-br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+  .ch-tl {
+    top: 0;
+    left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .ch-tr {
+    top: 0;
+    right: 0;
+    border-left: 0;
+    border-bottom: 0;
+  }
+  .ch-bl {
+    bottom: 0;
+    left: 0;
+    border-right: 0;
+    border-top: 0;
+  }
+  .ch-br {
+    bottom: 0;
+    right: 0;
+    border-left: 0;
+    border-top: 0;
+  }
 }
 
 .data-label {
@@ -303,7 +351,11 @@ const startInitialization = async () => {
 
 .init-btn {
   --t-color: rgb(var(--v-theme-primary));
-  background-color: color-mix(in srgb, var(--t-color), rgb(var(--v-theme-surface)) 85%) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--t-color),
+    rgb(var(--v-theme-surface)) 85%
+  ) !important;
   color: var(--t-color) !important;
   border: 1px solid var(--t-color) !important;
   border-radius: 4px !important;
@@ -311,21 +363,36 @@ const startInitialization = async () => {
   font-weight: 800;
   transition: all 0.3s ease;
   &:hover {
-    background-color: color-mix(in srgb, var(--t-color), rgb(var(--v-theme-surface)) 70%) !important;
+    background-color: color-mix(
+      in srgb,
+      var(--t-color),
+      rgb(var(--v-theme-surface)) 70%
+    ) !important;
     transform: translateY(-2px);
     box-shadow: 0 15px 35px rgba(var(--v-theme-primary), 0.25) !important;
   }
 }
 
-.hover-blueprint { animation: floatCalibrate 10s infinite ease-in-out; }
+.hover-blueprint {
+  animation: floatCalibrate 10s infinite ease-in-out;
+}
 @keyframes floatCalibrate {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(10px, -15px) rotate(1deg); }
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(10px, -15px) rotate(1deg);
+  }
 }
 
-.boot-overlay { backdrop-filter: blur(12px); }
+.boot-overlay {
+  backdrop-filter: blur(12px);
+}
 
-.letter-spacing-2 { letter-spacing: 2px !important; }
+.letter-spacing-2 {
+  letter-spacing: 2px !important;
+}
 
 .entry-mask {
   position: fixed;
@@ -344,21 +411,46 @@ const startInitialization = async () => {
   color: rgb(var(--v-theme-primary));
   position: relative;
   letter-spacing: 10px;
-  &::before, &::after {
+  &::before,
+  &::after {
     content: attr(data-text);
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
   }
-  &::before { color: #ff00ff; z-index: -1; animation: glitch-anim 0.3s infinite; }
-  &::after { color: #00ffff; z-index: -2; animation: glitch-anim 0.3s infinite reverse; }
+  &::before {
+    color: #ff00ff;
+    z-index: -1;
+    animation: glitch-anim 0.3s infinite;
+  }
+  &::after {
+    color: #00ffff;
+    z-index: -2;
+    animation: glitch-anim 0.3s infinite reverse;
+  }
 }
 
 @keyframes glitch-anim {
-  0% { transform: translate(0); }
-  20% { transform: translate(-3px, 3px); }
-  40% { transform: translate(-3px, -3px); }
-  60% { transform: translate(3px, 3px); }
-  80% { transform: translate(3px, -3px); }
-  100% { transform: translate(0); }
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-3px, 3px);
+  }
+  40% {
+    transform: translate(-3px, -3px);
+  }
+  60% {
+    transform: translate(3px, 3px);
+  }
+  80% {
+    transform: translate(3px, -3px);
+  }
+  100% {
+    transform: translate(0);
+  }
 }
 </style>

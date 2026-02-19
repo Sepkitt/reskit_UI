@@ -12,7 +12,8 @@
         :density="density"
         :size="size"
         :disabled="disabled"
-
+        class="rounded-lg  tooltip-btn"
+        :class="` tooltip-${color}`"
         @click.stop="emit('click', $event)"
       />
     </template>
@@ -29,13 +30,13 @@ interface Props {
   variant?: 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
   density?: 'default' | 'comfortable' | 'compact'
   size?: 'default' | 'x-small' | 'small' | 'large'
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
   color: 'primary',
   location: 'bottom',
-  variant: 'text',
+  variant: 'tonal',
   density: 'comfortable',
   disabled: false
 })
