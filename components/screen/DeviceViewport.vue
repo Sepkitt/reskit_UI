@@ -164,7 +164,7 @@
             hide-details
             thumb-color="accent"
             track-color="background"
-            class="zoom-slider-ui"
+            class="zoom-slider-ui my-1"
           >
           <template #append>
            <TooltipButton 
