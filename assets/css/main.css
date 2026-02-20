@@ -44,16 +44,16 @@ html {
   opacity: 1 !important;
   font-weight: 600;
   font-size: 0.75rem;
-  box-shadow: 0 4px 10px rgb(var(--v-theme-background));
+  /* box-shadow: 0 4px 10px rgb(var(--v-theme-background)); */
   padding: 8px 12px !important;
 }
 
 [class*="tooltip-"] {
-  background-color: color-mix(
+ background-color: color-mix(
     in srgb,
     var(--t-color),
-    rgb(var(--v-theme-background)) 50%
-  );
+    rgb(var(--v-theme-surface)) 90%
+  ) !important;
   color: var(--t-color);
   border: 1px solid var(--t-color);
   border-radius: 5px;
@@ -92,7 +92,7 @@ html {
   background-color: color-mix(
     in srgb,
     var(--t-color),
-    rgb(var(--v-theme-surface)) 90%
+    rgb(var(--v-theme-background)) 90%
   ) !important;
 }
 
