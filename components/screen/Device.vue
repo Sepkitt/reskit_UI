@@ -69,11 +69,13 @@
             </div>
             <iframe
               v-if="renderIframe"
+              :key="iframeKey"
               ref="iframeRef"
               :src="props.src"
               class="iframe-element transition-opacity holds-the-frame"
               :class="{ 'opacity-0': isLoading }"
-              @load="isLoading = false"
+              @load="handleIframeLoad"
+              @error="handleIframeError"
             />
           </div>
         </div>
@@ -107,7 +109,7 @@
           <v-chip
             :class="isPanActive ? 'tooltip-success' : 'tooltip-secondary'"
             :color="isPanActive ? 'success' : 'secondary '"
-            class="tooltip-btn "
+            class="tooltip-btn"
           >
             {{
               isDragging
@@ -125,7 +127,6 @@
               variant="tonal"
               color="warning"
               class="mb-2"
-              
               location="left"
               icon="mdi-refresh"
               @click="resetAndRefresh"
@@ -133,18 +134,22 @@
             </TooltipButton>
 
             <TooltipButton
-             :text="panningLocked ? 'Click to Disable Panning' : 'Enable Panning'"
+              :text="
+                panningLocked ? 'Click to Disable Panning' : 'Enable Panning'
+              "
               size="large"
               :color="panningLocked ? 'success' : 'info'"
-              :icon="panningLocked ? 'mdi-hand-back-right': 'mdi-cursor-default-click' "
+              :icon="
+                panningLocked
+                  ? 'mdi-hand-back-right'
+                  : 'mdi-cursor-default-click'
+              "
               class="mb-2"
               variant="tonal"
               location="left"
               icon="mdi-refresh"
               @click="panningLocked = !panningLocked"
-           />
-            
-            
+            />
           </div>
         </div>
       </div>
@@ -176,6 +181,8 @@ const renderIframe = ref(true);
 const isDragging = ref(false);
 const pan = ref({ x: 0, y: 0 });
 const startPos = ref({ x: 0, y: 0 });
+
+const iframeKey = ref(0);
 
 // Watchers
 watch(
@@ -263,23 +270,23 @@ const resetAndRefresh = async () => {
   emit("update:zoom", 0);
 
   isLoading.value = true;
-
-  // 1. Nuke the iframe from the DOM entirely
-  renderIframe.value = false;
-
-  // 2. Wait for the DOM to clear (nextTick)
-  await nextTick();
-
-  // 3. Bring it back after a tiny delay
-  setTimeout(() => {
-    renderIframe.value = true;
-  }, 50);
+  iframeKey.value++;
 
   // Safety Timeout
   setTimeout(() => {
     if (isLoading.value) isLoading.value = false;
   }, 8000);
 };
+
+const handleIframeLoad = () => {
+  isLoading.value = false;
+};
+
+const handleIframeError = () => {
+  isLoading.value = false;
+  console.error("iframe failed to load");
+};
+
 const startPan = (e) => {
   if (!isPanActive.value) return;
   isDragging.value = true;
@@ -312,6 +319,17 @@ const handleKeyUp = (e) => {
   if (e.code === "Space") spacePressed.value = false;
 };
 
+watch(
+  () => props.src,
+  (newSrc) => {
+    if (newSrc && newSrc !== "https://" && newSrc !== "about:blank") {
+      isLoading.value = true;
+      console.log("iframe src changed to:", newSrc);
+    }
+  },
+  { immediate: true },
+);
+
 // Lifecycle
 onMounted(() => {
   updateSize();
@@ -320,7 +338,20 @@ onMounted(() => {
   window.addEventListener("mouseup", stopPan);
   window.addEventListener("keydown", handleKeyDown);
   window.addEventListener("keyup", handleKeyUp);
-  if (props.src && iframeRef.value) iframeRef.value.src = props.src;
+
+  // Start loading timer
+  const loadTimer = setTimeout(() => {
+    if (isLoading.value) {
+      console.warn("iframe taking longer than expected");
+      // You could show a different UI state here
+    }
+  }, 5000);
+
+  // Return a cleanup function that will run on unmount
+  return () => {
+    clearTimeout(loadTimer);
+    observer.disconnect();
+  };
 });
 
 onUnmounted(() => {
