@@ -386,13 +386,12 @@ onUnmounted(() => {
 .browser-shell {
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-
+  box-shadow: 0 2px 10px  rgb(var(--v-theme-background));
+  outline: 2px solid rgb(var(--v-theme-primary)) !important;
   /* CHANGE THIS: Use the theme surface or transparent so it doesn't flash white */
   background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-outline));
   width: 100%;
   height: 100%;
 
@@ -415,6 +414,7 @@ onUnmounted(() => {
   background-size: 20px 20px;
 }
 .device-frame {
+  
   position: relative;
   background-color: rgb(var(--v-theme-surface));
   background-image: radial-gradient(
@@ -439,6 +439,8 @@ onUnmounted(() => {
     scrollbar-width: none;
   }
   .holds-the-frame {
+       
+
     //  background: url('https://media.tenor.com/Pq1cZiuhlEEAAAAi/rajinikanth.gif')
     //    center center no-repeat;
     background-size: contain;

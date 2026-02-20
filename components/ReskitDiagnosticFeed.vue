@@ -5,23 +5,23 @@
     </div>
 
     <div class="hud-body">
-      <div class="hud-item">
+      <div class="hud-item  text-text">
         <span class="label">RENDERING</span>
         <span class="value" :class="fps < 45 ? 'text-error' : 'text-primary'">
           {{ fps }} FPS
         </span>
       </div>
-      <div class="hud-item">
+      <div class="hud-item  text-text">
         <span class="label">NET_LOAD</span>
         <span class="value">{{ loadTime }}ms</span>
       </div>
-      <div class="hud-item" v-if="memory">
+      <div class="hud-item  text-text" v-if="memory">
         <span class="label">JS_HEAP</span>
         <span class="value">{{ memory }}MB</span>
       </div>
     </div>
     
-    <div class="hud-footer">
+    <div class="hud-footer  text-text">
       STATUS: {{ fps < 45 ? 'DEGRADED' : 'NOMINAL' }}
     </div>
   </div>
