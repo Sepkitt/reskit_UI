@@ -93,7 +93,7 @@
             {{ networkStatus.toUpperCase() }}
           </v-btn>
         </template>
-        <v-list density="compact" class="font-mono tooltip-primary tooltip-btn" >
+        <v-list density="compact" class="font-mono tooltip-primary tooltip-btn">
           <v-list-item
             @click="setNetwork('online')"
             title="ONLINE (NO LIMIT)"
@@ -320,6 +320,18 @@ const getSimulatedLabel = (width) => {
 </script>
 
 <style scoped lang="scss">
+
+.v-list-item--density-compact:not(.v-list-item--nav).v-list-item--one-line {
+    &:hover {
+    border-top: 0.2px solid var(--t-color);
+    border-bottom: 0.2px solid var(--t-color);
+
+    box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
+    background-color: rgb(var(--t-color));
+    color: var(--t-color) !important;
+
+    }
+}
 .device-viewport-container {
   flex-grow: 1;
   position: relative;

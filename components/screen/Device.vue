@@ -65,7 +65,7 @@
                 z-index: 10;
               "
             >
-              <EmptyState :is-mobile="props.width < 600"/>
+              <EmptyState :is-mobile="props.width < 600" />
             </div>
             <iframe
               v-if="renderIframe"
@@ -107,44 +107,44 @@
           <v-chip
             :class="isPanActive ? 'tooltip-success' : 'tooltip-secondary'"
             :color="isPanActive ? 'success' : 'secondary '"
-            class="shadow-sm"
+            class="tooltip-btn "
           >
             {{
               isDragging
                 ? "Dragging..."
                 : isPanActive
                   ? "Hand Tool Active"
-                  : `Zoomed In  ${ Math.round((zoom + 1) * 100)}%`
+                  : `Zoomed In  ${Math.round((zoom + 1) * 100)}%`
             }}
           </v-chip>
 
           <div class="d-flex flex-column gap-2">
-            <v-btn
-              size="small"
-              color="secondary"
+            <TooltipButton
+              text="Refresh Device"
+              size="large"
+              variant="tonal"
+              color="warning"
               class="mb-2"
-              icon
-              elevation="4"
+              
+              location="left"
+              icon="mdi-refresh"
               @click="resetAndRefresh"
             >
-              <v-icon>mdi-refresh</v-icon>
-            </v-btn>
+            </TooltipButton>
 
-            <v-btn
-              size="small"
-              :color="panningLocked ? 'success' : ''"
-              icon
-              elevation="4"
+            <TooltipButton
+             :text="panningLocked ? 'Click to Disable Panning' : 'Enable Panning'"
+              size="large"
+              :color="panningLocked ? 'success' : 'info'"
+              :icon="panningLocked ? 'mdi-hand-back-right': 'mdi-cursor-default-click' "
+              class="mb-2"
+              variant="tonal"
+              location="left"
+              icon="mdi-refresh"
               @click="panningLocked = !panningLocked"
-            >
-              <v-icon>
-                {{
-                  panningLocked
-                    ? "mdi-hand-back-right"
-                    : "mdi-cursor-default-click"
-                }}
-              </v-icon>
-            </v-btn>
+           />
+            
+            
           </div>
         </div>
       </div>
@@ -407,15 +407,12 @@ onUnmounted(() => {
     }
     scrollbar-width: none;
   }
-.holds-the-frame {
-  //  background: url('https://media.tenor.com/Pq1cZiuhlEEAAAAi/rajinikanth.gif')
-  //    center center no-repeat;
+  .holds-the-frame {
+    //  background: url('https://media.tenor.com/Pq1cZiuhlEEAAAAi/rajinikanth.gif')
+    //    center center no-repeat;
     background-size: contain;
+  }
 }
-}
-
-
-
 
 .pan-overlay {
   position: absolute;
