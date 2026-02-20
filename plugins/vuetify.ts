@@ -7,7 +7,7 @@ export const lightTheme = {
   dark: false,
   colors: {
     // Shifting from pure white to a soft workspace grey
-    background: "#F1F5F9",
+    background: "#c7d1db",
     surface: "#FFFFFF",
     baseCard: "#f6f3f3",
     "surface-variant": "#F8FAFC", // Used for URL bars/nested areas
@@ -27,7 +27,7 @@ export const lightTheme = {
     warning: "#F59E0B",
 
     // Grid and border colors
-    outline: "#CBD5E1", // Subtle borders
+    tertiary: "#67788c", // Subtle borders
   },
 } as const;
 
@@ -54,7 +54,7 @@ export const darkTheme = {
     success: "#34D399",
     warning: "#FBBF24",
 
-    outline: "#334155", // Darker borders
+    tertiary: "#334155", // Darker borders
   },
 } as const;
 // Export union type of color keys
