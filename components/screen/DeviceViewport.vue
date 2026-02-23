@@ -48,11 +48,10 @@
           </v-tooltip>
         </template>
 
-        <ReskitDiagnosticFeed
-          :label="getSimulatedLabel(device.width)"
-          :load-time="loadTime"
-          :fps="fps"
-          :memory="memoryUsage"
+        <ReskitMenuCard
+          :title="`DIAGNOSTIC_FEED // ${getSimulatedLabel(device.width)}`"
+          :items="diagnosticItems"
+          :footerText="`STATUS: ${fps < 45 ? 'DEGRADED' : 'NOMINAL'}`"
         />
       </v-menu>
 
@@ -166,25 +165,26 @@
             track-color="background"
             class="zoom-slider-ui my-1"
           >
-          <template #append>
-           <TooltipButton 
+            <template #append>
+              <TooltipButton
                 text="Zoom In"
                 icon="mdi-magnify-plus-outline"
                 size="small"
                 variant="tonal"
                 color="primary"
                 @click="$emit('update:zoom', Math.min(zoom + 0.5, 3))"
-                />
-          </template>
+              />
+            </template>
             <template #prepend>
-            <TooltipButton icon="mdi-magnify-minus-outline"
+              <TooltipButton
+                icon="mdi-magnify-minus-outline"
                 text="Zoom out"
                 size="small"
                 variant="tonal"
                 color="primary"
-                :disabled="zoom <= 0.4" 
+                :disabled="zoom <= 0.4"
                 @click="$emit('update:zoom', Math.min(zoom - 0.5, 3))"
-                />
+              />
             </template>
           </v-slider>
         </template>
@@ -272,6 +272,32 @@ const onDeviceChange = (newDevice) => {
   emit("update:device", newDevice);
 };
 
+// :label="getSimulatedLabel(device.width)"
+//           :load-time="loadTime"
+//           :fps="fps"
+//           :memory="memoryUsage"
+
+// DiagnosticFeedback items
+const diagnosticItems = computed(() => {
+  return [
+    {
+      label: "RENDERING",
+      value: `${fps.value}FPS`,
+      itemClass: fps.value < 45 ? "text-error" : "text-primary",
+    },
+    {
+      label: "NET_LOAD",
+      value: `${loadTime.value}ms`,
+      itemClass: "",
+    },
+    {
+      label: "JS_HEAP",
+      value: `${memoryUsage.value}MB`,
+      itemClass: "",
+    },
+  ];
+});
+
 // NETWORK STATUS
 const networkStatus = ref("online");
 const isThrottling = ref(false);
@@ -320,17 +346,15 @@ const getSimulatedLabel = (width) => {
 </script>
 
 <style scoped lang="scss">
-
 .v-list-item--density-compact:not(.v-list-item--nav).v-list-item--one-line {
-    &:hover {
+  &:hover {
     border-top: 0.2px solid var(--t-color);
     border-bottom: 0.2px solid var(--t-color);
 
     box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
     background-color: rgb(var(--t-color));
     color: var(--t-color) !important;
-
-    }
+  }
 }
 .device-viewport-container {
   flex-grow: 1;

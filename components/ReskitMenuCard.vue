@@ -1,15 +1,15 @@
 <template>
   <div class="perf-menu-content font-mono">
-    <div class="hud-header">
-      DIAGNOSTIC_FEED // {{ label }}
-    </div>
+    <div class="hud-header">{{ title }}</div>
 
     <div class="hud-body">
-      <div class="hud-item  text-text">
+      <!-- <div class="hud-item  text-text">
         <span class="label">RENDERING</span>
         <span class="value" :class="fps < 45 ? 'text-error' : 'text-primary'">
           {{ fps }} FPS
         </span>
+
+        
       </div>
       <div class="hud-item  text-text">
         <span class="label">NET_LOAD</span>
@@ -18,22 +18,39 @@
       <div class="hud-item  text-text" v-if="memory">
         <span class="label">JS_HEAP</span>
         <span class="value">{{ memory }}MB</span>
+      </div> -->
+
+      <div
+        class="hud-item text-text"
+        v-for="(item, index) in items"
+        :key="index"
+      >
+        <span class="label">{{ item.label }}</span>
+        <span class="value" :class="item.itemClass">
+          {{ item.value }}
+        </span>
       </div>
     </div>
-    
-    <div class="hud-footer  text-text">
-      STATUS: {{ fps < 45 ? 'DEGRADED' : 'NOMINAL' }}
+
+    <div class="hud-footer text-text" v-if="footerText">
+     {{ footerText }}
     </div>
   </div>
 </template>
 
 <script setup>
+
+
 const props = defineProps({
-  label: String,
-  loadTime: Number,
-  fps: Number,
-  memory: Number
+  items: Array,
+  title: String,
+   footerText: String
+  // loadTime: Number,
+  // fps: Number,
+  // memory: Number,
 });
+
+
 </script>
 
 <style scoped lang="scss">
@@ -57,8 +74,12 @@ const props = defineProps({
     display: flex;
     justify-content: space-between;
     margin-bottom: 4px;
-    .label { opacity: 0.6; }
-    .value { font-weight: 900; }
+    .label {
+      opacity: 0.6;
+    }
+    .value {
+      font-weight: 900;
+    }
   }
 
   .hud-footer {
