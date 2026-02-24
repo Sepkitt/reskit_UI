@@ -38,7 +38,7 @@ export const darkTheme = {
     background: "#020617",
     surface: "#0F172A", // Navy-tinted dark grey for depth
     baseCard: "#1E293B", // The "blueprint" area
-    "surface-variant": "#1E293B",
+    "surface-variant": "#091220",
 
     primary: "#3B82F6", // Brighter blue for dark mode visibility
     darkness: "#000000",
