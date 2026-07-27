@@ -345,15 +345,18 @@ onUnmounted(() => {
   cancelAnimationFrame(rafId);
 });
 
+const BREAKPOINTS = [
+  { min: 2560, name: "xxl" },
+  { min: 1920, name: "xl" },
+  { min: 1280, name: "lg" },
+  { min: 960, name: "md" },
+  { min: 600, name: "sm" },
+  { min: 0, name: "xs" },
+];
+
 const getSimulatedLabel = (width) => {
   const w = Number(width);
-  if (w >= 3840) return "4k";
-  if (w >= 2560) return "2k";
-  if (w >= 1904) return "xl";
-  if (w >= 1264) return "lg";
-  if (w >= 960) return "md";
-  if (w >= 600) return "sm";
-  return "xs";
+  return BREAKPOINTS.find(bp => w >= bp.min)?.name ?? "xs";
 };
 </script>
 

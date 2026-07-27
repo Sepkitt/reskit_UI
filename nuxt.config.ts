@@ -32,6 +32,7 @@ export default defineNuxtConfig({
     transpile: ["vuetify"],
   },
   vite: {
+    // @ts-expect-error
     plugins: [vuetify({ autoImport: true })],
     vue: {
       template: {
