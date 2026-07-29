@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar color="background" elevation="0" class="border-b">
+    <v-app-bar :color="!isDark ? 'background' : 'surface'" elevation="0" class="border-b">
       <div class="d-flex align-center px-4">
         <ReskitLogo :size="40" />
         <v-toolbar-title
@@ -16,7 +16,7 @@
       <v-text-field
         v-model="urlInput"
         density="compact"
-        variant="solo-filled"
+        variant="solo"
         flat
         bg-color="surface-variant"
         placeholder="Enter URL..."
@@ -170,9 +170,11 @@ const computedMaxHeight = computed(() => {
 .url-bar-refined {
   max-width: 500px;
   :deep(.v-field) {
-    border-radius: 8px !important;
+    border-radius: 5px !important;
     font-size: 0.9rem;
     border: 1px solid rgba(var(--v-theme-primary), 0.4) !important;
+      box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
+
   }
 
   :deep(.v-field__input) {

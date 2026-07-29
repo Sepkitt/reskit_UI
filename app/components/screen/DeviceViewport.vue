@@ -2,7 +2,7 @@
   <v-card
     :height="maxHeight"
     class="d-flex flex-column rounded-lg overflow-hidden border-themed"
-    color="background"
+    color="surface"
     elevation="0"
   >
     <v-toolbar color="surface" density="compact" class="border-b pa-1">
@@ -72,13 +72,14 @@
       />
 
       <v-menu offset="10">
-        <template v-slot:activator="{ props }">
+        <template v-slot:activator="{ isActive, props }">
           <v-btn
+            :append-icon="isActive ? 'mdi-menu-up' : 'mdi-menu-down'"
             height="40px"
             v-bind="props"
-            class="rounded-lg tooltip-primary tooltip-btn mx-2"
+            :class="menuStatusText"
+            class="rounded-lg tooltip-btn mx-2"
             size="small"
-            :color="networkStatus === 'online' ? 'default' : 'warning'"
           >
             <v-icon start size="small">
               {{
@@ -92,20 +93,11 @@
             {{ networkStatus.toUpperCase() }}
           </v-btn>
         </template>
-        <v-list density="compact" class="font-mono tooltip-primary tooltip-btn">
-          <v-list-item
-            @click="setNetwork('online')"
-            title="ONLINE (NO LIMIT)"
-          />
-          <v-list-item
-            @click="setNetwork('slow')"
-            title="SLOW 3G (LATENCY: 400ms)"
-          />
-          <v-list-item
-            @click="setNetwork('offline')"
-            title="OFFLINE (DISCONNECT)"
-          />
-        </v-list>
+        <ReskitMenuCard
+          title="Network Throtteling"
+          :items="menuItems"
+          @itemClick="setNetwork"
+        />
       </v-menu>
 
       <v-btn
@@ -272,11 +264,6 @@ const onDeviceChange = (newDevice) => {
   emit("update:device", newDevice);
 };
 
-// :label="getSimulatedLabel(device.width)"
-//           :load-time="loadTime"
-//           :fps="fps"
-//           :memory="memoryUsage"
-
 // DiagnosticFeedback items
 const diagnosticItems = computed(() => {
   return [
@@ -302,15 +289,40 @@ const diagnosticItems = computed(() => {
 const networkStatus = ref("online");
 const isThrottling = ref(false);
 
+const menuStatusText = computed(() => {
+  switch (networkStatus.value) {
+    case "online":
+      return "tooltip-success";
+    case "slow":
+      return "tooltip-warning";
+    case "offline":
+      return "tooltip-error";
+    default:
+      "tooltip-primary";
+      break;
+  }
+  // networkStatus === 'online' ? 'tooltip-success' : ''
+});
+
 const setNetwork = (status) => {
   networkStatus.value = status;
   // If we change status, we reset the load timer to simulate a fresh request
   loadStart.value = performance.now();
+  console.log("Network set to:", status);
 
   // OPTIONAL: If you want to force the iframe to reload to see the "slow" effect:
   // Note: This requires a ref on the Device component
   // deviceRef.value?.reload();
 };
+
+// network throtteling menu
+const menuItems = computed(() => {
+  return [
+    { label: "ONLINE", value: "NO LIMIT", clickable: true, action: "online" },
+    { label: "SLOW", value: " 400ms", clickable: true, action: "slow", itemClass: 'text-warning' },
+    { label: "OFFLINE", value: "DISCONNECT", clickable: true, action: "offline" ,itemClass: 'text-error'},
+  ];
+});
 
 const onIframeLoad = () => {
   let delay = 0;
@@ -333,15 +345,18 @@ onUnmounted(() => {
   cancelAnimationFrame(rafId);
 });
 
+const BREAKPOINTS = [
+  { min: 2560, name: "xxl" },
+  { min: 1920, name: "xl" },
+  { min: 1280, name: "lg" },
+  { min: 960, name: "md" },
+  { min: 600, name: "sm" },
+  { min: 0, name: "xs" },
+];
+
 const getSimulatedLabel = (width) => {
   const w = Number(width);
-  if (w >= 3840) return "4k";
-  if (w >= 2560) return "2k";
-  if (w >= 1904) return "xl";
-  if (w >= 1264) return "lg";
-  if (w >= 960) return "md";
-  if (w >= 600) return "sm";
-  return "xs";
+  return BREAKPOINTS.find(bp => w >= bp.min)?.name ?? "xs";
 };
 </script>
 

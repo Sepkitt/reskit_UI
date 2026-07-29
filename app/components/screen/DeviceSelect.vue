@@ -49,27 +49,29 @@ defineExpose({ selectRef });
     <template #selection="{ item }">
       <div class="d-flex align-center w-100">
         <span class="text-caption font-weight-bold text-primary mr-2">
-          {{ getSimulatedLabel(item.raw.width) }}
+          {{ getSimulatedLabel(item.width) }}
         </span>
         <span class="text-caption font-weight-medium">
-          {{ item.raw.name }}
+          {{ item.name }}
+        </span>
+          <span class="text-caption font-weight-medium">
         </span>
       </div>
     </template>
 
     <template #item="{ props: itemProps, item }">
-      <v-list-item class="tooltip-primary" v-bind="itemProps" >
+      <v-list-item   v-bind="itemProps" >
         <template #title>
           <div class="d-flex align-center justify-space-between">
-            <span class="text-body-2">{{ item.raw.name }}</span>
+            <span class="text-body-2">{{ item.name }}</span>
             <div class="mini-label-badge ml-4">
-              {{ getSimulatedLabel(item.raw.width) }}
+              {{ getSimulatedLabel(item.width) }}
             </div>
           </div>
         </template>
         <template #subtitle>
           <span class="text-grey">
-            {{ item.raw.width }} × {{ item.raw.height }}
+            {{ item.width }} × {{ item.height }}
           </span>
         </template>
       </v-list-item>
