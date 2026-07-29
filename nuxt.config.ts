@@ -18,21 +18,15 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
+  modules: ["@pinia/nuxt"],
   // Optional: Global configuration for persistence
-  piniaPersistedstate: {
-    storage: "cookies", // Recommended for Nuxt to avoid the "dark mode flash"
-    cookieOptions: {
-      sameSite: "lax",
-    },
-  },
+
   css: ["~/assets/css/main.css"],
   devtools: { enabled: false },
   build: {
     transpile: ["vuetify"],
   },
   vite: {
-    // @ts-expect-error
     plugins: [vuetify({ autoImport: true })],
     vue: {
       template: {
