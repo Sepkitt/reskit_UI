@@ -1,15 +1,19 @@
 <template>
   <v-app>
-    <v-app-bar :color="!isDark ? 'background' : 'surface'" elevation="0" class="border-b">
-      <div class="d-flex align-center px-4">
-        <ReskitLogo :size="40" />
+    <v-app-bar
+      :color="!isDark ? 'background' : 'surface'"
+    >
+        <ReskitLogo :size="'50'" />
         <v-toolbar-title
-          class="text-primary font-weight-black letter-spacing-1 ml-2"
+          class="d-flex fill-height align-center text-primary font-weight-bold text-title-large"
         >
-          RES<span class="text-text">KIT</span>
-          <span class="text-overline">V2.0</span>
+        <div class="d-flex fill-height">
+          Res<span class="text-text">KIT</span>
+          <span class="d-flex align-center pa-1 text-label-small font-weight-bold ml-2 tooltip-primary"
+            >V{{ $config.public.clientVersion }}</span
+          >
+        </div>
         </v-toolbar-title>
-      </div>
 
       <v-spacer />
 
@@ -173,8 +177,7 @@ const computedMaxHeight = computed(() => {
     border-radius: 5px !important;
     font-size: 0.9rem;
     border: 1px solid rgba(var(--v-theme-primary), 0.4) !important;
-      box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
-
+    box-shadow: inset 0 2px 6px 0 rgb(var(--v-theme-background));
   }
 
   :deep(.v-field__input) {
