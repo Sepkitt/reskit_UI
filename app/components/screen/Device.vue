@@ -102,7 +102,7 @@
     </div>
 
     <v-fade-transition>
-      <div class="slider-controls">
+      <div class="d-flex fill-height slider-controls">
         <slot name="content" v-bind="props" />
 
         <div v-if="props.zoom !== 0" class="device-controls mr-2">
@@ -429,7 +429,7 @@ onUnmounted(() => {
   .iframe-element {
     background-color: transparent;
     border: 0;
-    width: calc(100% + 20px);
+    width: stretch;
     height: 100%;
     margin-left: -10px;
     display: block;
@@ -516,8 +516,9 @@ onUnmounted(() => {
 
 .slider-controls {
   position: absolute;
-  bottom: 24px;
-  right: 24px;
+   bottom: 10px;
+   height:95%;
+  right: 15px;
 }
 
 .scan-line {
