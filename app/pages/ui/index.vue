@@ -81,8 +81,8 @@
     </v-app-bar>
 
     <v-main class="bg-darkness">
-      <v-container fluid class="fill-height py-0">
-        <v-row no-gutters class="fill-height">
+      <v-container fluid class="fill-height py-0 px-0">
+        <v-row no-gutters class="fill-height" density="compact">
           <v-col
             v-for="config in deviceConfigs"
             :key="config.id"
