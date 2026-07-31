@@ -221,7 +221,7 @@ const totalDeviceHeight = computed(() => {
 
 const fitScale = computed(() => {
   if (displayDimensions.value.w === 0) return 0.2;
-  const padding = 80;
+  const padding = 60;
   const scaleW = (displayDimensions.value.w - padding) / totalDeviceWidth.value;
   const scaleH =
     (displayDimensions.value.h - padding) / totalDeviceHeight.value;
