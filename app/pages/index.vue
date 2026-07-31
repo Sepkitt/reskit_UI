@@ -28,8 +28,16 @@
         <div class="ruler-line"></div>
       </div>
 
-      <v-container class="fill-height position-relative py-10" style="z-index: 2" fluid>
-        <v-row align="center" justify="space-between" class="fill-height px-4 px-md-16">
+      <v-container
+        class="fill-height position-relative py-10"
+        style="z-index: 2"
+        fluid
+      >
+        <v-row
+          align="center"
+          justify="space-between"
+          class="fill-height px-4 px-md-16"
+        >
           <v-col cols="12" md="6" lg="5" order="2" order-md="1">
             <v-fade-transition appear>
               <div :class="{ 'text-center': mobile, 'text-left': !mobile }">
@@ -39,13 +47,21 @@
                   PROJECT_RESKIT // UNIT_01
                 </div>
 
-                <h1 class="text-h2 text-md-h1 font-weight-black mb-2 main-title">
+                <h1
+                  class="text-h2 text-md-h1 font-weight-black mb-2 main-title"
+                >
                   RES<span class="text-primary">KIT</span>
                 </h1>
 
-                <div class="d-flex align-center mb-6 justify-center justify-md-start">
-                  <span class="version-tag">v2.0.4-BETA</span>
-                  <span class="text-caption text-grey ml-4 font-mono opacity-50">
+                <div
+                  class="d-flex align-center mb-6 justify-center justify-md-start"
+                >
+                  <span class="version-tag"
+                    >V{{ $config.public.clientVersion }}</span
+                  >
+                  <span
+                    class="text-caption text-grey ml-4 font-mono opacity-50"
+                  >
                     INIT_ID: {{ mouseCoord }}
                   </span>
                 </div>
@@ -57,7 +73,8 @@
                   <span class="text-primary font-weight-medium"
                     >blueprint environment</span
                   >
-                  designed for precision device simulation and high-fidelity validation.
+                  designed for precision device simulation and high-fidelity
+                  validation.
                 </h2>
 
                 <v-btn
@@ -91,8 +108,12 @@
               <ReskitLogo :size="dynamicLogoSize" />
 
               <div class="data-label d-none d-sm-block">
-                <div class="text-caption font-weight-black">OBJ_REF: UI_GLOBAL</div>
-                <div class="text-caption opacity-60">XY_POS: {{ mouseCoord }}</div>
+                <div class="text-caption font-weight-black">
+                  OBJ_REF: UI_GLOBAL
+                </div>
+                <div class="text-caption opacity-60">
+                  XY_POS: {{ mouseCoord }}
+                </div>
               </div>
             </div>
           </v-col>
@@ -102,7 +123,12 @@
 
     <div v-else class="pre-mount-loader d-flex align-center justify-center">
       <div class="loader-content text-center">
-        <v-progress-circular indeterminate color="primary" size="64" width="2" />
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          size="64"
+          width="2"
+        />
         <div class="mt-4 font-mono text-primary text-caption">
           CALIBRATING_VIEWPORT...
         </div>
@@ -141,7 +167,7 @@ onMounted(() => {
 const mouseX = ref(0);
 const mouseY = ref(0);
 const mouseCoord = computed(
-  () => `${Math.round(mouseX.value)},${Math.round(mouseY.value)}`
+  () => `${Math.round(mouseX.value)},${Math.round(mouseY.value)}`,
 );
 
 const handleMouseMove = (e) => {
@@ -177,7 +203,9 @@ const startInitialization = async () => {
   bootPercent.value = 0;
 
   for (let i = 0; i < logOptions.length; i++) {
-    await new Promise((r) => setTimeout(r, Math.floor(Math.random() * 450) + 150));
+    await new Promise((r) =>
+      setTimeout(r, Math.floor(Math.random() * 450) + 150),
+    );
     bootLogs.value.push(logOptions[i]);
     bootPercent.value = Math.floor(((i + 1) / logOptions.length) * 100);
     if (i === logOptions.length - 1) {
@@ -197,11 +225,13 @@ const startInitialization = async () => {
 
 .blueprint-landing {
   position: relative;
-  background-image: linear-gradient(
+  background-image:
+    linear-gradient(rgba(var(--v-theme-primary), 0.08) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
       rgba(var(--v-theme-primary), 0.08) 1px,
       transparent 1px
-    ),
-    linear-gradient(90deg, rgba(var(--v-theme-primary), 0.08) 1px, transparent 1px);
+    );
   background-size: 60px 60px;
 
   &::after {
