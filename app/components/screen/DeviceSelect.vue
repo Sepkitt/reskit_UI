@@ -38,24 +38,23 @@ defineExpose({ selectRef });
     item-title="name"
     return-object
     density="compact"
-    variant="outlined"
+    variant="solo"
     base-color="primary"
     hide-details
     ref="selectRef "
-    class="device-select-refined tooltip-btn"
+    class="device-select-refined tooltip-primary"
     color="primary" style="--v-field-color: white;"
     :menu-props="{ contentClass: 'selector-menu' }"
   >
     <template #selection="{ item }">
       <div class="d-flex align-center w-100">
-        <span class="text-caption font-weight-bold text-primary mr-2">
+        <span class="text-label-small font-weight-bold text-primary tooltip-primary pa-1 mr-2">
           {{ getSimulatedLabel(item.width) }}
         </span>
-        <span class="text-caption font-weight-medium">
+        <span class="d-flex text-label-small font-weight-medium ">
           {{ item.name }}
         </span>
-          <span class="text-caption font-weight-medium">
-        </span>
+         
       </div>
     </template>
 

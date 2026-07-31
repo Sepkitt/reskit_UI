@@ -1,7 +1,6 @@
 <template>
   <v-card
-    :height="maxHeight"
-    class="d-flex flex-column rounded-lg overflow-hidden border-themed"
+    class="d-flex fill-height flex-column rounded-lg overflow-hidden border-themed"
     color="surface"
     elevation="0"
   >
@@ -388,6 +387,7 @@ const getSimulatedLabel = (width) => {
     position: absolute;
     width: 20px;
     height: 20px;
+    border-radius:2px;
     border: 2px solid rgb(var(--v-theme-primary));
     pointer-events: none;
     z-index: 5;
