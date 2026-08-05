@@ -1,19 +1,17 @@
 <template>
   <v-app>
-    <v-app-bar
-      :color="!isDark ? 'background' : 'surface'"
-    >
-        <ReskitLogo :size="'50'" />
-        <v-toolbar-title
-          class="d-flex fill-height align-center text-primary font-weight-bold text-title-large"
-        >
+    <v-app-bar :color="!isDark ? 'background' : 'surface'">
+      <v-toolbar-title
+        class="d-flex fill-height align-center text-primary font-weight-bold text-title-large"
+      >
         <div class="d-flex fill-height">
           Res<span class="text-text">KIT</span>
-          <span class="d-flex align-center pa-1 text-label-small font-weight-bold ml-2 tooltip-primary"
+          <span
+            class="d-flex align-center pa-1 text-label-small font-weight-bold ml-2 tooltip-primary"
             >V{{ $config.public.clientVersion }}</span
           >
         </div>
-        </v-toolbar-title>
+      </v-toolbar-title>
 
       <v-spacer />
 
@@ -39,7 +37,7 @@
               color="grey"
               class="cursor-pointer"
               @click="urlInput = ''"
-              >mdi-close-circle</v-icon
+              >mdi-close</v-icon
             >
           </v-fade-transition>
         </template>
@@ -48,7 +46,7 @@
       <v-btn
         color="primary"
         variant="flat"
-        class="ml-2 px-6"
+        class="ml-2"
         height="40"
         @click="handleUpdate"
       >
@@ -68,7 +66,7 @@
         />
 
         <TooltipButton
-          class="ml-2"
+          class="ml-1"
           variant="tonal"
           color="primary"
           :icon="
@@ -77,6 +75,16 @@
           :text="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
           @click="toggleTheme"
         />
+        <BtnMenu class="ml-1" >
+          <template #content>
+            <v-switch
+              v-model="config.visible"
+              v-for="config in deviceConfigs"
+              :key="config.id"
+              :label="`Frame ${config.id}`"
+            ></v-switch>
+          </template>
+        </BtnMenu>
       </div>
     </v-app-bar>
 
@@ -84,11 +92,11 @@
       <v-container fluid class="fill-height py-0 px-0">
         <v-row no-gutters class="fill-height" density="compact">
           <v-col
-            v-for="config in deviceConfigs"
+            v-for="config in visibleDeviceConfigs"
             :key="config.id"
             cols="12"
-            :lg="config.lg"
-            :xl="config.xl"
+            :lg="isSingleFrame ? 12 : config.lg"
+            :xl="isSingleFrame ? 12 : config.xl"
             class="pa-2"
           >
             <DeviceViewport
@@ -118,10 +126,18 @@ import { laptops, televisions, phones, tablets } from "~/assets/devices.json";
 const { isDark, toggleTheme } = useMyTheme();
 const display = useDisplay();
 const isHydrated = ref(false);
+const selectedFrame = ref([1, 2]);
 
 const urlInput = ref("https://nuxtjs.org/");
 const activeSrc = ref("https://nuxtjs.org/");
 const dialog = ref(false);
+
+const btnActions = [
+  {
+    icon: "",
+    title: "",
+  },
+];
 
 onMounted(() => {
   isHydrated.value = true;
@@ -134,6 +150,7 @@ const smSet = [...phones, ...tablets];
 const deviceConfigs = ref([
   {
     id: 1,
+    visible: true,
     xl: 7,
     lg: 8,
     zoom: 0,
@@ -143,6 +160,7 @@ const deviceConfigs = ref([
   },
   {
     id: 2,
+    visible: true,
     xl: 5,
     lg: 4,
     zoom: 0,
@@ -168,6 +186,12 @@ const computedMaxHeight = computed(() => {
   const map = { xs: "86vh", sm: "86vh", md: "600px", lg: "86vh", xl: "90vh" };
   return map[display.name.value] || "86vh";
 });
+
+const visibleDeviceConfigs = computed(() =>
+  deviceConfigs.value.filter((config) => config.visible),
+);
+
+const isSingleFrame = computed(() => visibleDeviceConfigs.value.length === 1);
 </script>
 
 <style scoped lang="scss">

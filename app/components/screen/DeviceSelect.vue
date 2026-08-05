@@ -40,6 +40,7 @@ defineExpose({ selectRef });
     density="compact"
     variant="solo"
     base-color="primary"
+    
     hide-details
     ref="selectRef "
     class="device-select-refined tooltip-primary"
@@ -47,16 +48,20 @@ defineExpose({ selectRef });
     :menu-props="{ contentClass: 'selector-menu' }"
   >
     <template #selection="{ item }">
-      <div class="d-flex align-center w-100">
-        <span class="text-label-small font-weight-bold text-primary tooltip-primary pa-1 mr-2">
+  <div class="d-flex align-center w-100">
+    <span class="text-label-small font-weight-bold text-primary tooltip-primary pa-1 mr-2">
           {{ getSimulatedLabel(item.width) }}
         </span>
-        <span class="d-flex text-label-small font-weight-medium ">
-          {{ item.name }}
-        </span>
-         
-      </div>
-    </template>
+
+    <span>{{ item.name }}</span>
+
+    <v-spacer />
+
+    <v-chip size="small" class="text-grey text-caption text-secondary pa-1 tooltip-secondary" label>
+      {{ item.width }} × {{ item.height }}
+    </v-chip>
+  </div>
+</template>
 
     <template #item="{ props: itemProps, item }">
       <v-list-item   v-bind="itemProps" >
@@ -89,6 +94,7 @@ defineExpose({ selectRef });
   font-weight: 500;
   
 }
+
 .mini-label-badge {
   font-size: 9px;
   font-weight: 900;
@@ -97,7 +103,14 @@ defineExpose({ selectRef });
   border-radius: 3px;
   color: rgb(var(--v-theme-primary));
 }
+.device-select-refined :deep(.v-select__selection) {
+  width: 100%;
+  flex: 1 1 auto;
+}
 
+.device-select-refined :deep(.v-select__selection-text) {
+  width: 100%;
+}
 
 
 </style>

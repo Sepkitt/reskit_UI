@@ -318,8 +318,20 @@ const setNetwork = (status) => {
 const menuItems = computed(() => {
   return [
     { label: "ONLINE", value: "NO LIMIT", clickable: true, action: "online" },
-    { label: "SLOW", value: " 400ms", clickable: true, action: "slow", itemClass: 'text-warning' },
-    { label: "OFFLINE", value: "DISCONNECT", clickable: true, action: "offline" ,itemClass: 'text-error'},
+    {
+      label: "SLOW",
+      value: " 400ms",
+      clickable: true,
+      action: "slow",
+      itemClass: "text-warning",
+    },
+    {
+      label: "OFFLINE",
+      value: "DISCONNECT",
+      clickable: true,
+      action: "offline",
+      itemClass: "text-error",
+    },
   ];
 });
 
@@ -355,7 +367,7 @@ const BREAKPOINTS = [
 
 const getSimulatedLabel = (width) => {
   const w = Number(width);
-  return BREAKPOINTS.find(bp => w >= bp.min)?.name ?? "xs";
+  return BREAKPOINTS.find((bp) => w >= bp.min)?.name ?? "xs";
 };
 </script>
 
@@ -387,7 +399,7 @@ const getSimulatedLabel = (width) => {
     position: absolute;
     width: 20px;
     height: 20px;
-    border-radius:2px;
+    border-radius: 2px;
     border: 2px solid rgb(var(--v-theme-primary));
     pointer-events: none;
     z-index: 5;
