@@ -140,6 +140,7 @@
         :src="activeSrc"
         show-browser-ui
         @load="onIframeLoad"
+        @navigation="$emit('navigate', $event)"
       >
         <template #content>
           <v-slider
@@ -197,7 +198,7 @@ const props = defineProps({
   frameNo: Number,
 });
 
-const emit = defineEmits(["update:device", "update:zoom", "update:rotate"]);
+const emit = defineEmits(["update:device", "update:zoom", "update:rotate", "navigate"]);
 
 const activeSrc = computed(() => {
   return networkStatus.value === "offline" ? "about:blank" : props.src;

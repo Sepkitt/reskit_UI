@@ -55,7 +55,11 @@
       </v-btn>
 
       <v-spacer />
-
+      <v-btn
+        icon="mdi-content-copy"
+        :color="mirrorEnabled ? 'success' : undefined"
+        @click="mirrorEnabled = !mirrorEnabled"
+      />{{ mirrorEnabled }}
       <div class="d-flex align-center mr-4">
         <TooltipButton
           variant="tonal"
@@ -75,13 +79,21 @@
           :text="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
           @click="toggleTheme"
         />
-        <BtnMenu class="ml-1" >
+        <BtnMenu class="ml-1">
           <template #content>
+            <div class="text-title-small text-grey py-1">Hide frame</div>
             <v-switch
               v-model="config.visible"
               v-for="config in deviceConfigs"
               :key="config.id"
               :label="`Frame ${config.id}`"
+              inset="square"
+              true-icon="mdi-check"
+              false-icon="mdi-close"
+              density="comfortable"
+              :disabled="visibleDeviceConfigs.length === 1 && config.visible"
+              thumb-color="success"
+              hide-details
             ></v-switch>
           </template>
         </BtnMenu>
@@ -107,6 +119,7 @@
               :src="activeSrc"
               :max-height="computedMaxHeight"
               :frameNo="config.id"
+              @navigate="syncNavigation(config.id, $event)"
             />
           </v-col>
         </v-row>
@@ -122,22 +135,31 @@ import { ref, computed, onMounted } from "vue";
 import { useDisplay } from "vuetify";
 import { laptops, televisions, phones, tablets } from "~/assets/devices.json";
 
+const mirrorEnabled = ref(false);
+const masterFrame = ref(1);
+
+const syncNavigation = (sourceFrameId, url) => {
+  console.log("Mirror event", {
+    sourceFrameId,
+    url,
+    mirrorEnabled: mirrorEnabled.value,
+    masterFrame: masterFrame.value,
+  });
+
+  if (!mirrorEnabled.value) return;
+
+  if (sourceFrameId !== masterFrame.value) return;
+
+  activeSrc.value = url;
+};
 // Composable & State
 const { isDark, toggleTheme } = useMyTheme();
 const display = useDisplay();
 const isHydrated = ref(false);
-const selectedFrame = ref([1, 2]);
 
-const urlInput = ref("https://nuxtjs.org/");
-const activeSrc = ref("https://nuxtjs.org/");
+const urlInput = ref("http://localhost:3000/demo");
+const activeSrc = ref("http://localhost:3000/demo");
 const dialog = ref(false);
-
-const btnActions = [
-  {
-    icon: "",
-    title: "",
-  },
-];
 
 onMounted(() => {
   isHydrated.value = true;

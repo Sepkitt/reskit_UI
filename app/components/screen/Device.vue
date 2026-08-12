@@ -169,7 +169,7 @@ const props = defineProps({
   showBrowserUI: { type: Boolean, default: true },
 });
 
-const emit = defineEmits(["update:zoom"]);
+const emit = defineEmits(["update:zoom", "navigation"]);
 
 const containerRef = ref(null);
 const iframeRef = ref(null);
@@ -280,6 +280,36 @@ const resetAndRefresh = async () => {
 
 const handleIframeLoad = () => {
   isLoading.value = false;
+
+  const win = iframeRef.value?.contentWindow;
+
+  if (!win) return;
+
+  if (win.__reskitMirrorPatched) {
+    return;
+  }
+
+  win.__reskitMirrorPatched = true;
+
+  const emitNavigation = () => {
+    emit("navigation", win.location.href);
+  };
+
+  const pushState = win.history.pushState;
+
+  win.history.pushState = function (...args) {
+    pushState.apply(this, args);
+    emitNavigation();
+  };
+
+  const replaceState = win.history.replaceState;
+
+  win.history.replaceState = function (...args) {
+    replaceState.apply(this, args);
+    emitNavigation();
+  };
+
+  win.addEventListener("popstate", emitNavigation);
 };
 
 const handleIframeError = () => {
@@ -388,7 +418,7 @@ onUnmounted(() => {
   flex-direction: column;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 2px 10px  rgb(var(--v-theme-background));
+  box-shadow: 0 2px 10px rgb(var(--v-theme-background));
   outline: 2px solid rgb(var(--v-theme-primary)) !important;
   /* CHANGE THIS: Use the theme surface or transparent so it doesn't flash white */
   background: rgb(var(--v-theme-surface));
@@ -414,7 +444,6 @@ onUnmounted(() => {
   background-size: 20px 20px;
 }
 .device-frame {
-  
   position: relative;
   background-color: rgb(var(--v-theme-surface));
   background-image: radial-gradient(
@@ -439,8 +468,6 @@ onUnmounted(() => {
     scrollbar-width: none;
   }
   .holds-the-frame {
-       
-
     //  background: url('https://media.tenor.com/Pq1cZiuhlEEAAAAi/rajinikanth.gif')
     //    center center no-repeat;
     background-size: contain;
@@ -516,8 +543,8 @@ onUnmounted(() => {
 
 .slider-controls {
   position: absolute;
-   bottom: 10px;
-   height:95%;
+  bottom: 10px;
+  height: 95%;
   right: 15px;
 }
 
