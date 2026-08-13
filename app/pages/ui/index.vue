@@ -55,11 +55,11 @@
       </v-btn>
 
       <v-spacer />
-      <v-btn
+      <!-- <v-btn
         icon="mdi-content-copy"
         :color="mirrorEnabled ? 'success' : undefined"
         @click="mirrorEnabled = !mirrorEnabled"
-      />{{ mirrorEnabled }}
+      /> -->
       <div class="d-flex align-center mr-4">
         <TooltipButton
           variant="tonal"
@@ -137,20 +137,31 @@ import { laptops, televisions, phones, tablets } from "~/assets/devices.json";
 
 const mirrorEnabled = ref(false);
 const masterFrame = ref(1);
+const syncing = ref(false);
 
 const syncNavigation = (sourceFrameId, url) => {
+  if (!mirrorEnabled.value) return;
+
+  if (sourceFrameId !== masterFrame.value) return;
+
+  if (syncing.value) return;
+
+  if (activeSrc.value === url) return;
+
+  syncing.value = true;
   console.log("Mirror event", {
     sourceFrameId,
     url,
     mirrorEnabled: mirrorEnabled.value,
     masterFrame: masterFrame.value,
   });
-
-  if (!mirrorEnabled.value) return;
-
-  if (sourceFrameId !== masterFrame.value) return;
-
+  console.log("Syncing follower:", url);
+  
   activeSrc.value = url;
+
+  requestAnimationFrame(() => {
+    syncing.value = false;
+  });
 };
 // Composable & State
 const { isDark, toggleTheme } = useMyTheme();

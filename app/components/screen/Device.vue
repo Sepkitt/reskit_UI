@@ -278,6 +278,8 @@ const resetAndRefresh = async () => {
   }, 8000);
 };
 
+let lastUrl = "";
+
 const handleIframeLoad = () => {
   isLoading.value = false;
 
@@ -292,7 +294,15 @@ const handleIframeLoad = () => {
   win.__reskitMirrorPatched = true;
 
   const emitNavigation = () => {
-    emit("navigation", win.location.href);
+    const currentUrl = win.location.href;
+
+    if (currentUrl === lastUrl) {
+      return;
+    }
+
+    lastUrl = currentUrl;
+
+    emit("navigation", currentUrl);
   };
 
   const pushState = win.history.pushState;
