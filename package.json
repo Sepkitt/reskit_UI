@@ -1,5 +1,5 @@
-{  "version": "2.1.0",
-
+{
+  "version": "2.1.0",
   "name": "vuejs",
   "type": "module",
   "private": true,
@@ -8,7 +8,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.11.3",
@@ -22,6 +24,9 @@
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",
+    "@storybook/addon-docs": "^10.5.7",
+    "@storybook/vue3-vite": "^10.5.8",
+    "@vitejs/plugin-vue": "^6.0.8",
     "sass-embedded": "^1.100.0"
   }
 }
