@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/vue3-vite";
 import { mergeConfig } from "vite";
-import vue from "@vitejs/plugin-vue"; 
+import vue from "@vitejs/plugin-vue";
 import vuetify from "vite-plugin-vuetify";
 
 const config: StorybookConfig = {
@@ -8,7 +8,12 @@ const config: StorybookConfig = {
     "../app/components/**/*.mdx",
     "../app/components/**/*.stories.@(js|jsx|ts|tsx|mdx)",
   ],
-  addons: ["@storybook/addon-essentials", "@storybook/addon-mdx-gfm"],
+  addons: ["@storybook/addon-docs"],
+  docs: {
+    //See the table below for the list of supported options
+    defaultName: "Documentation",
+    docsMode: true,
+  },
   framework: {
     name: "@storybook/vue3-vite",
     options: {},

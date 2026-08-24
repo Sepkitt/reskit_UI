@@ -186,8 +186,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, mergeProps } from "vue";
-
+import { ref, computed, onMounted, onUnmounted, mergeProps } from "vue";
 const props = defineProps({
   device: Object,
   items: Array,
@@ -198,7 +197,12 @@ const props = defineProps({
   frameNo: Number,
 });
 
-const emit = defineEmits(["update:device", "update:zoom", "update:rotate", "navigate"]);
+const emit = defineEmits([
+  "update:device",
+  "update:zoom",
+  "update:rotate",
+  "navigate",
+]);
 
 const activeSrc = computed(() => {
   return networkStatus.value === "offline" ? "about:blank" : props.src;

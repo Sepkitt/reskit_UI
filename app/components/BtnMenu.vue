@@ -1,23 +1,22 @@
 <template>
   <v-btn
-    icon
-    color="primary"
+    :icon="isIcon"
+    :color="color"
     class="tooltip-success"
-    variant="tonal"
-    size="small"
+    :variant="variant"
+    :size="size"
+    :disabled="disabled"
   >
-    <v-icon :icon="'mdi-dots-vertical'" color="success" />
-    <v-menu activator="parent">
+    <v-icon :icon="icon" :color="iconColor" />
+    <v-menu activator="parent" :theme="$vuetify.theme.name">
       <v-list>
-        <!-- <v-list-item v-for="(item, index) in items" :key="index" :value="index">
-          <template v-slot:prepend>
-            <v-icon :icon="item.icon"></v-icon>
-          </template>
-
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item> -->
-        <!-- <v-divider v-if="$slots.content"></v-divider> -->
-        <v-list-item class="bg-background" v-if="$slots.content">
+        <v-list-item
+          v-if="$slots.content"
+          :style="{
+            backgroundColor: `rgb(var(--v-theme-${menuBackgroundColor}))`,
+          }"
+          3
+        >
           <slot name="content" />
         </v-list-item>
       </v-list>
@@ -26,8 +25,26 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-  items: [],
+interface Props {
+  icon?: string;
+  color?: string;
+  disabled?: boolean;
+  iconColor?: string;
+  size?: "x-small" | "small" | "default" | "large" | "x-large";
+  variant?: "flat" | "text" | "elevated" | "tonal" | "outlined" | "plain";
+  isIcon?: boolean;
+  menuBackgroundColor?: string;
+}
+
+withDefaults(defineProps<Props>(), {
+  icon: "mdi-dots-vertical",
+  color: "primary",
+  disabled: false,
+  iconColor: "success",
+  size: "small",
+  variant: "tonal",
+  isIcon: true,
+  menuBackgroundColor: "background",
 });
 </script>
 
