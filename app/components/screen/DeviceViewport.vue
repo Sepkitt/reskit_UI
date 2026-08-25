@@ -140,6 +140,7 @@
         :src="activeSrc"
         show-browser-ui
         @load="onIframeLoad"
+        @navigation="$emit('navigate', $event)"
       >
         <template #content>
           <v-slider
@@ -185,8 +186,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, mergeProps } from "vue";
-
+import { ref, computed, onMounted, onUnmounted, mergeProps } from "vue";
 const props = defineProps({
   device: Object,
   items: Array,
@@ -197,7 +197,12 @@ const props = defineProps({
   frameNo: Number,
 });
 
-const emit = defineEmits(["update:device", "update:zoom", "update:rotate"]);
+const emit = defineEmits([
+  "update:device",
+  "update:zoom",
+  "update:rotate",
+  "navigate",
+]);
 
 const activeSrc = computed(() => {
   return networkStatus.value === "offline" ? "about:blank" : props.src;
@@ -318,8 +323,20 @@ const setNetwork = (status) => {
 const menuItems = computed(() => {
   return [
     { label: "ONLINE", value: "NO LIMIT", clickable: true, action: "online" },
-    { label: "SLOW", value: " 400ms", clickable: true, action: "slow", itemClass: 'text-warning' },
-    { label: "OFFLINE", value: "DISCONNECT", clickable: true, action: "offline" ,itemClass: 'text-error'},
+    {
+      label: "SLOW",
+      value: " 400ms",
+      clickable: true,
+      action: "slow",
+      itemClass: "text-warning",
+    },
+    {
+      label: "OFFLINE",
+      value: "DISCONNECT",
+      clickable: true,
+      action: "offline",
+      itemClass: "text-error",
+    },
   ];
 });
 
@@ -355,7 +372,7 @@ const BREAKPOINTS = [
 
 const getSimulatedLabel = (width) => {
   const w = Number(width);
-  return BREAKPOINTS.find(bp => w >= bp.min)?.name ?? "xs";
+  return BREAKPOINTS.find((bp) => w >= bp.min)?.name ?? "xs";
 };
 </script>
 
@@ -387,7 +404,7 @@ const getSimulatedLabel = (width) => {
     position: absolute;
     width: 20px;
     height: 20px;
-    border-radius:2px;
+    border-radius: 2px;
     border: 2px solid rgb(var(--v-theme-primary));
     pointer-events: none;
     z-index: 5;
